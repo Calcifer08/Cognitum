@@ -2,6 +2,7 @@ FROM nginx:stable
 
 RUN apt update && apt install -y openssl
 
+# Если вы используете собственные сертификаты — поместите их в ./nginx/certs/
 RUN mkdir -p /etc/nginx/certs && \
     if [ ! -f /etc/nginx/certs/server.key ]; then \
       echo "Сертификаты не найдены, создаём..." && \
