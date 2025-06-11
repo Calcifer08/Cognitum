@@ -66,14 +66,14 @@ public class PlayerDataUI : MonoBehaviour
 
       _isProcessing = true;
       _saveButton.interactable = false;
-      AndroidToast.Show("Сохранение...");
+      AndroidToast.Show("РЎРѕС…СЂР°РЅРµРЅРёРµ...");
 
       await PlayerDataManager.SavePlayerDataAsync(_playerData, true);
 
       _isProcessing = false;
       _saveButton.interactable = true;
-      AndroidToast.Show("Данные пользователя сохранены!");
-      Debug.Log("Данные игрока сохранены");
+      AndroidToast.Show("Р”Р°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ СЃРѕС…СЂР°РЅРµРЅС‹!");
+      Debug.Log("Р”Р°РЅРЅС‹Рµ РёРіСЂРѕРєР° СЃРѕС…СЂР°РЅРµРЅС‹");
     }
   }
 }

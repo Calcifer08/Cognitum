@@ -21,7 +21,7 @@ public class AboutGameViewer : MonoBehaviour
   }
 
   /// <summary>
-  /// Загружает туториал для выбранной игры по её GameId
+  /// Р—Р°РіСЂСѓР¶Р°РµС‚ С‚СѓС‚РѕСЂРёР°Р» РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕР№ РёРіСЂС‹ РїРѕ РµС‘ GameId
   /// </summary>
   public void Init(string gameId)
   {
@@ -35,7 +35,7 @@ public class AboutGameViewer : MonoBehaviour
     }
     else
     {
-      _aboutGameText.text = "Информации по игре нет.";
+      _aboutGameText.text = "РРЅС„РѕСЂРјР°С†РёРё РїРѕ РёРіСЂРµ РЅРµС‚.";
       _nextButton.interactable = false;
       _prevButton.interactable = false;
     }

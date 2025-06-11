@@ -22,30 +22,30 @@ public class UIProgress : MonoBehaviour
     _resultImageLeft = _answerResultImages.transform.Find("Left").GetComponent<Image>();
     _resultImageRight = _answerResultImages.transform.Find("Right").GetComponent<Image>();
 
-    _scoreText.text = "Очки: 0";
+    _scoreText.text = "РћС‡РєРё: 0";
   }
 
   public void UpdateScore(int score)
   {
-    string currentScore = $"Очки: {score}";
+    string currentScore = $"РћС‡РєРё: {score}";
     _scoreText.text = currentScore;
   }
 
   public void UpdateLevel(int level)
   {
-    string currentLevel = $"Уровень: {level}";
+    string currentLevel = $"РЈСЂРѕРІРµРЅСЊ: {level}";
     _levelText.text = currentLevel;
   }
 
   public void UpdateCorrect(int correct, int maxCorrect)
   {
-    string currentCorrect = $"Верно: {correct}/{maxCorrect}";
+    string currentCorrect = $"Р’РµСЂРЅРѕ: {correct}/{maxCorrect}";
     _correctText.text = currentCorrect;
   }
 
   public void UpdateMistake(int mistake, int maxMistake)
   {
-    string currentMistake = $"Ошибки {mistake}/{maxMistake}";
+    string currentMistake = $"РћС€РёР±РєРё {mistake}/{maxMistake}";
     _mistakeText.text = currentMistake;
   }
 

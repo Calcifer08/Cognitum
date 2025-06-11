@@ -46,7 +46,7 @@ public class PlayerData
 
   public enum AgeGroup
   {
-    [EnumMember(Value = "Не указано")]
+    [EnumMember(Value = "РќРµ СѓРєР°Р·Р°РЅРѕ")]
     Unknown,
 
     [EnumMember(Value = "10-14")]
@@ -76,61 +76,61 @@ public class PlayerData
 
   public enum Genders
   {
-    [EnumMember(Value = "Не указано")]
+    [EnumMember(Value = "РќРµ СѓРєР°Р·Р°РЅРѕ")]
     Unknown,
 
-    [EnumMember(Value = "Мужчина")]
+    [EnumMember(Value = "РњСѓР¶С‡РёРЅР°")]
     Male,
 
-    [EnumMember(Value = "Женщина")]
+    [EnumMember(Value = "Р–РµРЅС‰РёРЅР°")]
     Female
   }
 
   public enum EducationLevel
   {
-    [EnumMember(Value = "Не указано")]
+    [EnumMember(Value = "РќРµ СѓРєР°Р·Р°РЅРѕ")]
     Unknown,
 
-    [EnumMember(Value = "Среднее")]
+    [EnumMember(Value = "РЎСЂРµРґРЅРµРµ")]
     Secondary,
 
-    [EnumMember(Value = "Высшее")]
+    [EnumMember(Value = "Р’С‹СЃС€РµРµ")]
     Higher,
 
-    [EnumMember(Value = "Аспирантура и выше")]
+    [EnumMember(Value = "РђСЃРїРёСЂР°РЅС‚СѓСЂР° Рё РІС‹С€Рµ")]
     PostGrad
   }
 
   public enum SleepDuration
   {
-    [EnumMember(Value = "Не указано")]
+    [EnumMember(Value = "РќРµ СѓРєР°Р·Р°РЅРѕ")]
     Unknown,
 
-    [EnumMember(Value = "7+ часов")]
+    [EnumMember(Value = "7+ С‡Р°СЃРѕРІ")]
     Good,
 
-    [EnumMember(Value = "5-6 часов")]
+    [EnumMember(Value = "5-6 С‡Р°СЃРѕРІ")]
     Medium,
 
-    [EnumMember(Value = "<5 часов")]
+    [EnumMember(Value = "<5 С‡Р°СЃРѕРІ")]
     Bad
   }
 
   public enum DigitalUsageHours
   {
-    [EnumMember(Value = "Не указано")]
+    [EnumMember(Value = "РќРµ СѓРєР°Р·Р°РЅРѕ")]
     Unknown,
 
-    [EnumMember(Value = "<1 часа")]
+    [EnumMember(Value = "<1 С‡Р°СЃР°")]
     Less_1,
 
-    [EnumMember(Value = "1-3 часа")]
+    [EnumMember(Value = "1-3 С‡Р°СЃР°")]
     Hours_1_3,
 
-    [EnumMember(Value = "4-6 часов")]
+    [EnumMember(Value = "4-6 С‡Р°СЃРѕРІ")]
     Hours_4_6,
 
-    [EnumMember(Value = "7+ часов")]
+    [EnumMember(Value = "7+ С‡Р°СЃРѕРІ")]
     More_7
   }
 }

@@ -10,14 +10,14 @@ public class ProgressManager : MonoBehaviour
   [SerializeField] private UIManager _uiMananger;
 
   public int Score { get; private set; } = 0;
-  private int _ÒorrectAnswerPoint = 3;
+  private int _—ÅorrectAnswerPoint = 3;
   private int _incorrectAnswerPoint = 1;
   private int _levelWinPoints = 5;
   private int _levelFailPoints = 3;
 
   public void UpdatePointsForLevel(int level)
   {
-    _ÒorrectAnswerPoint = 3 * level;
+    _—ÅorrectAnswerPoint = 3 * level;
     _incorrectAnswerPoint = 1 * level;
     _levelWinPoints = 5 * level;
     _levelFailPoints = 3 * level;
@@ -26,7 +26,7 @@ public class ProgressManager : MonoBehaviour
 
   public void AddPointsForCorrectAnswer()
   {
-    Score += _ÒorrectAnswerPoint;
+    Score += _—ÅorrectAnswerPoint;
     UpdateScore();
   }
 

@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 
 /// <summary>
-/// Запрос для авторизации.
+/// Р—Р°РїСЂРѕСЃ РґР»СЏ Р°РІС‚РѕСЂРёР·Р°С†РёРё.
 /// </summary>
 public class UserCredentialsRequest
 {
@@ -11,7 +11,7 @@ public class UserCredentialsRequest
 }
 
 /// <summary>
-/// Ответ с токенами после авторизации.
+/// РћС‚РІРµС‚ СЃ С‚РѕРєРµРЅР°РјРё РїРѕСЃР»Рµ Р°РІС‚РѕСЂРёР·Р°С†РёРё.
 /// </summary>
 public class TokensResponse
 {
@@ -29,7 +29,7 @@ public class AuthResponse
 }
 
 /// <summary>
-/// Ошибка, возвращаемая сервером.
+/// РћС€РёР±РєР°, РІРѕР·РІСЂР°С‰Р°РµРјР°СЏ СЃРµСЂРІРµСЂРѕРј.
 /// </summary>
 public class ErrorResponse
 {
@@ -40,17 +40,17 @@ public class ErrorResponse
     try
     {
       ErrorResponse errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(json);
-      return errorResponse?.message ?? "Неизвестная ошибка на сервере";
+      return errorResponse?.message ?? "РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР° РЅР° СЃРµСЂРІРµСЂРµ";
     }
     catch
     {
-      return "Ошибка парсинга ответа сервера";
+      return "РћС€РёР±РєР° РїР°СЂСЃРёРЅРіР° РѕС‚РІРµС‚Р° СЃРµСЂРІРµСЂР°";
     }
   }
 }
 
 /// <summary>
-/// Запрос на обновление токена.
+/// Р—Р°РїСЂРѕСЃ РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ С‚РѕРєРµРЅР°.
 /// </summary>
 public class RefreshTokenRequest
 {

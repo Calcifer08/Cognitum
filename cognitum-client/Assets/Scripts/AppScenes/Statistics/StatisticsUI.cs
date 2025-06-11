@@ -97,11 +97,11 @@ public class StatisticsUI : MonoBehaviour
     if (data.Count < 1)
     {
       _graphContainer.SetActive(false);
-      _text.text = "Данных за выбранный период нет.";
+      _text.text = "Р”Р°РЅРЅС‹С… Р·Р° РІС‹Р±СЂР°РЅРЅС‹Р№ РїРµСЂРёРѕРґ РЅРµС‚.";
     }
     else
     {
-      _text.text = "Среднее значение рассчитывается по всем сыгранным сессиям в пределах указанного периода.";
+      _text.text = "РЎСЂРµРґРЅРµРµ Р·РЅР°С‡РµРЅРёРµ СЂР°СЃСЃС‡РёС‚С‹РІР°РµС‚СЃСЏ РїРѕ РІСЃРµРј СЃС‹РіСЂР°РЅРЅС‹Рј СЃРµСЃСЃРёСЏРј РІ РїСЂРµРґРµР»Р°С… СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїРµСЂРёРѕРґР°.";
       _graphContainer.SetActive(true);
       LayoutRebuilder.ForceRebuildLayoutImmediate(_content.GetComponent<RectTransform>());
       _barChart.DrawBarChart(data);
@@ -111,7 +111,7 @@ public class StatisticsUI : MonoBehaviour
   private IEnumerator AnimateLoadingText()
   {
     TMP_Text loadingTMP = _loadText.GetComponent<TMP_Text>();
-    string baseText = "Данные обновляются ";
+    string baseText = "Р”Р°РЅРЅС‹Рµ РѕР±РЅРѕРІР»СЏСЋС‚СЃСЏ ";
     int dotCount = 0;
 
     while (true)

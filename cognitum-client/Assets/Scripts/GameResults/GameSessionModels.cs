@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 // SessionsData.json
 
-/// <summary> Данные по конкретной игровой сессии </summary>
+/// <summary> Р”Р°РЅРЅС‹Рµ РїРѕ РєРѕРЅРєСЂРµС‚РЅРѕР№ РёРіСЂРѕРІРѕР№ СЃРµСЃСЃРёРё </summary>
 [System.Serializable]
 public class GameSession
 {
@@ -10,12 +10,12 @@ public class GameSession
   public int Level;
 }
 
-/// <summary> Класс для результатов всех игровых сесиий, которые не агрегированы </summary>
+/// <summary> РљР»Р°СЃСЃ РґР»СЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РІСЃРµС… РёРіСЂРѕРІС‹С… СЃРµСЃРёРёР№, РєРѕС‚РѕСЂС‹Рµ РЅРµ Р°РіСЂРµРіРёСЂРѕРІР°РЅС‹ </summary>
 [System.Serializable]
 public class SessionsData
 {
 
-  /// <summary> игры -> даты -> данные </summary>
+  /// <summary> РёРіСЂС‹ -> РґР°С‚С‹ -> РґР°РЅРЅС‹Рµ </summary>
   public Dictionary<string, Dictionary<string, List<GameSession>>> Sessions = new Dictionary<string, Dictionary<string, List<GameSession>>>();
 }
 

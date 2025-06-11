@@ -37,13 +37,13 @@ public static class AppSettingsManager
     {
       string json = await File.ReadAllTextAsync(FilePath);
       _settings = JsonConvert.DeserializeObject<AppSettings>(json);
-      Debug.Log("Файл настроек загружен");
+      Debug.Log("Р¤Р°Р№Р» РЅР°СЃС‚СЂРѕРµРє Р·Р°РіСЂСѓР¶РµРЅ");
     }
     else
     {
       _settings = new AppSettings();
       await SaveSettingsAsync();
-      Debug.Log("Файл настроек не найден. Создан новый");
+      Debug.Log("Р¤Р°Р№Р» РЅР°СЃС‚СЂРѕРµРє РЅРµ РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅ РЅРѕРІС‹Р№");
     }
   }
 
@@ -63,11 +63,11 @@ public static class AppSettingsManager
 #endif
 
       await File.WriteAllTextAsync(FilePath, json);
-      Debug.Log("Файл настроек сохранён");
+      Debug.Log("Р¤Р°Р№Р» РЅР°СЃС‚СЂРѕРµРє СЃРѕС…СЂР°РЅС‘РЅ");
     }
     catch (Exception ex)
     {
-      Debug.LogError("Ошибка при сохранении настроек: " + ex.Message);
+      Debug.LogError("РћС€РёР±РєР° РїСЂРё СЃРѕС…СЂР°РЅРµРЅРёРё РЅР°СЃС‚СЂРѕРµРє: " + ex.Message);
     }
   }
 
@@ -111,7 +111,7 @@ public static class AppSettingsManager
 
     if (_settings.Notifications.Enabled)
     {
-      NotificationManager.EnableNotifications(hour, minute, "Ежедневное уведомление", "Не забудь про тренировку!");
+      NotificationManager.EnableNotifications(hour, minute, "Р•Р¶РµРґРЅРµРІРЅРѕРµ СѓРІРµРґРѕРјР»РµРЅРёРµ", "РќРµ Р·Р°Р±СѓРґСЊ РїСЂРѕ С‚СЂРµРЅРёСЂРѕРІРєСѓ!");
     }
   }
 

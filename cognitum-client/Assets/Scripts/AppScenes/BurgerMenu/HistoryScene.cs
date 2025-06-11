@@ -78,9 +78,9 @@ public class HistoryScene : MonoBehaviour
       else
       {
 #if UNITY_ANDROID
-        AndroidToast.Show("Нажмите ещё раз для выхода");
+        AndroidToast.Show("РќР°Р¶РјРёС‚Рµ РµС‰С‘ СЂР°Р· РґР»СЏ РІС‹С…РѕРґР°");
 #else
-        Debug.Log("Нажмите ещё раз для выхода");
+        Debug.Log("РќР°Р¶РјРёС‚Рµ РµС‰С‘ СЂР°Р· РґР»СЏ РІС‹С…РѕРґР°");
 #endif
         _lastBackPressedTime = Time.time;
       }

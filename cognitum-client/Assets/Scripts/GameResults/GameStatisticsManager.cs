@@ -14,7 +14,7 @@ public static class GameStatisticsManager
   public const string FileName = "GameStatistics.json";
   private static readonly string FilePath = Path.Combine(Application.persistentDataPath, FileName);
 
-  private static GameStatistics _gameStatistics; // категории -> игры -> даты -> данные
+  private static GameStatistics _gameStatistics; // РєР°С‚РµРіРѕСЂРёРё -> РёРіСЂС‹ -> РґР°С‚С‹ -> РґР°РЅРЅС‹Рµ
 
   private static string _lastUpdate;
 
@@ -51,12 +51,12 @@ public static class GameStatisticsManager
     {
       string json = await File.ReadAllTextAsync(FilePath);
       _gameStatistics = JsonConvert.DeserializeObject<GameStatistics>(json);
-      Debug.Log("Файл статистики загружен");
+      Debug.Log("Р¤Р°Р№Р» СЃС‚Р°С‚РёСЃС‚РёРєРё Р·Р°РіСЂСѓР¶РµРЅ");
     }
     else
     {
       _gameStatistics = new GameStatistics();
-      Debug.Log("Файл статистики не найден. Создан новый");
+      Debug.Log("Р¤Р°Р№Р» СЃС‚Р°С‚РёСЃС‚РёРєРё РЅРµ РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅ РЅРѕРІС‹Р№");
     }
   }
 
@@ -76,10 +76,10 @@ public static class GameStatisticsManager
   public static async Task AggregateDateAsync()
   {
     await AggregateDailyDataAsync();
-    Debug.Log("Файл сессий обработан и сохранён");
+    Debug.Log("Р¤Р°Р№Р» СЃРµСЃСЃРёР№ РѕР±СЂР°Р±РѕС‚Р°РЅ Рё СЃРѕС…СЂР°РЅС‘РЅ");
 
     await AggregateWeeklyAndMonthlyDataAsync();
-    Debug.Log("Файл статистики игр обновлён и сохранён");
+    Debug.Log("Р¤Р°Р№Р» СЃС‚Р°С‚РёСЃС‚РёРєРё РёРіСЂ РѕР±РЅРѕРІР»С‘РЅ Рё СЃРѕС…СЂР°РЅС‘РЅ");
   }
 
   public static async Task SaveStatisticsFileAsync(GameStatistics data)
@@ -93,7 +93,7 @@ public static class GameStatisticsManager
 #endif
 
     await File.WriteAllTextAsync(FilePath, json);
-    Debug.Log("Файл статистики игр сохранён");
+    Debug.Log("Р¤Р°Р№Р» СЃС‚Р°С‚РёСЃС‚РёРєРё РёРіСЂ СЃРѕС…СЂР°РЅС‘РЅ");
   }
 
   private static async Task AggregateDailyDataAsync()
@@ -225,7 +225,7 @@ public static class GameStatisticsManager
       }
       else
       {
-        throw new ArgumentException("Неверно указан период");
+        throw new ArgumentException("РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅ РїРµСЂРёРѕРґ");
       }
 
       if (periodEndDate >= DateTime.Parse(_lastUpdate).Date)
@@ -254,7 +254,7 @@ public static class GameStatisticsManager
         }
         else
         {
-          throw new ArgumentException("Неверно указан период");
+          throw new ArgumentException("РќРµРІРµСЂРЅРѕ СѓРєР°Р·Р°РЅ РїРµСЂРёРѕРґ");
         }
 
       })
@@ -326,7 +326,7 @@ public static class GameStatisticsManager
   {
     if (_gameStatistics == null)
     {
-      Debug.LogError("Нет статистики для отправки.");
+      Debug.LogError("РќРµС‚ СЃС‚Р°С‚РёСЃС‚РёРєРё РґР»СЏ РѕС‚РїСЂР°РІРєРё.");
       return false;
     }
 
@@ -339,14 +339,14 @@ public static class GameStatisticsManager
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
     {
-      Debug.Log("Нет интернета. Статистика будет отправлена позже.");
+      Debug.Log("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°. РЎС‚Р°С‚РёСЃС‚РёРєР° Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР·Р¶Рµ.");
       return false;
     }
 
     string token = AuthManager.GetAccessToken();
     if (string.IsNullOrEmpty(token))
     {
-      Debug.LogError("Нет токена для отправки статистики.");
+      Debug.LogError("РќРµС‚ С‚РѕРєРµРЅР° РґР»СЏ РѕС‚РїСЂР°РІРєРё СЃС‚Р°С‚РёСЃС‚РёРєРё.");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
@@ -367,7 +367,7 @@ public static class GameStatisticsManager
 
       if (request.result == UnityWebRequest.Result.Success)
       {
-        Debug.Log("Статистика успешно отправлена на сервер.");
+        Debug.Log("РЎС‚Р°С‚РёСЃС‚РёРєР° СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅР° РЅР° СЃРµСЂРІРµСЂ.");
         return true;
       }
       else
@@ -381,17 +381,17 @@ public static class GameStatisticsManager
   {
     if (request.responseCode == 0)
     {
-      Debug.LogError("Сервер не отвечает. Статистика будет отправлена позже.");
+      Debug.LogError("РЎРµСЂРІРµСЂ РЅРµ РѕС‚РІРµС‡Р°РµС‚. РЎС‚Р°С‚РёСЃС‚РёРєР° Р±СѓРґРµС‚ РѕС‚РїСЂР°РІР»РµРЅР° РїРѕР·Р¶Рµ.");
       return false;
     }
 
     string parsedMessage = ErrorResponse.ParseErrorMessage(request.downloadHandler.text);
 
-    if (parsedMessage == "Токен истёк")
+    if (parsedMessage == "РўРѕРєРµРЅ РёСЃС‚С‘Рє")
     {
       if (retryCount < 1)
       {
-        Debug.Log("Токен истёк. Пробуем обновить...");
+        Debug.Log("РўРѕРєРµРЅ РёСЃС‚С‘Рє. РџСЂРѕР±СѓРµРј РѕР±РЅРѕРІРёС‚СЊ...");
         await TokenRefreshManager.RefreshTokenAsync();
 
         if (!string.IsNullOrEmpty(SecureStorage.GetData(APIConstants.StorageKeys.AccessToken)))
@@ -400,30 +400,30 @@ public static class GameStatisticsManager
         }
         else
         {
-          Debug.LogError("Не удалось обновить токен. Отправка статистики отменена.");
+          Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ С‚РѕРєРµРЅ. РћС‚РїСЂР°РІРєР° СЃС‚Р°С‚РёСЃС‚РёРєРё РѕС‚РјРµРЅРµРЅР°.");
           return false;
         }
       }
       else
       {
-        Debug.LogError("Превышено количество попыток обновления токена.");
+        Debug.LogError("РџСЂРµРІС‹С€РµРЅРѕ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРїС‹С‚РѕРє РѕР±РЅРѕРІР»РµРЅРёСЏ С‚РѕРєРµРЅР°.");
         return false;
       }
     }
     else if (request.responseCode == 400)
     {
-      Debug.LogError($"Ошибка: некорректные данные. {parsedMessage}");
+      Debug.LogError($"РћС€РёР±РєР°: РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ. {parsedMessage}");
       return false;
     }
     else if (request.responseCode == 401)
     {
-      Debug.LogError($"Ошибка авторизации: {parsedMessage} (код {request.responseCode}). Пользователь будет выведен из системы.");
+      Debug.LogError($"РћС€РёР±РєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё: {parsedMessage} (РєРѕРґ {request.responseCode}). РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РІС‹РІРµРґРµРЅ РёР· СЃРёСЃС‚РµРјС‹.");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
     else
     {
-      Debug.LogError($"Неизвестная ошибка при отправке статистики: {parsedMessage} (код {request.responseCode})");
+      Debug.LogError($"РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕС‚РїСЂР°РІРєРµ СЃС‚Р°С‚РёСЃС‚РёРєРё: {parsedMessage} (РєРѕРґ {request.responseCode})");
       return false;
     }
   }
@@ -435,13 +435,13 @@ public static class GameStatisticsManager
   {
     if (!_gameStatistics.GamesStatistics.TryGetValue(category, out var gamesInCategory))
     {
-      Debug.LogWarning($"Нет данных по категории: {category}");
+      Debug.LogWarning($"РќРµС‚ РґР°РЅРЅС‹С… РїРѕ РєР°С‚РµРіРѕСЂРёРё: {category}");
       return new Dictionary<string, int>();
     }
 
     if (!gamesInCategory.TryGetValue(gameId, out var periodStatistics))
     {
-      Debug.LogWarning($"Нет данных по игре: {gameId} в категории: {category}");
+      Debug.LogWarning($"РќРµС‚ РґР°РЅРЅС‹С… РїРѕ РёРіСЂРµ: {gameId} РІ РєР°С‚РµРіРѕСЂРёРё: {category}");
       return new Dictionary<string, int>();
     }
 
@@ -458,13 +458,13 @@ public static class GameStatisticsManager
         rawPeriodData = periodStatistics.Statistics.MonthlyAverage;
         break;
       default:
-        Debug.LogWarning($"Неизвестный тип периода: {periodName}");
+        Debug.LogWarning($"РќРµРёР·РІРµСЃС‚РЅС‹Р№ С‚РёРї РїРµСЂРёРѕРґР°: {periodName}");
         return new Dictionary<string, int>();
     }
 
     if (rawPeriodData == null || rawPeriodData.Count == 0)
     {
-      Debug.LogWarning($"Нет данных по периоду {periodName} для игры {gameId} в категории {category}");
+      Debug.LogWarning($"РќРµС‚ РґР°РЅРЅС‹С… РїРѕ РїРµСЂРёРѕРґСѓ {periodName} РґР»СЏ РёРіСЂС‹ {gameId} РІ РєР°С‚РµРіРѕСЂРёРё {category}");
       return new Dictionary<string, int>();
     }
 

@@ -79,22 +79,22 @@ public class GameResultsManager
 
   public static string GetResults()
   {
-    string results = $"Набрано очков: {_totalScore}\n";
+    string results = $"РќР°Р±СЂР°РЅРѕ РѕС‡РєРѕРІ: {_totalScore}\n";
 
     if (_totalScore <= _maxScore)
-      results += $"Рекорд: {_maxScore}\n";
+      results += $"Р РµРєРѕСЂРґ: {_maxScore}\n";
 
-    results += $"Максимальный уровень: {_maxLevelReached}\n";
-    results += $"Минимальный уровень: {_minLevelReached}\n";
-    results += $"Пройдено уровней: {_winLevels}\n";
-    results += $"Провалено уровней: {_failLevels}\n";
+    results += $"РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ: {_maxLevelReached}\n";
+    results += $"РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ: {_minLevelReached}\n";
+    results += $"РџСЂРѕР№РґРµРЅРѕ СѓСЂРѕРІРЅРµР№: {_winLevels}\n";
+    results += $"РџСЂРѕРІР°Р»РµРЅРѕ СѓСЂРѕРІРЅРµР№: {_failLevels}\n";
 
     float accuracy = (_correctAnswers * 100f) / (_correctAnswers + _incorrectAnswers + _skippedAnswers);
     accuracy = Mathf.Round(accuracy * 100f) / 100f;
-    results += $"Точность: {accuracy}%\n";
-    results += $"Правильных ответов: {_correctAnswers}\n";
-    results += $"Неправильных ответов: {_incorrectAnswers}\n";
-    results += $"Пропущенные ответы: {_skippedAnswers}";
+    results += $"РўРѕС‡РЅРѕСЃС‚СЊ: {accuracy}%\n";
+    results += $"РџСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ: {_correctAnswers}\n";
+    results += $"РќРµРїСЂР°РІРёР»СЊРЅС‹С… РѕС‚РІРµС‚РѕРІ: {_incorrectAnswers}\n";
+    results += $"РџСЂРѕРїСѓС‰РµРЅРЅС‹Рµ РѕС‚РІРµС‚С‹: {_skippedAnswers}";
 
     return results;
   }
@@ -102,7 +102,7 @@ public class GameResultsManager
   public static string GetAchievement()
   {
     if (_totalScore > _maxScore)
-      return "Новый рекорд!";
+      return "РќРѕРІС‹Р№ СЂРµРєРѕСЂРґ!";
 
     int totalAnswers = _correctAnswers + _incorrectAnswers + _skippedAnswers;
 
@@ -111,10 +111,10 @@ public class GameResultsManager
       float accuracy = (_correctAnswers * 100f) / totalAnswers;
 
       if (accuracy >= 85f)
-        return "Отличная точность!";
+        return "РћС‚Р»РёС‡РЅР°СЏ С‚РѕС‡РЅРѕСЃС‚СЊ!";
     }
 
-    return "Хорошая работа!";
+    return "РҐРѕСЂРѕС€Р°СЏ СЂР°Р±РѕС‚Р°!";
   }
 
   public static void ResetResults()

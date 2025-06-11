@@ -35,7 +35,7 @@ public class CategoryMenu : MonoBehaviour
     _gamesData = GameDataManager.GetGamesData();
 
     InitializationDropdown();
-    DisplayCategory("Все");
+    DisplayCategory("Р’СЃРµ");
     _categoryDropdown.onValueChanged.AddListener((_) => FilterCategory());
   }
 
@@ -43,7 +43,7 @@ public class CategoryMenu : MonoBehaviour
   {
     _categoryDropdown.options.Clear();
 
-    _categoryDropdown.AddOptions(new List<string> { "Все" });
+    _categoryDropdown.AddOptions(new List<string> { "Р’СЃРµ" });
 
     foreach (var category in _gamesData.Categories)
     {
@@ -66,7 +66,7 @@ public class CategoryMenu : MonoBehaviour
 
     foreach (var category in _gamesData.Categories)
     {
-      if (nameCategory == "Все" || category.NameCategory == nameCategory)
+      if (nameCategory == "Р’СЃРµ" || category.NameCategory == nameCategory)
       {
         GameObject categoryTitle = Instantiate(_prefabTitle, _boxGames);
         categoryTitle.GetComponent<TextMeshProUGUI>().text = category.NameCategory;
@@ -91,7 +91,7 @@ public class CategoryMenu : MonoBehaviour
           if (descriptionTMP != null)
           {
             AboutGame aboutGame = _allAboutGame.AboutGames.Find(t => t.GameId == game.GameId);
-            descriptionTMP.text = aboutGame != null ? aboutGame.Description : "Описание не найдено";
+            descriptionTMP.text = aboutGame != null ? aboutGame.Description : "РћРїРёСЃР°РЅРёРµ РЅРµ РЅР°Р№РґРµРЅРѕ";
           }
 
           if (visualData != null)

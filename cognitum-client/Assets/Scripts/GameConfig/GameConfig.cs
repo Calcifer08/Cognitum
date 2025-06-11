@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary> Данные игры </summary>
+/// <summary> Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ </summary>
 [System.Serializable]
 public class GameConfig
 {
@@ -12,7 +12,7 @@ public class GameConfig
   public int MaxScore = 0;
 }
 
-/// <summary> Список конфигов игр </summary>
+/// <summary> РЎРїРёСЃРѕРє РєРѕРЅС„РёРіРѕРІ РёРіСЂ </summary>
 [System.Serializable]
 public class GameConfigData
 {

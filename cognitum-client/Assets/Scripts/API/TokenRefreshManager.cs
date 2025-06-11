@@ -13,7 +13,7 @@ public static class TokenRefreshManager
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
     {
-      Debug.LogWarning("Íåò èíòåðíåòà");
+      Debug.LogWarning("ÐÐµÑ‚ Ð¸Ð½Ñ‚ÐµÑ€Ð½ÐµÑ‚Ð°");
       return;
     }
 
@@ -21,7 +21,7 @@ public static class TokenRefreshManager
 
     if (string.IsNullOrEmpty(refreshToken))
     {
-      Debug.LogWarning("Íåò ðåôðåø-òîêåíà");
+      Debug.LogWarning("ÐÐµÑ‚ Ñ€ÐµÑ„Ñ€ÐµÑˆ-Ñ‚Ð¾ÐºÐµÐ½Ð°");
       AuthManager.ClearTokensAndLogout();
       return;
     }
@@ -57,12 +57,12 @@ public static class TokenRefreshManager
           }
           else
           {
-            Debug.LogError($"Îøèáêà: íåêîððåêòíûå äàííûå ñ ñåðâåðà. Îòâåò: {request.downloadHandler.text}");
+            Debug.LogError($"ÐžÑˆÐ¸Ð±ÐºÐ°: Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ñ‹Ðµ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð°. ÐžÑ‚Ð²ÐµÑ‚: {request.downloadHandler.text}");
           }
         }
         catch (Exception ex)
         {
-          Debug.LogError($"Îøèáêà ïàðñèíãà JSON: {ex.Message}. Îòâåò: {request.downloadHandler.text}");
+          Debug.LogError($"ÐžÑˆÐ¸Ð±ÐºÐ° Ð¿Ð°Ñ€ÑÐ¸Ð½Ð³Ð° JSON: {ex.Message}. ÐžÑ‚Ð²ÐµÑ‚: {request.downloadHandler.text}");
         }
       }
       else
@@ -76,7 +76,7 @@ public static class TokenRefreshManager
   {
     if (request.responseCode == 0)
     {
-      Debug.LogError("Îøèáêà àâòîðèçàöèè: ñåðâåð íå îòâå÷àåò");
+      Debug.LogError("ÐžÑˆÐ¸Ð±ÐºÐ° Ð°Ð²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ð¸: ÑÐµÑ€Ð²ÐµÑ€ Ð½Ðµ Ð¾Ñ‚Ð²ÐµÑ‡Ð°ÐµÑ‚");
       return;
     }
 
@@ -85,17 +85,17 @@ public static class TokenRefreshManager
 
     if (request.responseCode == 403)
     {
-      Debug.LogError($"Îøèáêà 403: {parsedMessage}. Ïåðåíàïðàâëÿåì íà àâòîðèçàöèþ.");
+      Debug.LogError($"ÐžÑˆÐ¸Ð±ÐºÐ° 403: {parsedMessage}. ÐŸÐµÑ€ÐµÐ½Ð°Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ Ð½Ð° Ð°Ð²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸ÑŽ.");
       AuthManager.ClearTokensAndLogout();
       SceneManager.LoadScene(SceneNames.Authentication);
     }
     else if (request.responseCode >= 500 && request.responseCode < 600)
     {
-      Debug.LogError($"Îøèáêà ñåðâåðà ({request.responseCode}): {parsedMessage}. Ïîïðîáóéòå ïîçæå.");
+      Debug.LogError($"ÐžÑˆÐ¸Ð±ÐºÐ° ÑÐµÑ€Ð²ÐµÑ€Ð° ({request.responseCode}): {parsedMessage}. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ð¿Ð¾Ð·Ð¶Ðµ.");
     }
     else
     {
-      Debug.LogError($"Îøèáêà îáíîâëåíèÿ òîêåíà ({request.responseCode}): {parsedMessage}");
+      Debug.LogError($"ÐžÑˆÐ¸Ð±ÐºÐ° Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ Ñ‚Ð¾ÐºÐµÐ½Ð° ({request.responseCode}): {parsedMessage}");
     }
   }
 }

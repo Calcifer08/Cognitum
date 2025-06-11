@@ -20,7 +20,7 @@ public static class AndroidToast
   {
     if (Application.platform != RuntimePlatform.Android)
     {
-      Debug.Log($"Toast не поддерживаются на данной платформе: {message}");
+      Debug.Log($"Toast РЅРµ РїРѕРґРґРµСЂР¶РёРІР°СЋС‚СЃСЏ РЅР° РґР°РЅРЅРѕР№ РїР»Р°С‚С„РѕСЂРјРµ: {message}");
       return;
     }
 

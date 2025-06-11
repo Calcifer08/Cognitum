@@ -27,12 +27,12 @@ public static class GameConfigManager
     {
       string json = await File.ReadAllTextAsync(FilePath);
       _gamesConfigData = JsonConvert.DeserializeObject<GameConfigData>(json);
-      Debug.Log("Файл конфигов игр загружен");
+      Debug.Log("Р¤Р°Р№Р» РєРѕРЅС„РёРіРѕРІ РёРіСЂ Р·Р°РіСЂСѓР¶РµРЅ");
     }
     else
     {
       _gamesConfigData = new GameConfigData();
-      Debug.Log("Файл конфигов игр не найден. Создан новый");
+      Debug.Log("Р¤Р°Р№Р» РєРѕРЅС„РёРіРѕРІ РёРіСЂ РЅРµ РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅ РЅРѕРІС‹Р№");
     }
   }
 
@@ -46,12 +46,12 @@ public static class GameConfigManager
     if (_gamesConfigData.GamesConfigData.ContainsKey(nameGame))
     {
       GameConfig gameConfig = _gamesConfigData.GamesConfigData[nameGame];
-      Debug.Log($"Данные игры {nameGame} загружены. Уровень {gameConfig.CurrentLevel}");
+      Debug.Log($"Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ {nameGame} Р·Р°РіСЂСѓР¶РµРЅС‹. РЈСЂРѕРІРµРЅСЊ {gameConfig.CurrentLevel}");
       return gameConfig;
     }
     else
     {
-      Debug.Log($"Данные игры {nameGame} отсутствуют");
+      Debug.Log($"Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ {nameGame} РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚");
       return new GameConfig();
     }
   }
@@ -73,13 +73,13 @@ public static class GameConfigManager
       }
 
       _gamesConfigData.GamesConfigData[nameGame].CountGame = countGame;
-      Debug.Log($"Данные игры {nameGame} обновлены. Уровень {level}, CountGame: {countGame}");
+      Debug.Log($"Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ {nameGame} РѕР±РЅРѕРІР»РµРЅС‹. РЈСЂРѕРІРµРЅСЊ {level}, CountGame: {countGame}");
     }
     else
     {
       _gamesConfigData.GamesConfigData[nameGame] =
         new GameConfig() { CurrentLevel = level, MaxLevelReached = level, CountGame = countGame, MaxScore = score };
-      Debug.Log($"Данные игры {nameGame} созданы. Уровень {level}, CountGame: {countGame}");
+      Debug.Log($"Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ {nameGame} СЃРѕР·РґР°РЅС‹. РЈСЂРѕРІРµРЅСЊ {level}, CountGame: {countGame}");
     }
 
     await SaveGameConfigAsync(_gamesConfigData);
@@ -99,7 +99,7 @@ public static class GameConfigManager
     string json = JsonConvert.SerializeObject(gamesConfigData, Formatting.Indented);
 #endif
     await File.WriteAllTextAsync(FilePath, json);
-    Debug.Log("Данные всех игр сохранены локально");
+    Debug.Log("Р”Р°РЅРЅС‹Рµ РІСЃРµС… РёРіСЂ СЃРѕС…СЂР°РЅРµРЅС‹ Р»РѕРєР°Р»СЊРЅРѕ");
   }
 
   public static async Task SendSingleGameConfigAsync(GameConfigData gameConfigData)
@@ -118,7 +118,7 @@ public static class GameConfigManager
   {
     if (_gamesConfigData == null)
     {
-      Debug.LogError("Нет данных игрока для отправки.");
+      Debug.LogError("РќРµС‚ РґР°РЅРЅС‹С… РёРіСЂРѕРєР° РґР»СЏ РѕС‚РїСЂР°РІРєРё.");
       return false;
     }
 
@@ -133,14 +133,14 @@ public static class GameConfigManager
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
     {
-      Debug.Log("Нет интернета, данные конфигурации игр будут отправлены позже");
+      Debug.Log("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°, РґР°РЅРЅС‹Рµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РёРіСЂ Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹ РїРѕР·Р¶Рµ");
       return false;
     }
 
     string token = AuthManager.GetAccessToken();
     if (string.IsNullOrEmpty(token))
     {
-      Debug.LogError("Ошибка: нет токена для отправки конфигурации игр");
+      Debug.LogError("РћС€РёР±РєР°: РЅРµС‚ С‚РѕРєРµРЅР° РґР»СЏ РѕС‚РїСЂР°РІРєРё РєРѕРЅС„РёРіСѓСЂР°С†РёРё РёРіСЂ");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
@@ -162,7 +162,7 @@ public static class GameConfigManager
 
       if (request.result == UnityWebRequest.Result.Success)
       {
-        Debug.Log("Конфигурационные данные игр успешно отправлены на сервер.");
+        Debug.Log("РљРѕРЅС„РёРіСѓСЂР°С†РёРѕРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ РёРіСЂ СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅС‹ РЅР° СЃРµСЂРІРµСЂ.");
         return true;
       }
       else
@@ -176,17 +176,17 @@ public static class GameConfigManager
   {
     if (request.responseCode == 0)
     {
-      Debug.LogError("Ошибка: сервер не отвечает. Данные конфигурации игр будут отправлены позже.");
+      Debug.LogError("РћС€РёР±РєР°: СЃРµСЂРІРµСЂ РЅРµ РѕС‚РІРµС‡Р°РµС‚. Р”Р°РЅРЅС‹Рµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РёРіСЂ Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹ РїРѕР·Р¶Рµ.");
       return false;
     }
 
     string parsedMessage = ErrorResponse.ParseErrorMessage(request.downloadHandler.text);
 
-    if (parsedMessage == "Токен истёк")
+    if (parsedMessage == "РўРѕРєРµРЅ РёСЃС‚С‘Рє")
     {
       if (retryCount < 1)
       {
-        Debug.Log("Токен истёк, обновляем...");
+        Debug.Log("РўРѕРєРµРЅ РёСЃС‚С‘Рє, РѕР±РЅРѕРІР»СЏРµРј...");
         await TokenRefreshManager.RefreshTokenAsync();
 
         if (!string.IsNullOrEmpty(SecureStorage.GetData(APIConstants.StorageKeys.AccessToken)))
@@ -195,30 +195,30 @@ public static class GameConfigManager
         }
         else
         {
-          Debug.LogError("Ошибка: не удалось обновить токены, отправка данных конфигурации прервана.");
+          Debug.LogError("РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ С‚РѕРєРµРЅС‹, РѕС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РєРѕРЅС„РёРіСѓСЂР°С†РёРё РїСЂРµСЂРІР°РЅР°.");
           return false;
         }
       }
       else
       {
-        Debug.LogError("Токен истёк, но попытки обновления превышены.");
+        Debug.LogError("РўРѕРєРµРЅ РёСЃС‚С‘Рє, РЅРѕ РїРѕРїС‹С‚РєРё РѕР±РЅРѕРІР»РµРЅРёСЏ РїСЂРµРІС‹С€РµРЅС‹.");
         return false;
       }
     }
     else if (request.responseCode == 400)
     {
-      Debug.LogError($"Ошибка некорректных данных: ({parsedMessage}).");
+      Debug.LogError($"РћС€РёР±РєР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… РґР°РЅРЅС‹С…: ({parsedMessage}).");
       return false;
     }
     else if (request.responseCode == 401)
     {
-      Debug.LogError($"Ошибка клиента: {parsedMessage} (код {request.responseCode}). Пользователь будет выведен из системы.");
+      Debug.LogError($"РћС€РёР±РєР° РєР»РёРµРЅС‚Р°: {parsedMessage} (РєРѕРґ {request.responseCode}). РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РІС‹РІРµРґРµРЅ РёР· СЃРёСЃС‚РµРјС‹.");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
     else
     {
-      Debug.LogError($"Неизвестная ошибка: {parsedMessage} (код {request.responseCode})");
+      Debug.LogError($"РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°: {parsedMessage} (РєРѕРґ {request.responseCode})");
       return false;
     }
   }

@@ -12,11 +12,11 @@ public static class SecureStorage
       try
       {
         secureStorageClass = new AndroidJavaClass("com.example.securestorage.SecureStorage");
-        Debug.Log("SecureStorageClass успешно создан.");
+        Debug.Log("SecureStorageClass СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ.");
       }
       catch (System.Exception e)
       {
-        Debug.LogError($"Ошибка загрузки SecureStorage: {e.Message}");
+        Debug.LogError($"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё SecureStorage: {e.Message}");
         return null;
       }
     }
@@ -36,7 +36,7 @@ public static class SecureStorage
       }
       catch (System.Exception e)
       {
-        Debug.LogError($"Ошибка сохранения данных в SecureStorage: {e.Message}");
+        Debug.LogError($"РћС€РёР±РєР° СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РІ SecureStorage: {e.Message}");
       }
     }
 
@@ -55,7 +55,7 @@ public static class SecureStorage
       }
       catch (System.Exception e)
       {
-        Debug.LogError($"Ошибка получения данных из SecureStorage: {e.Message}");
+        Debug.LogError($"РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С… РёР· SecureStorage: {e.Message}");
       }
     }
 
@@ -75,7 +75,7 @@ public static class SecureStorage
       }
       catch (System.Exception e)
       {
-        Debug.LogError($"Ошибка удаления данных в SecureStorage: {e.Message}");
+        Debug.LogError($"РћС€РёР±РєР° СѓРґР°Р»РµРЅРёСЏ РґР°РЅРЅС‹С… РІ SecureStorage: {e.Message}");
       }
     }
 
@@ -92,7 +92,7 @@ public static class SecureStorage
     }
     catch (System.Exception e)
     {
-      Debug.LogError($"Ошибка сохранения данных в файл: {e.Message}");
+      Debug.LogError($"РћС€РёР±РєР° СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»: {e.Message}");
     }
     return false;
   }
@@ -109,7 +109,7 @@ public static class SecureStorage
     }
     catch (System.Exception e)
     {
-      Debug.LogError($"Ошибка получения данных из файла: {e.Message}");
+      Debug.LogError($"РћС€РёР±РєР° РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р°: {e.Message}");
     }
 
     return null;
@@ -128,7 +128,7 @@ public static class SecureStorage
     }
     catch (System.Exception e)
     {
-      Debug.LogError($"Ошибка удаления данных из файла: {e.Message}");
+      Debug.LogError($"РћС€РёР±РєР° СѓРґР°Р»РµРЅРёСЏ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р°: {e.Message}");
     }
 
     return false;

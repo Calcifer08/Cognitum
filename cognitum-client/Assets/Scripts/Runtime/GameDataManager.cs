@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Класс для хранения и доступа к данным об играх.
-/// Загружает GamesData один раз и предоставляет вспомогательные методы.
+/// РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё РґРѕСЃС‚СѓРїР° Рє РґР°РЅРЅС‹Рј РѕР± РёРіСЂР°С….
+/// Р—Р°РіСЂСѓР¶Р°РµС‚ GamesData РѕРґРёРЅ СЂР°Р· Рё РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ РјРµС‚РѕРґС‹.
 /// </summary>
 public static class GameDataManager
 {
@@ -38,7 +38,7 @@ public static class GameDataManager
   {
     if (_gamesData == null)
     {
-      Debug.LogError("GameDataManager не инициализирован! Не удалось загрузить список категорий.");
+      Debug.LogError("GameDataManager РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅ! РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№.");
     }
 
     return _gamesData;
@@ -51,7 +51,7 @@ public static class GameDataManager
       return sceneName;
     }
 
-    Debug.LogError($"GameId '{gameId}' не найден в GamesData.");
+    Debug.LogError($"GameId '{gameId}' РЅРµ РЅР°Р№РґРµРЅ РІ GamesData.");
     return null;
   }
 

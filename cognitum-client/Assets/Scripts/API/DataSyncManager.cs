@@ -14,7 +14,7 @@ public static class DataSyncManager
   private static int _timeWait = 30 * 1000;
 
   /// <summary>
-  /// Инициализация: загружает список неотправленных файлов и пытается отправить.
+  /// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ: Р·Р°РіСЂСѓР¶Р°РµС‚ СЃРїРёСЃРѕРє РЅРµРѕС‚РїСЂР°РІР»РµРЅРЅС‹С… С„Р°Р№Р»РѕРІ Рё РїС‹С‚Р°РµС‚СЃСЏ РѕС‚РїСЂР°РІРёС‚СЊ.
   /// </summary>
   public static async Task InitializeAsync()
   {
@@ -42,7 +42,7 @@ public static class DataSyncManager
     if (_pendingFiles.Add(fileName))
     {
       await SavePendingFilesAsync();
-      Debug.Log($"Файл {fileName} добавлен в очередь на отправку.");
+      Debug.Log($"Р¤Р°Р№Р» {fileName} РґРѕР±Р°РІР»РµРЅ РІ РѕС‡РµСЂРµРґСЊ РЅР° РѕС‚РїСЂР°РІРєСѓ.");
     }
     await Task.Delay(_timeWait);
     await TrySendDataAsync();
@@ -58,12 +58,12 @@ public static class DataSyncManager
     {
       if (Application.internetReachability == NetworkReachability.NotReachable)
       {
-        Debug.Log("Нет интернета, попытаемся отправить данные позже...");
+        Debug.Log("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°, РїРѕРїС‹С‚Р°РµРјСЃСЏ РѕС‚РїСЂР°РІРёС‚СЊ РґР°РЅРЅС‹Рµ РїРѕР·Р¶Рµ...");
         await Task.Delay(_timeWait);
         continue;
       }
 
-      Debug.LogWarning("Попытка синхронизации");
+      Debug.LogWarning("РџРѕРїС‹С‚РєР° СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё");
       _isSending = true;
       List<string> filesToSend = new List<string>(_pendingFiles);
 
@@ -78,7 +78,7 @@ public static class DataSyncManager
         }
         else
         {
-          Debug.Log("Ошибка при отправке данных, будет произведена повторная попытка через 1 час.");
+          Debug.Log("РћС€РёР±РєР° РїСЂРё РѕС‚РїСЂР°РІРєРµ РґР°РЅРЅС‹С…, Р±СѓРґРµС‚ РїСЂРѕРёР·РІРµРґРµРЅР° РїРѕРІС‚РѕСЂРЅР°СЏ РїРѕРїС‹С‚РєР° С‡РµСЂРµР· 1 С‡Р°СЃ.");
           await Task.Delay(TimeSpan.FromHours(1));
           break;
         }
@@ -99,7 +99,7 @@ public static class DataSyncManager
       case GameStatisticsManager.FileName:
         return await GameStatisticsManager.SendAllStatisticsAsync();
       default:
-        Debug.LogError($"Неизвестный файл {fileName}");
+        Debug.LogError($"РќРµРёР·РІРµСЃС‚РЅС‹Р№ С„Р°Р№Р» {fileName}");
         return false;
     }
   }

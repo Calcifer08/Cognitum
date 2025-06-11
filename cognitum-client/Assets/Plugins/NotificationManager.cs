@@ -12,11 +12,11 @@ public static class NotificationManager
       try
       {
         _notificationClass = new AndroidJavaClass("com.example.notifyforunity.NotificationBridge");
-        Debug.Log("_notificationClass успешно создан.");
+        Debug.Log("_notificationClass СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ.");
       }
       catch (System.Exception e)
       {
-        Debug.LogError($"Ошибка загрузки _notificationClass: {e.Message}");
+        Debug.LogError($"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё _notificationClass: {e.Message}");
         return null;
       }
     }
@@ -24,37 +24,37 @@ public static class NotificationManager
   }
 
   /// <summary>
-  /// Включает ежедневные уведомления на заданное время с заголовком и сообщением
+  /// Р’РєР»СЋС‡Р°РµС‚ РµР¶РµРґРЅРµРІРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ РЅР° Р·Р°РґР°РЅРЅРѕРµ РІСЂРµРјСЏ СЃ Р·Р°РіРѕР»РѕРІРєРѕРј Рё СЃРѕРѕР±С‰РµРЅРёРµРј
   /// </summary>
   public static void EnableNotifications(int hour, int minute, string title, string message)
   {
     GetNotificationClass();
     _notificationClass.CallStatic("scheduleNotification", hour, minute, title, message);
-    Debug.Log($"[NotificationManager] Уведомления включены на {hour:D2}:{minute:D2} с текстом: {title} - {message}");
+    Debug.Log($"[NotificationManager] РЈРІРµРґРѕРјР»РµРЅРёСЏ РІРєР»СЋС‡РµРЅС‹ РЅР° {hour:D2}:{minute:D2} СЃ С‚РµРєСЃС‚РѕРј: {title} - {message}");
   }
 
   /// <summary>
-  /// Отключает уведомления
+  /// РћС‚РєР»СЋС‡Р°РµС‚ СѓРІРµРґРѕРјР»РµРЅРёСЏ
   /// </summary>
   public static void DisableNotifications()
   {
     GetNotificationClass();
     _notificationClass.CallStatic("cancelNotification");
-    Debug.Log("[NotificationManager] Уведомления отключены");
+    Debug.Log("[NotificationManager] РЈРІРµРґРѕРјР»РµРЅРёСЏ РѕС‚РєР»СЋС‡РµРЅС‹");
   }
 
   /// <summary>
-  /// Обновляет время последнего захода
+  /// РћР±РЅРѕРІР»СЏРµС‚ РІСЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ Р·Р°С…РѕРґР°
   /// </summary>
   public static void UpdateLastVisitTime()
   {
     GetNotificationClass();
     _notificationClass.CallStatic("updateLastVisitTime");
-    Debug.Log("[NotificationManager] Время последнего визита обновлено");
+    Debug.Log("[NotificationManager] Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РІРёР·РёС‚Р° РѕР±РЅРѕРІР»РµРЅРѕ");
   }
 
   /// <summary>
-  /// Получает сохранённое время уведомления (часы и минуты)
+  /// РџРѕР»СѓС‡Р°РµС‚ СЃРѕС…СЂР°РЅС‘РЅРЅРѕРµ РІСЂРµРјСЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ (С‡Р°СЃС‹ Рё РјРёРЅСѓС‚С‹)
   /// </summary>
   public static (int hour, int minute) GetScheduledTime()
   {
@@ -63,84 +63,84 @@ public static class NotificationManager
 
     if (result != null && result.Length == 2)
     {
-      Debug.Log($"[NotificationManager] Установленное время уведомления: {result[0]:D2}:{result[1]:D2}");
+      Debug.Log($"[NotificationManager] РЈСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРµ РІСЂРµРјСЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ: {result[0]:D2}:{result[1]:D2}");
       return (result[0], result[1]);
     }
 
-    Debug.LogWarning("[NotificationManager] Не удалось получить время уведомления");
+    Debug.LogWarning("[NotificationManager] РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ РІСЂРµРјСЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ");
     return (18, 0);
   }
 
 
   /// <summary>
-  /// Проверяет, есть ли разрешение на уведомления (true — есть)
+  /// РџСЂРѕРІРµСЂСЏРµС‚, РµСЃС‚СЊ Р»Рё СЂР°Р·СЂРµС€РµРЅРёРµ РЅР° СѓРІРµРґРѕРјР»РµРЅРёСЏ (true вЂ” РµСЃС‚СЊ)
   /// </summary>
   public static bool HasNotificationPermission()
   {
     GetNotificationClass();
     bool has = _notificationClass.CallStatic<bool>("hasPermission");
-    Debug.Log($"[NotificationManager] Разрешение на уведомления: {has}");
+    Debug.Log($"[NotificationManager] Р Р°Р·СЂРµС€РµРЅРёРµ РЅР° СѓРІРµРґРѕРјР»РµРЅРёСЏ: {has}");
     return has;
   }
 
   /// <summary>
-  /// Запрашивает разрешение на уведомления, если его ещё нет (показывает системный диалог)
+  /// Р—Р°РїСЂР°С€РёРІР°РµС‚ СЂР°Р·СЂРµС€РµРЅРёРµ РЅР° СѓРІРµРґРѕРјР»РµРЅРёСЏ, РµСЃР»Рё РµРіРѕ РµС‰С‘ РЅРµС‚ (РїРѕРєР°Р·С‹РІР°РµС‚ СЃРёСЃС‚РµРјРЅС‹Р№ РґРёР°Р»РѕРі)
   /// </summary>
   public static void RequestNotificationPermissionIfNeeded()
   {
     GetNotificationClass();
     _notificationClass.CallStatic("requestPermissionIfNeeded");
-    Debug.Log("[NotificationManager] Запрошено разрешение на уведомления");
+    Debug.Log("[NotificationManager] Р—Р°РїСЂРѕС€РµРЅРѕ СЂР°Р·СЂРµС€РµРЅРёРµ РЅР° СѓРІРµРґРѕРјР»РµРЅРёСЏ");
   }
 
   /// <summary>
-  /// Открывает настройки уведомлений для текущего приложения
+  /// РћС‚РєСЂС‹РІР°РµС‚ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№ РґР»СЏ С‚РµРєСѓС‰РµРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ
   /// </summary>
   public static void OpenNotificationSettings()
   {
     GetNotificationClass();
     _notificationClass.CallStatic("openSettings");
-    Debug.Log("[NotificationManager] Открыты настройки уведомлений");
+    Debug.Log("[NotificationManager] РћС‚РєСЂС‹С‚С‹ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№");
   }
 
 #else
 
   public static void EnableNotifications(int hour, int minute, string title, string message)
   {
-    Debug.Log($"[NotificationManager] (заглушка) Уведомления включены на {hour:D2}:{minute:D2} с текстом: {title} - {message}");
+    Debug.Log($"[NotificationManager] (Р·Р°РіР»СѓС€РєР°) РЈРІРµРґРѕРјР»РµРЅРёСЏ РІРєР»СЋС‡РµРЅС‹ РЅР° {hour:D2}:{minute:D2} СЃ С‚РµРєСЃС‚РѕРј: {title} - {message}");
   }
 
   public static void DisableNotifications()
   {
-    Debug.Log("[NotificationManager] (заглушка) Уведомления отключены");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) РЈРІРµРґРѕРјР»РµРЅРёСЏ РѕС‚РєР»СЋС‡РµРЅС‹");
   }
 
   public static void UpdateLastVisitTime()
   {
-    Debug.Log("[NotificationManager] (заглушка) Время последнего визита обновлено");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РІРёР·РёС‚Р° РѕР±РЅРѕРІР»РµРЅРѕ");
   }
 
   public static (int hour, int minute) GetScheduledTime()
   {
-    Debug.Log("[NotificationManager] (заглушка) Время уведомления");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) Р’СЂРµРјСЏ СѓРІРµРґРѕРјР»РµРЅРёСЏ");
     return (18, 0);
   }
 
 
   public static bool HasNotificationPermission()
   {
-    Debug.Log("[NotificationManager] (заглушка) Проверка разрешений — всегда true");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) РџСЂРѕРІРµСЂРєР° СЂР°Р·СЂРµС€РµРЅРёР№ вЂ” РІСЃРµРіРґР° true");
     return true;
   }
 
   public static void RequestNotificationPermissionIfNeeded()
   {
-    Debug.Log("[NotificationManager] (заглушка) Разрешение запрошено (симулировано)");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) Р Р°Р·СЂРµС€РµРЅРёРµ Р·Р°РїСЂРѕС€РµРЅРѕ (СЃРёРјСѓР»РёСЂРѕРІР°РЅРѕ)");
   }
 
   public static void OpenNotificationSettings()
   {
-    Debug.Log("[NotificationManager] (заглушка) Открытие настроек уведомлений");
+    Debug.Log("[NotificationManager] (Р·Р°РіР»СѓС€РєР°) РћС‚РєСЂС‹С‚РёРµ РЅР°СЃС‚СЂРѕРµРє СѓРІРµРґРѕРјР»РµРЅРёР№");
   }
 #endif
 }

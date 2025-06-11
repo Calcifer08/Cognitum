@@ -63,7 +63,7 @@ public class FlankingTaskBuilder : AbstractGameBuilder
         FlankerLayout.Vertical, FlankerLayout.Cross }),
       6 => () => SetConfigLevel(0.5f, 2f, new List<string> { FlankerLayout.Horizontal,
         FlankerLayout.Vertical, FlankerLayout.Cross }),
-      _ => throw new ArgumentException($"Недопустимый уровень: {level}")
+      _ => throw new ArgumentException($"РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ СѓСЂРѕРІРµРЅСЊ: {level}")
     };
 
     action.Invoke();
@@ -157,9 +157,9 @@ public class FlankingTaskBuilder : AbstractGameBuilder
     }
 
     TextAnswer = finalTargetDirection;
-    TextQuestion = $"Целевое направление: {targetDirection}. " +
-      $"Инверсия ответа: {_isInvert}. " +
-      $"Направление фланкеров: {flankerDirection}.";
+    TextQuestion = $"Р¦РµР»РµРІРѕРµ РЅР°РїСЂР°РІР»РµРЅРёРµ: {targetDirection}. " +
+      $"РРЅРІРµСЂСЃРёСЏ РѕС‚РІРµС‚Р°: {_isInvert}. " +
+      $"РќР°РїСЂР°РІР»РµРЅРёРµ С„Р»Р°РЅРєРµСЂРѕРІ: {flankerDirection}.";
   }
 
 
@@ -199,7 +199,7 @@ public class FlankingTaskBuilder : AbstractGameBuilder
       FlankerLayout.Horizontal => _horizontalPositions,
       FlankerLayout.Vertical => _verticalPositions,
       FlankerLayout.Cross => _horizontalPositions.Concat(_verticalPositions).ToList(),
-      _ => throw new ArgumentException($"Неизвестный макет: {layout}")
+      _ => throw new ArgumentException($"РќРµРёР·РІРµСЃС‚РЅС‹Р№ РјР°РєРµС‚: {layout}")
     };
   }
 

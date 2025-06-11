@@ -18,7 +18,7 @@ public class AppSettingsUI : MonoBehaviour
 
   [SerializeField] private Button _backButton;
 
-  [Header("Отключение в игре")]
+  [Header("РћС‚РєР»СЋС‡РµРЅРёРµ РІ РёРіСЂРµ")]
   [SerializeField] private UnityEventSystem.EventSystem _eventSystem;
   [SerializeField] private AudioListener _audioListener;
 

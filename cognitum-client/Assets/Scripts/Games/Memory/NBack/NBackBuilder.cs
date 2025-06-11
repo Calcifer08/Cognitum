@@ -59,7 +59,7 @@ public class NBackBuilder : AbstractGameBuilder
       8 => () => SetLevelConfig(4, 1, 3, 2f),
       9 => () => SetLevelConfig(4, 2, 3, 4f),
       10 => () => SetLevelConfig(4, 2, 3, 3f),
-      _ => throw new ArgumentException($"Недопустимый уровень: {level}")
+      _ => throw new ArgumentException($"РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ СѓСЂРѕРІРµРЅСЊ: {level}")
     };
 
     action.Invoke();
@@ -146,12 +146,12 @@ public class NBackBuilder : AbstractGameBuilder
       _currentHidden++;
 
     _targetCompareIndex = _targetHiddenIndex + _countMemorySpan;
-    TextAnswer = _sequence[_targetHiddenIndex] == _sequence[_targetCompareIndex] ? "да" : "нет";
+    TextAnswer = _sequence[_targetHiddenIndex] == _sequence[_targetCompareIndex] ? "РґР°" : "РЅРµС‚";
     TextQuestion =
-      $"Последовательность: [{string.Join(", ", _sequence)}] | " +
-      $"Скрытые позиции до: {_currentHidden} (включительно) | " +
-      $"Сравниваем индексы: {_targetHiddenIndex} и {_targetCompareIndex} | " +
-      $"Совпадают ли числа на этих позициях?";
+      $"РџРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ: [{string.Join(", ", _sequence)}] | " +
+      $"РЎРєСЂС‹С‚С‹Рµ РїРѕР·РёС†РёРё РґРѕ: {_currentHidden} (РІРєР»СЋС‡РёС‚РµР»СЊРЅРѕ) | " +
+      $"РЎСЂР°РІРЅРёРІР°РµРј РёРЅРґРµРєСЃС‹: {_targetHiddenIndex} Рё {_targetCompareIndex} | " +
+      $"РЎРѕРІРїР°РґР°СЋС‚ Р»Рё С‡РёСЃР»Р° РЅР° СЌС‚РёС… РїРѕР·РёС†РёСЏС…?";
 
     ShowVisibleNumbers(_currentHidden);
   }

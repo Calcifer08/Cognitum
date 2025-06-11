@@ -12,7 +12,7 @@ public class LevelSelector : MonoBehaviour
   private int _selectedLevel;
 
   /// <summary>
-  /// Инициализация слайдера уровня на основе конфигурации игры
+  /// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃР»Р°Р№РґРµСЂР° СѓСЂРѕРІРЅСЏ РЅР° РѕСЃРЅРѕРІРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё РёРіСЂС‹
   /// </summary>
   public void Init(string gameId)
   {
@@ -38,7 +38,7 @@ public class LevelSelector : MonoBehaviour
 
   private void UpdateLevelText(int level)
   {
-    levelText.text = $"Выбранный уровень: {level}";
+    levelText.text = $"Р’С‹Р±СЂР°РЅРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ: {level}";
   }
   public void SaveSelectedLevel()
   {

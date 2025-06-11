@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// события на уровня
+// СЃРѕР±С‹С‚РёСЏ РЅР° СѓСЂРѕРІРЅСЏ
 
 [System.Serializable]
 public class LogLevelEvents
@@ -112,7 +112,7 @@ public class EventForgetPhaseEnd : AbstractEventData
 public class EventAnswerPhaseStart : AbstractEventData
 {
   public int QuestionNumber;
-  public float Duration = 0; // 0 = бесконечное время
+  public float Duration = 0; // 0 = Р±РµСЃРєРѕРЅРµС‡РЅРѕРµ РІСЂРµРјСЏ
 
   public EventAnswerPhaseStart(int questionNumber, float duration)
   {

@@ -19,7 +19,7 @@ public class ButtonAnwserBinary : MonoBehaviour
       _gameBuilder = FindObjectOfType<AbstractGameBuilder>();
 
     if (_gameBuilder == null)
-      Debug.LogError("AbstractGameBuilder νε νΰιδεν νΰ ρφενε!");
+      Debug.LogError("AbstractGameBuilder Π½Πµ Π½Π°ΠΉΠ΄ΠµΠ½ Π½Π° ΡΡ†ΠµΠ½Πµ!");
 
     _timeOpen = _gameBuilder.ResultDisplayTime;
 
@@ -27,8 +27,8 @@ public class ButtonAnwserBinary : MonoBehaviour
     _disColors = _originalColors;
     _disColors.disabledColor = Color.white;
 
-    _buttonYes.onClick.AddListener(() => StartCoroutine(SetAnswerCoroutine(_buttonYes, "Δΰ")));
-    _buttonNo.onClick.AddListener(() => StartCoroutine(SetAnswerCoroutine(_buttonNo, "Νες")));
+    _buttonYes.onClick.AddListener(() => StartCoroutine(SetAnswerCoroutine(_buttonYes, "Π”Π°")));
+    _buttonNo.onClick.AddListener(() => StartCoroutine(SetAnswerCoroutine(_buttonNo, "ΠΠµΡ‚")));
   }
 
   private IEnumerator SetAnswerCoroutine(Button button, string answer)

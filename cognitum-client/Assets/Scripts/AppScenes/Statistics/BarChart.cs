@@ -28,7 +28,7 @@ public class BarChart : MonoBehaviour
 
     if (data == null || data.Count == 0)
     {
-      Debug.LogWarning("Данные для графика пусты.");
+      Debug.LogWarning("Р”Р°РЅРЅС‹Рµ РґР»СЏ РіСЂР°С„РёРєР° РїСѓСЃС‚С‹.");
       return;
     }
 
@@ -69,7 +69,7 @@ public class BarChart : MonoBehaviour
         float barHeight = normalizedHeight * containerHeight;
         barRect.sizeDelta = new Vector2(barWidth, barHeight);
 
-        // === Подпись даты ===
+        // === РџРѕРґРїРёСЃСЊ РґР°С‚С‹ ===
         GameObject labelObject = Instantiate(_labelDateBarPrefab, barObject.transform);
         TextMeshProUGUI labelText = labelObject.GetComponent<TextMeshProUGUI>();
         labelText.text = DateTime.Parse(pair.Key).ToString("dd.MM");
@@ -81,7 +81,7 @@ public class BarChart : MonoBehaviour
         labelRect.sizeDelta = new Vector2(barWidth, 50f);
         labelRect.anchoredPosition = new Vector2(0, 0);
 
-        // === Подпись очков над столбцом ===
+        // === РџРѕРґРїРёСЃСЊ РѕС‡РєРѕРІ РЅР°Рґ СЃС‚РѕР»Р±С†РѕРј ===
         GameObject valueLabel = Instantiate(_labelBarPrefab, barObject.transform);
         TextMeshProUGUI valueText = valueLabel.GetComponent<TextMeshProUGUI>();
         valueText.text = pair.Value.ToString();

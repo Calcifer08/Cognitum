@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
-// Структуры данных, используемые для логирования игровых сессий
-// Используются GameManager и LogManager
+// РЎС‚СЂСѓРєС‚СѓСЂС‹ РґР°РЅРЅС‹С…, РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР»СЏ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ РёРіСЂРѕРІС‹С… СЃРµСЃСЃРёР№
+// РСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ GameManager Рё LogManager
 
 public struct StartGame
 {
@@ -58,16 +58,16 @@ public struct LevelResults
 
 public struct QuestionData
 {
-  /// <summary> Указывает игровой менеджер </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ РјРµРЅРµРґР¶РµСЂ </summary>
   public int QuestionNumber;
 
-  /// <summary> Указывает игровой скрипт </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ СЃРєСЂРёРїС‚ </summary>
   public string QuestionText;
 
-  /// <summary> Указывает игровой скрипт </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ СЃРєСЂРёРїС‚ </summary>
   public string ExpectedAnswer;
 
-  /// <summary> Указывает игровой скрипт </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ СЃРєСЂРёРїС‚ </summary>
   public Dictionary<string, object> SpecificData;
 
   public QuestionData(string questionText, string expectedAnswer, Dictionary<string, object> specificData)
@@ -82,16 +82,16 @@ public struct QuestionData
 
   public struct AnswerData
 {
-  /// <summary> Указывает игровой менеджер </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ РјРµРЅРµРґР¶РµСЂ </summary>
   public int QuestionNumber;
 
-  /// <summary> Указывает игровой скрипт </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ СЃРєСЂРёРїС‚ </summary>
   public string AnswerText;
 
-  /// <summary> Указывает игровой скрипт </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ СЃРєСЂРёРїС‚ </summary>
   public bool IsCorrect;
 
-  /// <summary> Указывает игровой менеджер </summary>
+  /// <summary> РЈРєР°Р·С‹РІР°РµС‚ РёРіСЂРѕРІРѕР№ РјРµРЅРµРґР¶РµСЂ </summary>
   public float ReactionTime;
 
   public AnswerData(string answerText, bool isCorrect)

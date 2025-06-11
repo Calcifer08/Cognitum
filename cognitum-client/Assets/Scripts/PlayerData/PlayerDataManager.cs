@@ -28,14 +28,14 @@ public static class PlayerDataManager
     {
       string json = await File.ReadAllTextAsync(FilePath);
       _playerData = JsonConvert.DeserializeObject<PlayerData>(json);
-      Debug.Log("Файл профиля игрока загружен");
+      Debug.Log("Р¤Р°Р№Р» РїСЂРѕС„РёР»СЏ РёРіСЂРѕРєР° Р·Р°РіСЂСѓР¶РµРЅ");
     }
     else
     {
       string userId = GetUserIdFromToken(AuthManager.GetAccessToken());
       _playerData = new PlayerData(userId);
       await SavePlayerDataAsync(_playerData, false);
-      Debug.Log("Файл профиля игрока не найден. Создан новый");
+      Debug.Log("Р¤Р°Р№Р» РїСЂРѕС„РёР»СЏ РёРіСЂРѕРєР° РЅРµ РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅ РЅРѕРІС‹Р№");
     }
   }
 
@@ -45,13 +45,13 @@ public static class PlayerDataManager
   }
 
   /// <summary>
-  /// Извлекает userId из JWT-токена.
+  /// РР·РІР»РµРєР°РµС‚ userId РёР· JWT-С‚РѕРєРµРЅР°.
   /// </summary>
   private static string GetUserIdFromToken(string token)
   {
     if (token == null)
     {
-      Debug.LogError("JWT отсутствует");
+      Debug.LogError("JWT РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚");
       return null;
     }
 
@@ -59,21 +59,21 @@ public static class PlayerDataManager
     {
       var parts = token.Split('.');
       if (parts.Length != 3)
-        throw new ArgumentException("Неверный JWT токен");
+        throw new ArgumentException("РќРµРІРµСЂРЅС‹Р№ JWT С‚РѕРєРµРЅ");
 
       string payload = Base64UrlDecode(parts[1]);
       var payloadObj = JsonConvert.DeserializeObject<JObject>(payload);
 
       if (payloadObj?["userId"] == null)
       {
-        throw new ArgumentException("Токен не содержит userId");
+        throw new ArgumentException("РўРѕРєРµРЅ РЅРµ СЃРѕРґРµСЂР¶РёС‚ userId");
       }
 
       return payloadObj["userId"].ToString();
     }
     catch (Exception e)
     {
-      Debug.LogError("Ошибка при разборе JWT: " + e.Message);
+      Debug.LogError("РћС€РёР±РєР° РїСЂРё СЂР°Р·Р±РѕСЂРµ JWT: " + e.Message);
       throw;
     }
   }
@@ -103,7 +103,7 @@ public static class PlayerDataManager
 #endif
 
     await File.WriteAllTextAsync(FilePath, json);
-    Debug.Log("Данные игрока сохранены локально.");
+    Debug.Log("Р”Р°РЅРЅС‹Рµ РёРіСЂРѕРєР° СЃРѕС…СЂР°РЅРµРЅС‹ Р»РѕРєР°Р»СЊРЅРѕ.");
 
     if (isSendToServer)
     {
@@ -120,14 +120,14 @@ public static class PlayerDataManager
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
     {
-      Debug.Log("Нет интернета, данные игрока будут отправлены позже");
+      Debug.Log("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°, РґР°РЅРЅС‹Рµ РёРіСЂРѕРєР° Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹ РїРѕР·Р¶Рµ");
       return false;
     }
 
     string token = AuthManager.GetAccessToken();
     if (string.IsNullOrEmpty(token))
     {
-      Debug.Log("Ошибка: нет токена для отправки данных игрока");
+      Debug.Log("РћС€РёР±РєР°: РЅРµС‚ С‚РѕРєРµРЅР° РґР»СЏ РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РёРіСЂРѕРєР°");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
@@ -149,7 +149,7 @@ public static class PlayerDataManager
 
       if (request.result == UnityWebRequest.Result.Success)
       {
-        Debug.Log("Данные игрока успешно отправлены на сервер.");
+        Debug.Log("Р”Р°РЅРЅС‹Рµ РёРіСЂРѕРєР° СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅС‹ РЅР° СЃРµСЂРІРµСЂ.");
         return true;
       }
       else
@@ -163,17 +163,17 @@ public static class PlayerDataManager
   {
     if (request.responseCode == 0)
     {
-      Debug.LogError("Ошибка: сервер не отвечает. Данные игрока будут отправлены позже.");
+      Debug.LogError("РћС€РёР±РєР°: СЃРµСЂРІРµСЂ РЅРµ РѕС‚РІРµС‡Р°РµС‚. Р”Р°РЅРЅС‹Рµ РёРіСЂРѕРєР° Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹ РїРѕР·Р¶Рµ.");
       return false;
     }
 
     string parsedMessage = ErrorResponse.ParseErrorMessage(request.downloadHandler.text);
 
-    if (parsedMessage == "Токен истёк")
+    if (parsedMessage == "РўРѕРєРµРЅ РёСЃС‚С‘Рє")
     {
       if (retryCount < 1)
       {
-        Debug.Log("Токен истёк, обновляем...");
+        Debug.Log("РўРѕРєРµРЅ РёСЃС‚С‘Рє, РѕР±РЅРѕРІР»СЏРµРј...");
         await TokenRefreshManager.RefreshTokenAsync();
 
         if (!string.IsNullOrEmpty(SecureStorage.GetData(APIConstants.StorageKeys.AccessToken)))
@@ -182,30 +182,30 @@ public static class PlayerDataManager
         }
         else
         {
-          Debug.LogError("Ошибка: не удалось обновить токены, отправка данных прервана.");
+          Debug.LogError("РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ С‚РѕРєРµРЅС‹, РѕС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РїСЂРµСЂРІР°РЅР°.");
           return false;
         }
       }
       else
       {
-        Debug.LogError("Токен истёк, но попытки обновления превышены.");
+        Debug.LogError("РўРѕРєРµРЅ РёСЃС‚С‘Рє, РЅРѕ РїРѕРїС‹С‚РєРё РѕР±РЅРѕРІР»РµРЅРёСЏ РїСЂРµРІС‹С€РµРЅС‹.");
         return false;
       }
     }
     else if (request.responseCode == 400)
     {
-      Debug.LogError($"Ошибка некорректных данных: ({parsedMessage}).");
+      Debug.LogError($"РћС€РёР±РєР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… РґР°РЅРЅС‹С…: ({parsedMessage}).");
       return false;
     }
     else if (request.responseCode == 401)
     {
-      Debug.LogError($"Ошибка клиента: {parsedMessage} (код {request.responseCode}). Пользователь будет выведен из системы.");
+      Debug.LogError($"РћС€РёР±РєР° РєР»РёРµРЅС‚Р°: {parsedMessage} (РєРѕРґ {request.responseCode}). РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РІС‹РІРµРґРµРЅ РёР· СЃРёСЃС‚РµРјС‹.");
       AuthManager.ClearTokensAndLogout();
       return false;
     }
     else
     {
-      Debug.LogError($"Неизвестная ошибка: {parsedMessage} (код {request.responseCode})");
+      Debug.LogError($"РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°: {parsedMessage} (РєРѕРґ {request.responseCode})");
       return false;
     }
   }
@@ -214,7 +214,7 @@ public static class PlayerDataManager
   {
     if (_playerData == null)
     {
-      Debug.LogError("Нет данных игрока для отправки.");
+      Debug.LogError("РќРµС‚ РґР°РЅРЅС‹С… РёРіСЂРѕРєР° РґР»СЏ РѕС‚РїСЂР°РІРєРё.");
       return false;
     }
 

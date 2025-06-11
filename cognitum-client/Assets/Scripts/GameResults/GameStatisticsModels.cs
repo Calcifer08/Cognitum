@@ -3,15 +3,15 @@ using System.Collections.Generic;
 // GameStatistics.json
 
 
-/// <summary> Среднее по очкам </summary>
+/// <summary> РЎСЂРµРґРЅРµРµ РїРѕ РѕС‡РєР°Рј </summary>
 [System.Serializable]
 public class DataStatistics
 {
   public int AverageScore;
 }
 
-/// <summary> Агрегированные данные за дни/недели/месяцы <br/>
-/// даты -> данные </summary>
+/// <summary> РђРіСЂРµРіРёСЂРѕРІР°РЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Р·Р° РґРЅРё/РЅРµРґРµР»Рё/РјРµСЃСЏС†С‹ <br/>
+/// РґР°С‚С‹ -> РґР°РЅРЅС‹Рµ </summary>
 public class PeriodStatistics
 {
   public Dictionary<string, DataStatistics> DailyAverage = new Dictionary<string, DataStatistics>();
@@ -19,24 +19,24 @@ public class PeriodStatistics
   public Dictionary<string, DataStatistics> MonthlyAverage = new Dictionary<string, DataStatistics>();
 }
 
-/// <summary> Статистика по одной игре и дата последнего обновления </summary>
+/// <summary> РЎС‚Р°С‚РёСЃС‚РёРєР° РїРѕ РѕРґРЅРѕР№ РёРіСЂРµ Рё РґР°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ </summary>
 [System.Serializable]
 public class GameStatisticsEntry
 {
-  /// <summary> Когда данные этой игры в последний раз обновлялись </summary>
+  /// <summary> РљРѕРіРґР° РґР°РЅРЅС‹Рµ СЌС‚РѕР№ РёРіСЂС‹ РІ РїРѕСЃР»РµРґРЅРёР№ СЂР°Р· РѕР±РЅРѕРІР»СЏР»РёСЃСЊ </summary>
   public string LastUpdate = "2024-01-01 10:00";
 
-  /// <summary> Агрегированные данные по периодам </summary>
+  /// <summary> РђРіСЂРµРіРёСЂРѕРІР°РЅРЅС‹Рµ РґР°РЅРЅС‹Рµ РїРѕ РїРµСЂРёРѕРґР°Рј </summary>
   public PeriodStatistics Statistics = new PeriodStatistics();
 }
 
-/// <summary> Все агрегированные данные по всем играм </summary>
+/// <summary> Р’СЃРµ Р°РіСЂРµРіРёСЂРѕРІР°РЅРЅС‹Рµ РґР°РЅРЅС‹Рµ РїРѕ РІСЃРµРј РёРіСЂР°Рј </summary>
 [System.Serializable]
 public class GameStatistics
 {
-  /// <summary> Для избежания повторных пересчётов старых данных </summary>
+  /// <summary> Р”Р»СЏ РёР·Р±РµР¶Р°РЅРёСЏ РїРѕРІС‚РѕСЂРЅС‹С… РїРµСЂРµСЃС‡С‘С‚РѕРІ СЃС‚Р°СЂС‹С… РґР°РЅРЅС‹С… </summary>
   public string LastUpdate = "2024-01-01 10:00";
 
-  /// <summary> категории -> игры -> даты -> данные </summary>
+  /// <summary> РєР°С‚РµРіРѕСЂРёРё -> РёРіСЂС‹ -> РґР°С‚С‹ -> РґР°РЅРЅС‹Рµ </summary>
   public Dictionary<string, Dictionary<string, GameStatisticsEntry>> GamesStatistics = new Dictionary<string, Dictionary<string, GameStatisticsEntry>>();
 }

@@ -5,34 +5,34 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GamesData", menuName = "ScriptableObject/GamesData")]
 public class GamesData : ScriptableObject
 {
-  /// <summary> Данные игры </summary>
+  /// <summary> Р”Р°РЅРЅС‹Рµ РёРіСЂС‹ </summary>
   [System.Serializable]
   public class Game
   {
-    /// <summary> Название игры для приложения </summary>
+    /// <summary> РќР°Р·РІР°РЅРёРµ РёРіСЂС‹ РґР»СЏ РїСЂРёР»РѕР¶РµРЅРёСЏ </summary>
     public string GameId;
 
-    /// <summary> Название игры для игрока </summary>
+    /// <summary> РќР°Р·РІР°РЅРёРµ РёРіСЂС‹ РґР»СЏ РёРіСЂРѕРєР° </summary>
     public string NameGame;
 
-    /// <summary> Название сцены игры </summary>
+    /// <summary> РќР°Р·РІР°РЅРёРµ СЃС†РµРЅС‹ РёРіСЂС‹ </summary>
     public string GameScene;
   }
 
-  /// <summary> Список игр в категории </summary>
+  /// <summary> РЎРїРёСЃРѕРє РёРіСЂ РІ РєР°С‚РµРіРѕСЂРёРё </summary>
   [System.Serializable]
   public class Category
   {
-    /// <summary> Категория игры для приложения </summary>
+    /// <summary> РљР°С‚РµРіРѕСЂРёСЏ РёРіСЂС‹ РґР»СЏ РїСЂРёР»РѕР¶РµРЅРёСЏ </summary>
     public string CategoryId;
 
-    /// <summary> Категория игры для игрока </summary>
+    /// <summary> РљР°С‚РµРіРѕСЂРёСЏ РёРіСЂС‹ РґР»СЏ РёРіСЂРѕРєР° </summary>
     public string NameCategory;
 
-    /// <summary> Список игр в категории </summary>
+    /// <summary> РЎРїРёСЃРѕРє РёРіСЂ РІ РєР°С‚РµРіРѕСЂРёРё </summary>
     public Game[] Games;
   }
 
-  /// <summary> Список категорий с играми </summary>
+  /// <summary> РЎРїРёСЃРѕРє РєР°С‚РµРіРѕСЂРёР№ СЃ РёРіСЂР°РјРё </summary>
   public Category[] Categories;
 }

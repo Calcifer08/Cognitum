@@ -45,10 +45,10 @@ public class AuthUI : MonoBehaviour
   public void SwitchToLogin()
   {
     _statusImage.gameObject.SetActive(false);
-    _headText.text = "Вход";
-    _switchAuthText.text = "Нет аккаунта? <link=register><color=blue><u>Зарегистрироваться!</u></color></link> " +
-      "<br> Забыли пароль? <link=reset><color=blue><u>Восстановить</u></color></link>";
-    _authButtonText.text = "Войти";
+    _headText.text = "Р’С…РѕРґ";
+    _switchAuthText.text = "РќРµС‚ Р°РєРєР°СѓРЅС‚Р°? <link=register><color=blue><u>Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ!</u></color></link> " +
+      "<br> Р—Р°Р±С‹Р»Рё РїР°СЂРѕР»СЊ? <link=reset><color=blue><u>Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ</u></color></link>";
+    _authButtonText.text = "Р’РѕР№С‚Рё";
     _passwordInput.gameObject.SetActive(true);
     _confirmPasswordInput.gameObject.SetActive(false);
     _authButton.onClick.RemoveAllListeners();
@@ -58,9 +58,9 @@ public class AuthUI : MonoBehaviour
   public void SwitchToRegis()
   {
     _statusImage.gameObject.SetActive(false);
-    _headText.text = "Регистрация";
-    _switchAuthText.text = "Уже есть аккаунт? <link=login><color=blue><u>Войти!</u></color></link>";
-    _authButtonText.text = "Зарегистрироваться";
+    _headText.text = "Р РµРіРёСЃС‚СЂР°С†РёСЏ";
+    _switchAuthText.text = "РЈР¶Рµ РµСЃС‚СЊ Р°РєРєР°СѓРЅС‚? <link=login><color=blue><u>Р’РѕР№С‚Рё!</u></color></link>";
+    _authButtonText.text = "Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ";
     _passwordInput.gameObject.SetActive(true);
     _confirmPasswordInput.gameObject.SetActive(true);
     _authButton.onClick.RemoveAllListeners();
@@ -70,11 +70,11 @@ public class AuthUI : MonoBehaviour
   public void SwitchToResetPassword()
   {
     _statusImage.gameObject.SetActive(false);
-    _headText.text = "Сброс пароля";
-    _switchAuthText.text = "<link=login><color=blue><u>Вернуться к входу</u></color></link>";
+    _headText.text = "РЎР±СЂРѕСЃ РїР°СЂРѕР»СЏ";
+    _switchAuthText.text = "<link=login><color=blue><u>Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє РІС…РѕРґСѓ</u></color></link>";
     _passwordInput.gameObject.SetActive(false);
     _confirmPasswordInput.gameObject.SetActive(false);
-    _authButtonText.text = "Сбросить";
+    _authButtonText.text = "РЎР±СЂРѕСЃРёС‚СЊ";
     _authButton.onClick.RemoveAllListeners();
     _authButton.onClick.AddListener(OnResetPasswordClicked);
   }
@@ -137,7 +137,7 @@ public class AuthUI : MonoBehaviour
     if (!IsValidEmail(email))
     {
       _statusImage.gameObject.SetActive(true);
-      _statusText.text = "Некорректный email!";
+      _statusText.text = "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ email!";
       return;
     }
 
@@ -153,19 +153,19 @@ public class AuthUI : MonoBehaviour
   {
     if (!IsValidEmail(email))
     {
-      _statusText.text = "Некорректный email!";
+      _statusText.text = "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ email!";
       return false;
     }
 
     if (!IsValidPassword(password))
     {
-      _statusText.text = "Пароль должен быть не менее 6 символов!";
+      _statusText.text = "РџР°СЂРѕР»СЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅРµ РјРµРЅРµРµ 6 СЃРёРјРІРѕР»РѕРІ!";
       return false;
     }
 
     if (password != confirmPassword)
     {
-      _statusText.text = "Пароли не совпадают!";
+      _statusText.text = "РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚!";
       return false;
     }
 

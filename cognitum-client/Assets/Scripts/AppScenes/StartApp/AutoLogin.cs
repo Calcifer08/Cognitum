@@ -7,7 +7,7 @@ public class AutoLogin : MonoBehaviour
 {
   async void Start()
   {
-    // !!! убрать при использовании нормальных сертификатов
+    // !!! СѓР±СЂР°С‚СЊ РїСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё РЅРѕСЂРјР°Р»СЊРЅС‹С… СЃРµСЂС‚РёС„РёРєР°С‚РѕРІ
     ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
     string accessToken = SecureStorage.GetData(APIConstants.StorageKeys.AccessToken);

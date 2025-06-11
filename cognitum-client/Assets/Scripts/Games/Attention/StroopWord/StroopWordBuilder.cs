@@ -12,20 +12,20 @@ public class StroopWordBuilder : AbstractGameBuilder
 
   private readonly List<string> _colorNames = new List<string>
   {
-    "Красный", "Зелёный", "Синий", "Жёлтый",
-    "Оранжевый", "Фиолетовый", "Голубой", "Чёрный"
+    "РљСЂР°СЃРЅС‹Р№", "Р—РµР»С‘РЅС‹Р№", "РЎРёРЅРёР№", "Р–С‘Р»С‚С‹Р№",
+    "РћСЂР°РЅР¶РµРІС‹Р№", "Р¤РёРѕР»РµС‚РѕРІС‹Р№", "Р“РѕР»СѓР±РѕР№", "Р§С‘СЂРЅС‹Р№"
   };
 
   private readonly Dictionary<string, Color32> _colorDict = new Dictionary<string, Color32>
   {
-    { "Красный", new Color32(239, 53, 68, 255) },
-    { "Зелёный", new Color32(140, 214, 173, 255) },
-    { "Синий", new Color32(63, 134, 242, 255) },
-    { "Жёлтый", new Color32(255, 236, 114, 255) },
-    { "Оранжевый", new Color32(254, 153, 0, 255) },
-    { "Фиолетовый", new Color32(151, 105, 204, 255) },
-    { "Голубой", new Color32(173, 213, 245, 255) },
-    { "Чёрный", new Color32(25, 30, 38, 255) },
+    { "РљСЂР°СЃРЅС‹Р№", new Color32(239, 53, 68, 255) },
+    { "Р—РµР»С‘РЅС‹Р№", new Color32(140, 214, 173, 255) },
+    { "РЎРёРЅРёР№", new Color32(63, 134, 242, 255) },
+    { "Р–С‘Р»С‚С‹Р№", new Color32(255, 236, 114, 255) },
+    { "РћСЂР°РЅР¶РµРІС‹Р№", new Color32(254, 153, 0, 255) },
+    { "Р¤РёРѕР»РµС‚РѕРІС‹Р№", new Color32(151, 105, 204, 255) },
+    { "Р“РѕР»СѓР±РѕР№", new Color32(173, 213, 245, 255) },
+    { "Р§С‘СЂРЅС‹Р№", new Color32(25, 30, 38, 255) },
   };
 
   private int _minColors = 3;
@@ -63,7 +63,7 @@ public class StroopWordBuilder : AbstractGameBuilder
     float step = (_maxTime - _minTime) / (MaxLevel - 1);
     TimeAnswerPhase = _maxTime - step * (level - 1);
 
-    Debug.Log($"Level {level}: Цветов: {_colorCount}, Время на ответ: {TimeAnswerPhase} секунд");
+    Debug.Log($"Level {level}: Р¦РІРµС‚РѕРІ: {_colorCount}, Р’СЂРµРјСЏ РЅР° РѕС‚РІРµС‚: {TimeAnswerPhase} СЃРµРєСѓРЅРґ");
   }
 
   public override Dictionary<string, object> GetSpecificData(bool isLevelData)
@@ -112,9 +112,9 @@ public class StroopWordBuilder : AbstractGameBuilder
     _questionText.text = word;
     _questionText.color = color;
 
-    TextQuestion = $"Текст: {word}, Цвет: {colorName}";
+    TextQuestion = $"РўРµРєСЃС‚: {word}, Р¦РІРµС‚: {colorName}";
 
-    TextAnswer = (word == colorName) ? "Да" : "Нет";
+    TextAnswer = (word == colorName) ? "Р”Р°" : "РќРµС‚";
   }
 
   public override IEnumerator StartMemorizePhaseCoroutine() { return null; }

@@ -19,13 +19,13 @@ public static class LogUploadManager
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
     {
-      Debug.Log("Нет интернета, логи будут отправлены позже");
+      Debug.Log("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°, Р»РѕРіРё Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹ РїРѕР·Р¶Рµ");
       return;
     }
 
     if (!Directory.Exists(_logsDirectoryPath))
     {
-      Debug.LogWarning("Директория с логами не существует. Логи не будут отправлены.");
+      Debug.LogWarning("Р”РёСЂРµРєС‚РѕСЂРёСЏ СЃ Р»РѕРіР°РјРё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚. Р›РѕРіРё РЅРµ Р±СѓРґСѓС‚ РѕС‚РїСЂР°РІР»РµРЅС‹.");
       return;
     }
 
@@ -33,14 +33,14 @@ public static class LogUploadManager
 
     if (logFiles.Length == 0)
     {
-      Debug.Log("Нет логов для отправки");
+      Debug.Log("РќРµС‚ Р»РѕРіРѕРІ РґР»СЏ РѕС‚РїСЂР°РІРєРё");
       return;
     }
 
     string token = AuthManager.GetAccessToken();
     if (string.IsNullOrEmpty(token))
     {
-      Debug.Log("Ошибка: нет токена для отправки логов");
+      Debug.Log("РћС€РёР±РєР°: РЅРµС‚ С‚РѕРєРµРЅР° РґР»СЏ РѕС‚РїСЂР°РІРєРё Р»РѕРіРѕРІ");
       AuthManager.ClearTokensAndLogout();
       return;
     }
@@ -94,15 +94,15 @@ public static class LogUploadManager
             try
             {
               File.Move(file, newFilePath);
-              Debug.Log($"Файл {fileName} перемещен в папку DeleteLogs.");
+              Debug.Log($"Р¤Р°Р№Р» {fileName} РїРµСЂРµРјРµС‰РµРЅ РІ РїР°РїРєСѓ DeleteLogs.");
             }
             catch (Exception ex)
             {
-              Debug.LogError($"Не удалось переместить файл {fileName}: {ex.Message}");
+              Debug.LogError($"РќРµ СѓРґР°Р»РѕСЃСЊ РїРµСЂРµРјРµСЃС‚РёС‚СЊ С„Р°Р№Р» {fileName}: {ex.Message}");
             }
           }
 #endif
-          Debug.Log($"Отправлено {i + batchContents.Count} из {logFiles.Length} логов");
+          Debug.Log($"РћС‚РїСЂР°РІР»РµРЅРѕ {i + batchContents.Count} РёР· {logFiles.Length} Р»РѕРіРѕРІ");
         }
         else
         {
@@ -114,24 +114,24 @@ public static class LogUploadManager
       await Task.Delay((int)(_delayBetweenBatches * 1000));
     }
 
-    Debug.Log("Все логи успешно отправлены и удалены");
+    Debug.Log("Р’СЃРµ Р»РѕРіРё СѓСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅС‹ Рё СѓРґР°Р»РµРЅС‹");
   }
 
   private static async Task HandleLogErrorResponseAsync(UnityWebRequest request, int retryCount)
   {
     if (request.responseCode == 0)
     {
-      Debug.LogError("Ошибка авторизации: сервер не отвечает");
+      Debug.LogError("РћС€РёР±РєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё: СЃРµСЂРІРµСЂ РЅРµ РѕС‚РІРµС‡Р°РµС‚");
       return;
     }
 
     string parsedMessage = ErrorResponse.ParseErrorMessage(request.downloadHandler.text);
 
-    if (parsedMessage == "Токен истёк")
+    if (parsedMessage == "РўРѕРєРµРЅ РёСЃС‚С‘Рє")
     {
       if (retryCount < 1)
       {
-        Debug.Log("Токен истёк, обновляем...");
+        Debug.Log("РўРѕРєРµРЅ РёСЃС‚С‘Рє, РѕР±РЅРѕРІР»СЏРµРј...");
 
         await TokenRefreshManager.RefreshTokenAsync();
 
@@ -141,22 +141,22 @@ public static class LogUploadManager
         }
         else
         {
-          Debug.LogError("Ошибка: не удалось обновить токены");
+          Debug.LogError("РћС€РёР±РєР°: РЅРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ С‚РѕРєРµРЅС‹");
         }
       }
     }
     else if (request.responseCode == 400)
     {
-      Debug.LogError($"Ошибка некорректных данных: ({parsedMessage}).");
+      Debug.LogError($"РћС€РёР±РєР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹С… РґР°РЅРЅС‹С…: ({parsedMessage}).");
     }
     else if (request.responseCode == 401)
     {
-      Debug.LogError($"Ошибка клиента: {parsedMessage} (код {request.responseCode}). Пользователь будет выведен из системы.");
+      Debug.LogError($"РћС€РёР±РєР° РєР»РёРµРЅС‚Р°: {parsedMessage} (РєРѕРґ {request.responseCode}). РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РІС‹РІРµРґРµРЅ РёР· СЃРёСЃС‚РµРјС‹.");
       AuthManager.ClearTokensAndLogout();
     }
     else
     {
-      Debug.LogError($"Неизвестная ошибка: {parsedMessage} (код {request.responseCode})");
+      Debug.LogError($"РќРµРёР·РІРµСЃС‚РЅР°СЏ РѕС€РёР±РєР°: {parsedMessage} (РєРѕРґ {request.responseCode})");
     }
   }
 }

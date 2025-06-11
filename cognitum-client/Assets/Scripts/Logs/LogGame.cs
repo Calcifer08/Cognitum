@@ -129,7 +129,7 @@ public class LogLevelData
 
       if (!(value is int || value is float || value is bool || value is string))
       {
-        Debug.LogWarning($"[LogValidator] Ключ '{pair.Key}' содержит неподдерживаемый тип: {value?.GetType().Name ?? "null"}");
+        Debug.LogWarning($"[LogValidator] РљР»СЋС‡ '{pair.Key}' СЃРѕРґРµСЂР¶РёС‚ РЅРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Р№ С‚РёРї: {value?.GetType().Name ?? "null"}");
         allValid = false;
       }
     }

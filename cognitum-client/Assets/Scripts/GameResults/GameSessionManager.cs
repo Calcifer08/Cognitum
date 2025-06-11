@@ -24,12 +24,12 @@ public static class GameSessionManager
     {
       string json = await File.ReadAllTextAsync(FilePath);
       _sessionData = JsonConvert.DeserializeObject<SessionsData>(json);
-      Debug.Log("Файл сессий загружен");
+      Debug.Log("Р¤Р°Р№Р» СЃРµСЃСЃРёР№ Р·Р°РіСЂСѓР¶РµРЅ");
     }
     else
     {
       _sessionData = new SessionsData();
-      Debug.Log("Файл сессий не найден. Создан новый");
+      Debug.Log("Р¤Р°Р№Р» СЃРµСЃСЃРёР№ РЅРµ РЅР°Р№РґРµРЅ. РЎРѕР·РґР°РЅ РЅРѕРІС‹Р№");
     }
   }
 
@@ -66,7 +66,7 @@ public static class GameSessionManager
     string json = JsonConvert.SerializeObject(_sessionData, Formatting.Indented);
 #endif
     await File.WriteAllTextAsync(FilePath, json);
-    Debug.Log("Данные сессии сохранены в файл");
+    Debug.Log("Р”Р°РЅРЅС‹Рµ СЃРµСЃСЃРёРё СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р»");
   }
 }
 

@@ -55,7 +55,7 @@ public class MissingValueBuilder : AbstractGameBuilder
       7 => () => SetConfigLevel(5, 2, 1, 25),
       8 => () => SetConfigLevel(6, 2, 2, 25),
       9 => () => SetConfigLevel(7, 3, 2, 25),
-      _ => throw new ArgumentException($"Недопустимый уровень: {level}")
+      _ => throw new ArgumentException($"РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ СѓСЂРѕРІРµРЅСЊ: {level}")
     };
 
     action.Invoke();
@@ -154,7 +154,7 @@ public class MissingValueBuilder : AbstractGameBuilder
       double result = Convert.ToDouble(new DataTable().Compute(expression, ""));
 
       if (result != intermediateValues[0])
-        throw new ArgumentException("Ошибка в вычислении");
+        throw new ArgumentException("РћС€РёР±РєР° РІ РІС‹С‡РёСЃР»РµРЅРёРё");
 
       (string hiddenExpression, string hiddenElement, bool isNumber) = HideRandomElement(expression, numbers, signs);
 
@@ -300,7 +300,7 @@ public class MissingValueBuilder : AbstractGameBuilder
       case "/":
         return isLeftOperand ? GenerateDivision(number) : GenerateMultiplier(number);
       default:
-        throw new ArgumentException("Неподдерживаемая операция");
+        throw new ArgumentException("РќРµРїРѕРґРґРµСЂР¶РёРІР°РµРјР°СЏ РѕРїРµСЂР°С†РёСЏ");
     }
   }
 
@@ -319,7 +319,7 @@ public class MissingValueBuilder : AbstractGameBuilder
           return int.MinValue;
         return left / right;
       default:
-        throw new ArgumentException("Неподдерживаемая операция");
+        throw new ArgumentException("РќРµРїРѕРґРґРµСЂР¶РёРІР°РµРјР°СЏ РѕРїРµСЂР°С†РёСЏ");
     }
   }
 
@@ -337,7 +337,7 @@ public class MissingValueBuilder : AbstractGameBuilder
   private string BuildExpression(int?[] numbers, string[] signs, bool[] parentheses)
   {
     if (numbers.Length != signs.Length + 1 || signs.Length != parentheses.Length)
-      throw new ArgumentException("Несоответствие длин массивов numbers, signs и parentheses.");
+      throw new ArgumentException("РќРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ РґР»РёРЅ РјР°СЃСЃРёРІРѕРІ numbers, signs Рё parentheses.");
 
     StringBuilder expression = new StringBuilder();
 
@@ -438,7 +438,7 @@ public class MissingValueBuilder : AbstractGameBuilder
       }
     }
 
-    throw new ArgumentException("Скрыть элемент не удалось. Нет совпадений.");
+    throw new ArgumentException("РЎРєСЂС‹С‚СЊ СЌР»РµРјРµРЅС‚ РЅРµ СѓРґР°Р»РѕСЃСЊ. РќРµС‚ СЃРѕРІРїР°РґРµРЅРёР№.");
   }
 
   private static string GetRightOperand(string expression, int startIndex)
@@ -452,13 +452,13 @@ public class MissingValueBuilder : AbstractGameBuilder
       return match.Value;
     }
 
-    throw new Exception("Не удалось определить правый операнд.");
+    throw new Exception("РќРµ СѓРґР°Р»РѕСЃСЊ РѕРїСЂРµРґРµР»РёС‚СЊ РїСЂР°РІС‹Р№ РѕРїРµСЂР°РЅРґ.");
   }
 
   private int GenerateAddition(int leftOperand)
   {
     if (leftOperand < 0)
-      throw new ArgumentException("Левый операнд должен быть положительным.");
+      throw new ArgumentException("Р›РµРІС‹Р№ РѕРїРµСЂР°РЅРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј.");
 
     if (leftOperand >= _maxPositiveValue)
       return 1;
@@ -471,7 +471,7 @@ public class MissingValueBuilder : AbstractGameBuilder
   private int GenerateSubtraction(int leftOperand)
   {
     if (leftOperand < 0)
-      throw new ArgumentException("Левый операнд должен быть положительным.");
+      throw new ArgumentException("Р›РµРІС‹Р№ РѕРїРµСЂР°РЅРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј.");
 
     if (leftOperand <= 1)
       return 0;
@@ -484,7 +484,7 @@ public class MissingValueBuilder : AbstractGameBuilder
   private int GenerateMultiplier(int leftOperand)
   {
     if (leftOperand < 0)
-      throw new ArgumentException("Левый операнд должен быть положительным.");
+      throw new ArgumentException("Р›РµРІС‹Р№ РѕРїРµСЂР°РЅРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј.");
 
     int maxMultiplication = _maxPositiveValue / leftOperand;
 
@@ -497,7 +497,7 @@ public class MissingValueBuilder : AbstractGameBuilder
   private int GenerateDivision(int leftOperand)
   {
     if (leftOperand < 0)
-      throw new ArgumentException("Левый операнд должен быть положительным.");
+      throw new ArgumentException("Р›РµРІС‹Р№ РѕРїРµСЂР°РЅРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј.");
 
     int maxDivision = _maxPositiveValue / 2;
 

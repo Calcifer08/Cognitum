@@ -34,7 +34,7 @@ public class LogSessionManager : MonoBehaviour
 
     CreateLogsDirectory();
 
-    Debug.Log("Начата запись лога игры");
+    Debug.Log("РќР°С‡Р°С‚Р° Р·Р°РїРёСЃСЊ Р»РѕРіР° РёРіСЂС‹");
   }
 
   public static void CreateLogsDirectory()
@@ -44,7 +44,7 @@ public class LogSessionManager : MonoBehaviour
     if (!Directory.Exists(_logsDirectoryPath))
     {
       Directory.CreateDirectory(_logsDirectoryPath);
-      Debug.Log("Папка логов создана");
+      Debug.Log("РџР°РїРєР° Р»РѕРіРѕРІ СЃРѕР·РґР°РЅР°");
     }
   }
 
@@ -52,7 +52,7 @@ public class LogSessionManager : MonoBehaviour
   {
     if (!LogLevelData.ValidateSpecificData(levelData.SpecificData))
     {
-      Debug.LogWarning("Обнаружены неподдерживаемые типы в специфичных данных.");
+      Debug.LogWarning("РћР±РЅР°СЂСѓР¶РµРЅС‹ РЅРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Рµ С‚РёРїС‹ РІ СЃРїРµС†РёС„РёС‡РЅС‹С… РґР°РЅРЅС‹С….");
       return;
     }
 
@@ -75,14 +75,14 @@ public class LogSessionManager : MonoBehaviour
     _logGame.Levels.Add(logLevel);
     currentLevel = logLevel;
 
-    Debug.Log("Уровень добавлен");
+    Debug.Log("РЈСЂРѕРІРµРЅСЊ РґРѕР±Р°РІР»РµРЅ");
   }
 
   public void LevelResultsLog(LevelResults levelResultsFromGame)
   {
     if (currentLevel == null)
     {
-      Debug.LogError("Нет уровня для завершения");
+      Debug.LogError("РќРµС‚ СѓСЂРѕРІРЅСЏ РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ");
       return;
     }
 
@@ -108,7 +108,7 @@ public class LogSessionManager : MonoBehaviour
       sessionResults.MaxLevelCompleted = Math.Max(sessionResults.MaxLevelCompleted, currentLevel.LevelParams.Level);
     }
 
-    Debug.Log("Уровень завершён");
+    Debug.Log("РЈСЂРѕРІРµРЅСЊ Р·Р°РІРµСЂС€С‘РЅ");
   }
 
   public async void EndGameSessionLog()
@@ -144,11 +144,11 @@ public class LogSessionManager : MonoBehaviour
     try
     {
       await File.WriteAllTextAsync(path, json);
-      Debug.Log("Лог сохранён");
+      Debug.Log("Р›РѕРі СЃРѕС…СЂР°РЅС‘РЅ");
     }
     catch (Exception ex)
     {
-      Debug.LogError($"Ошибка при сохранении лога: {ex.Message}");
+      Debug.LogError($"РћС€РёР±РєР° РїСЂРё СЃРѕС…СЂР°РЅРµРЅРёРё Р»РѕРіР°: {ex.Message}");
     }
     finally
     {
@@ -168,19 +168,19 @@ public class LogSessionManager : MonoBehaviour
   {
     if (currentLevel == null)
     {
-      Debug.LogError("Нельзя добавить событие, нет текущего уровня");
+      Debug.LogError("РќРµР»СЊР·СЏ РґРѕР±Р°РІРёС‚СЊ СЃРѕР±С‹С‚РёРµ, РЅРµС‚ С‚РµРєСѓС‰РµРіРѕ СѓСЂРѕРІРЅСЏ");
       return;
     }
 
     currentLevel.LevelEvents.Add(logEvent);
-    Debug.Log("Событие добавлено в текущий уровень");
+    Debug.Log("РЎРѕР±С‹С‚РёРµ РґРѕР±Р°РІР»РµРЅРѕ РІ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ");
   }
 
   public void AddQuestionStartToLog(QuestionData questionData)
   {
     if (!LogLevelData.ValidateSpecificData(questionData.SpecificData))
     {
-      Debug.LogWarning("Обнаружены неподдерживаемые типы в специфичных данных.");
+      Debug.LogWarning("РћР±РЅР°СЂСѓР¶РµРЅС‹ РЅРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹Рµ С‚РёРїС‹ РІ СЃРїРµС†РёС„РёС‡РЅС‹С… РґР°РЅРЅС‹С….");
       return;
     }
 

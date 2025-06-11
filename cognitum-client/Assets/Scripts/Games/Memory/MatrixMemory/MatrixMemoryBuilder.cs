@@ -57,7 +57,7 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
 
     CountAnswersToQuestion = (_rows * _columns) / 2;
 
-    TextQuestion = $"Размерность матрицы {_rows} * {_columns}. Открыть зелёные ячейки. Число ячеек: {CountAnswersToQuestion}";
+    TextQuestion = $"Р Р°Р·РјРµСЂРЅРѕСЃС‚СЊ РјР°С‚СЂРёС†С‹ {_rows} * {_columns}. РћС‚РєСЂС‹С‚СЊ Р·РµР»С‘РЅС‹Рµ СЏС‡РµР№РєРё. Р§РёСЃР»Рѕ СЏС‡РµРµРє: {CountAnswersToQuestion}";
   }
 
   public override Dictionary<string, object> GetSpecificData(bool isLevelData)
@@ -169,7 +169,7 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
     }
     else
     {
-      Debug.LogError($"Нет кнопки с координатами {answer}");
+      Debug.LogError($"РќРµС‚ РєРЅРѕРїРєРё СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё {answer}");
     }
   }
   private IEnumerator BlockButtonAfterClicking(Button button, float time)

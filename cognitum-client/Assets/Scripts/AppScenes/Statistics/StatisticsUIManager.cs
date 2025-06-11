@@ -17,9 +17,9 @@ public class StatisticsUIManager
 
     _periodOptions = new List<DropdownOption<string>>
     {
-      new DropdownOption<string>("Дни", "DailyAverage"),
-      new DropdownOption<string>("Недели", "WeeklyAverage"),
-      new DropdownOption<string>("Месяцы", "MonthlyAverage"),
+      new DropdownOption<string>("Р”РЅРё", "DailyAverage"),
+      new DropdownOption<string>("РќРµРґРµР»Рё", "WeeklyAverage"),
+      new DropdownOption<string>("РњРµСЃСЏС†С‹", "MonthlyAverage"),
     };
   }
 
@@ -45,7 +45,7 @@ public class StatisticsUIManager
 
   public Dictionary<string, int> GetChartData(string categoryId, string gameId, string periodKey)
   {
-    Debug.Log($"Ищем данные для графика: категория = {categoryId}, игра = {gameId}, период = {periodKey}");
+    Debug.Log($"РС‰РµРј РґР°РЅРЅС‹Рµ РґР»СЏ РіСЂР°С„РёРєР°: РєР°С‚РµРіРѕСЂРёСЏ = {categoryId}, РёРіСЂР° = {gameId}, РїРµСЂРёРѕРґ = {periodKey}");
     return GameStatisticsManager.GetPeriodData(categoryId, gameId, periodKey);
   }
 }

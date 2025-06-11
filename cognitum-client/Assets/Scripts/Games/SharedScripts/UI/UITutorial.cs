@@ -37,7 +37,7 @@ public class UITutorial : MonoBehaviour
     }
     else
     {
-      _tutorialText.text = "Информации по игре нет.";
+      _tutorialText.text = "РРЅС„РѕСЂРјР°С†РёРё РїРѕ РёРіСЂРµ РЅРµС‚.";
       _nextPageButton.interactable = false;
       _prevPageButton.interactable = false;
     }
