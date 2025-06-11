@@ -12,6 +12,12 @@ export default {
 
   JWT_SECRET: process.env.JWT_SECRET,
   REFRESH_SECRET: process.env.REFRESH_SECRET,
-  JWT_EXPIRES_IN: "15m",
-  REFRESH_EXPIRES_IN: "30d",
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+  REFRESH_EXPIRES_IN: process.env.REFRESH_EXPIRES_IN,
+
+  FRONTEND_URL: process.env.FRONTEND_URL,
+  SMTP_HOST: process.env.SMTP_HOST,
+  SMTP_PORT: Number(process.env.SMTP_PORT),
+  SMTP_USER: process.env.SMTP_USER,
+  SMTP_PASS: process.env.SMTP_PASS,
 };

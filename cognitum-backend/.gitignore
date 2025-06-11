@@ -2,6 +2,7 @@
 !.env.example
 
 api/node_modules/
+nginx/certs/*
 
 .vscode/
 
