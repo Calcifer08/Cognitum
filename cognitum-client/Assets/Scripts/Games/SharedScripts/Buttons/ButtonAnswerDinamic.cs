@@ -15,8 +15,6 @@ public class ButtonAnswerDinamic : MonoBehaviour
     _button = GetComponent<Button>();
     _button.onClick.AddListener(OnClick);
 
-    _timeOpen = _gameBuilder.ResultDisplayTime;
-
     ColorBlock disColor = _button.colors;
     disColor.disabledColor = Color.white;
     _button.colors = disColor;
@@ -26,6 +24,8 @@ public class ButtonAnswerDinamic : MonoBehaviour
   {
     _gameBuilder = abstractBuilder;
     _textAnswer = textAnswer;
+
+    _timeOpen = _gameBuilder.ResultDisplayTime;
   }
 
   private void OnClick()

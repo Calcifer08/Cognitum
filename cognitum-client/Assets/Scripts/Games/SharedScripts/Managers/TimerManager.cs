@@ -12,7 +12,7 @@ public class TimerManager : MonoBehaviour
   public event Action<int, string> OnPauseStarted;
   public event Action<int, float> OnPauseEnded;
   private int _numberPause = 0;
-  private float pauseStartTime = 0f;  // ¬рем€ начала паузы
+  private float pauseStartTime = 0f;
 
   public event Action OnEndTimeAnswerPhase;
   private bool _isAnswerTimerRunning = false;
@@ -26,7 +26,6 @@ public class TimerManager : MonoBehaviour
 
   private void Update()
   {
-    // если пауза или врем€ игры вышло
     if (Time.timeScale == 0f || _isTimeOver) return;
 
     if (_timeSession > 0f)
@@ -42,7 +41,6 @@ public class TimerManager : MonoBehaviour
 
     if (_isAnswerTimerRunning)
     {
-      // если есть врем€ на вопрос
       if (_currentTimeQuestion > 0f)
       {
         _currentTimeQuestion -= Time.deltaTime;
@@ -100,30 +98,25 @@ public class TimerManager : MonoBehaviour
       pauseStartTime = Time.realtimeSinceStartup;
       _numberPause++;
       OnPauseStarted?.Invoke(_numberPause, "The Game is Paused");
-      //_logSessionManager.AddPauseStartToLog(_numberPause, "The Game is Paused");
     }
     else
     {
       Time.timeScale = 1f;
       float pauseDuration = Time.realtimeSinceStartup - pauseStartTime;
       OnPauseEnded?.Invoke(_numberPause, pauseDuration);
-      //_logSessionManager.AddPauseEndToLog(_numberPause, pauseDuration);
     }
   }
 
-  // ¬ызываетс€, когда приложение сворачиваетс€ или восстанавливаетс€
   void OnApplicationPause(bool isPaused)
   {
     if (isPaused)
     {
-      // ѕриложение свернуто Ч сохран€ем врем€
       pauseStartTime = Time.realtimeSinceStartup;
       _numberPause++;
       OnPauseStarted?.Invoke(_numberPause, "The app is minimized");
     }
     else
     {
-      // ѕриложение восстановлено Ч вычисл€ем длительность паузы
       float pauseDuration = Time.realtimeSinceStartup - pauseStartTime;
       OnPauseEnded?.Invoke(_numberPause, pauseDuration);
     }

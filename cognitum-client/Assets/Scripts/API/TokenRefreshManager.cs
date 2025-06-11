@@ -7,14 +7,8 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 
-/// <summary>
-/// Класс для обновления access и refresh токенов.
-/// </summary>
 public static class TokenRefreshManager
 {
-  /// <summary>
-  /// Отправляет рефреш-токен и обновляет access-токен.
-  /// </summary>
   public static async Task RefreshTokenAsync()
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -42,15 +36,11 @@ public static class TokenRefreshManager
       request.downloadHandler = new DownloadHandlerBuffer();
       request.SetRequestHeader("Content-Type", "application/json");
 
-      // await request.SendWebRequest(); // не может вернуть await
-      //request.SendWebRequest();
-
       var operation = request.SendWebRequest();
 
-      // Ожидаем завершения на каждом шаге
       while (!operation.isDone)
       {
-        await Task.Yield();  // Освобождаем поток для других задач
+        await Task.Yield();
       }
 
       if (request.result == UnityWebRequest.Result.Success)
@@ -67,7 +57,6 @@ public static class TokenRefreshManager
           }
           else
           {
-            // если сервер прислал не токены
             Debug.LogError($"Ошибка: некорректные данные с сервера. Ответ: {request.downloadHandler.text}");
           }
         }
@@ -83,9 +72,6 @@ public static class TokenRefreshManager
     }
   }
 
-  /// <summary>
-  /// Обрабатывает ошибки, полученные от сервера.
-  /// </summary>
   private static void HandleErrorResponse(UnityWebRequest request)
   {
     if (request.responseCode == 0)

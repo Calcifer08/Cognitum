@@ -7,36 +7,33 @@ using TMPro;
 
 public class PlayerDataUI : MonoBehaviour
 {
-  public TMP_Dropdown AgeDropdown;
-  public TMP_Dropdown GenderDropdown;
-  public TMP_Dropdown EducationDropdown;
-  public TMP_Dropdown SleepDropdown;
-  public TMP_Dropdown DigitalUsageDropdown;
-  public Button SaveButton; // Кнопка сохранения
+  [SerializeField] private TMP_Dropdown _ageDropdown;
+  [SerializeField] private TMP_Dropdown _genderDropdown;
+  [SerializeField] private TMP_Dropdown _educationDropdown;
+  [SerializeField] private TMP_Dropdown _sleepDropdown;
+  [SerializeField] private TMP_Dropdown _digitalUsageDropdown;
+  [SerializeField] private Button _saveButton;
 
   private PlayerData _playerData;
-  private bool _isProcessing = false; // Флаг, предотвращающий спам сохранений
+  private bool _isProcessing = false;
 
   private void Start()
   {
     _playerData = PlayerDataManager.GetPlayerData();
 
-    // Заполняем dropdown'ы значениями
-    SetupDropdown(AgeDropdown, Enum.GetValues(typeof(PlayerData.AgeGroup)).Cast<PlayerData.AgeGroup>());
-    SetupDropdown(GenderDropdown, Enum.GetValues(typeof(PlayerData.Genders)).Cast<PlayerData.Genders>());
-    SetupDropdown(EducationDropdown, Enum.GetValues(typeof(PlayerData.EducationLevel)).Cast<PlayerData.EducationLevel>());
-    SetupDropdown(SleepDropdown, Enum.GetValues(typeof(PlayerData.SleepDuration)).Cast<PlayerData.SleepDuration>());
-    SetupDropdown(DigitalUsageDropdown, Enum.GetValues(typeof(PlayerData.DigitalUsageHours)).Cast<PlayerData.DigitalUsageHours>());
+    SetupDropdown(_ageDropdown, Enum.GetValues(typeof(PlayerData.AgeGroup)).Cast<PlayerData.AgeGroup>());
+    SetupDropdown(_genderDropdown, Enum.GetValues(typeof(PlayerData.Genders)).Cast<PlayerData.Genders>());
+    SetupDropdown(_educationDropdown, Enum.GetValues(typeof(PlayerData.EducationLevel)).Cast<PlayerData.EducationLevel>());
+    SetupDropdown(_sleepDropdown, Enum.GetValues(typeof(PlayerData.SleepDuration)).Cast<PlayerData.SleepDuration>());
+    SetupDropdown(_digitalUsageDropdown, Enum.GetValues(typeof(PlayerData.DigitalUsageHours)).Cast<PlayerData.DigitalUsageHours>());
 
-    // Устанавливаем сохранённые значения
-    SetDropdownValue(AgeDropdown, _playerData.Age);
-    SetDropdownValue(GenderDropdown, _playerData.Gender);
-    SetDropdownValue(EducationDropdown, _playerData.Education);
-    SetDropdownValue(SleepDropdown, _playerData.Sleep);
-    SetDropdownValue(DigitalUsageDropdown, _playerData.DigitalUsage);
+    SetDropdownValue(_ageDropdown, _playerData.Age);
+    SetDropdownValue(_genderDropdown, _playerData.Gender);
+    SetDropdownValue(_educationDropdown, _playerData.Education);
+    SetDropdownValue(_sleepDropdown, _playerData.Sleep);
+    SetDropdownValue(_digitalUsageDropdown, _playerData.DigitalUsage);
 
-    // Назначаем обработчик нажатия кнопки сохранения
-    SaveButton.onClick.AddListener(OnSaveButtonClicked);
+    _saveButton.onClick.AddListener(OnSaveButtonClicked);
   }
 
   private void SetupDropdown<T>(TMP_Dropdown dropdown, IEnumerable<T> values) where T : Enum
@@ -61,21 +58,20 @@ public class PlayerDataUI : MonoBehaviour
   {
     if (!_isProcessing)
     {
-      // Заполняем объект данными перед сохранением
-      _playerData.Age = (PlayerData.AgeGroup)AgeDropdown.value;
-      _playerData.Gender = (PlayerData.Genders)GenderDropdown.value;
-      _playerData.Education = (PlayerData.EducationLevel)EducationDropdown.value;
-      _playerData.Sleep = (PlayerData.SleepDuration)SleepDropdown.value;
-      _playerData.DigitalUsage = (PlayerData.DigitalUsageHours)DigitalUsageDropdown.value;
+      _playerData.Age = (PlayerData.AgeGroup)_ageDropdown.value;
+      _playerData.Gender = (PlayerData.Genders)_genderDropdown.value;
+      _playerData.Education = (PlayerData.EducationLevel)_educationDropdown.value;
+      _playerData.Sleep = (PlayerData.SleepDuration)_sleepDropdown.value;
+      _playerData.DigitalUsage = (PlayerData.DigitalUsageHours)_digitalUsageDropdown.value;
 
       _isProcessing = true;
-      SaveButton.interactable = false; // Блокируем кнопку на время сохранения
+      _saveButton.interactable = false;
       AndroidToast.Show("Сохранение...");
 
       await PlayerDataManager.SavePlayerDataAsync(_playerData, true);
 
       _isProcessing = false;
-      SaveButton.interactable = true;
+      _saveButton.interactable = true;
       AndroidToast.Show("Данные пользователя сохранены!");
       Debug.Log("Данные игрока сохранены");
     }

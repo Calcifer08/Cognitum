@@ -1,5 +1,4 @@
 
-// ”ниверсальный класс дл€ дропдаунов
 public class DropdownOption<T>
 {
   public string DisplayName;

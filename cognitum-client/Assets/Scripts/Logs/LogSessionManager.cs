@@ -113,13 +113,12 @@ public class LogSessionManager : MonoBehaviour
 
   public async void EndGameSessionLog()
   {
-    // т.к. сейчас он в префабе для удобства и не является корневым
     if (transform.parent != null)
     {
       transform.SetParent(null);
     }
 
-    DontDestroyOnLoad(gameObject); // чтобы при смене сцены не прервали
+    DontDestroyOnLoad(gameObject);
 
     var sessionResults = _logGame.Session.SessionResults;
     sessionResults.TimeEnd = DateTime.Now.ToString("O");
@@ -137,7 +136,7 @@ public class LogSessionManager : MonoBehaviour
   private async Task SaveLogAsync(string path)
   {
 #if UNITY_ANDROID && !UNITY_EDITOR
-    string json = JsonConvert.SerializeObject(_logData, Formatting.None);
+    string json = JsonConvert.SerializeObject(_logGame, Formatting.None);
 #elif UNITY_EDITOR
     string json = JsonConvert.SerializeObject(_logGame, Formatting.Indented);
 #endif
@@ -153,16 +152,14 @@ public class LogSessionManager : MonoBehaviour
     }
     finally
     {
-      Destroy(gameObject); // уничтожаем, ибо отработал
+      Destroy(gameObject);
     }
   }
 
   private string GetTimeString()
   {
     TimeSpan ts = _sessionStopwatch.Elapsed;
-    return ts.ToString("c"); // формат вида "hh:mm:ss.fff"
-    //return string.Format("{0:00}:{1:00}:{2:000}",
-    //    ts.Minutes, ts.Seconds, ts.Milliseconds);
+    return ts.ToString("c");
   }
 
 

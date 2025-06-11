@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// события на уровне
+// события на уровня
+
 [System.Serializable]
 public class LogLevelEvents
 {
-  [JsonConverter(typeof(StringEnumConverter))] // JsonConverter для конвертации Enum в строку, иначе будут инты
-  public TagsList Tags; // по идее будет только один тег, но если нет, то выше
+  [JsonConverter(typeof(StringEnumConverter))]
+  public TagsList Tags;
 
   public string Time;
 
@@ -27,17 +28,15 @@ public class LogLevelEvents
 
 
 
-// абстрактный класс, ибо у меня много классов может быть и принимать проще такой
 [System.Serializable]
 public abstract class AbstractEventData { }
 
 
 
-// событие показа вопроса для матрицы
 [System.Serializable]
 public class EventQuestionStart : AbstractEventData
 {
-  public int QuestionNumber; // выдаём в контроллере
+  public int QuestionNumber;
   public string QuestionText;
   public string ExpectedAnswer;
   public Dictionary<string, object> SpecificData;
@@ -55,7 +54,6 @@ public class EventQuestionStart : AbstractEventData
   }
 }
 
-// событие конца показа вопроса
 [System.Serializable]
 public class EventQuestionEnd : AbstractEventData
 {
@@ -65,11 +63,10 @@ public class EventQuestionEnd : AbstractEventData
 }
 
 
-// Начало фазы запоминания — когда игрок видит вопрос, но не может отвечать
 public class EventMemorizePhaseStart : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
-  public float Duration; // Время запоминания
+  public int QuestionNumber;
+  public float Duration;
 
   public EventMemorizePhaseStart(int questionNumber, float duration)
   {
@@ -78,10 +75,9 @@ public class EventMemorizePhaseStart : AbstractEventData
   }
 }
 
-// Конец фазы забывания (Retention phase)
 public class EventMemorizePhaseEnd : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
+  public int QuestionNumber;
 
   public EventMemorizePhaseEnd(int questionNumber)
   {
@@ -90,11 +86,10 @@ public class EventMemorizePhaseEnd : AbstractEventData
 }
 
 
-// Начало фазы забывания (Retention phase) — когда игрок не видит вопрос и не может отвечать
 public class EventForgetPhaseStart : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
-  public float Duration; // Время забывания (т.е. сколько времени пройдёт от скрытия вопроса до возможности ответа)
+  public int QuestionNumber;
+  public float Duration;
 
   public EventForgetPhaseStart(int questionNumber, float duration)
   {
@@ -103,10 +98,9 @@ public class EventForgetPhaseStart : AbstractEventData
   }
 }
 
-// Конец фазы забывания (Retention phase)
 public class EventForgetPhaseEnd : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
+  public int QuestionNumber;
 
   public EventForgetPhaseEnd(int questionNumber)
   {
@@ -115,11 +109,10 @@ public class EventForgetPhaseEnd : AbstractEventData
 }
 
 
-// Начало фазы ответа (когда игрок может отвечать на вопрос)
 public class EventAnswerPhaseStart : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
-  public float Duration; // время фазы, указать 0, если бесконечное время
+  public int QuestionNumber;
+  public float Duration = 0; // 0 = бесконечное время
 
   public EventAnswerPhaseStart(int questionNumber, float duration)
   {
@@ -128,12 +121,11 @@ public class EventAnswerPhaseStart : AbstractEventData
   }
 }
 
-// Конец фазы ответа (когда игрок может отвечать на вопрос)
 public class EventAnswerPhaseEnd : AbstractEventData
 {
-  public int QuestionNumber; // Номер вопроса
+  public int QuestionNumber; 
 
-  [JsonConverter(typeof(StringEnumConverter))] // JsonConverter для конвертации Enum в строку, иначе будут инты
+  [JsonConverter(typeof(StringEnumConverter))]
   public StatusQuestionList Status;
 
   public EventAnswerPhaseEnd(int questionNumber, StatusQuestionList status)
@@ -144,7 +136,6 @@ public class EventAnswerPhaseEnd : AbstractEventData
 }
 
 
-// событие ответа пользователя
 [System.Serializable]
 public class EventAnswer : AbstractEventData
 {
@@ -164,12 +155,11 @@ public class EventAnswer : AbstractEventData
 
 
 
-// событие паузы
 [System.Serializable]
 public class EventPauseStart : AbstractEventData
 {
   public int PauseNumber;
-  public string Description; // ибо можно в игре или при сворачивании
+  public string Description;
 
   public EventPauseStart(int pauseNumber, string description)
   {
@@ -178,7 +168,6 @@ public class EventPauseStart : AbstractEventData
   }
 }
 
-// событие паузы
 [System.Serializable]
 public class EventPauseEnd : AbstractEventData
 {
@@ -195,12 +184,11 @@ public class EventPauseEnd : AbstractEventData
 
 
 
-// системные события
 [System.Serializable]
 public class EventSystem : AbstractEventData
 {
-  public string EventType; // тип системного события
-  public string Description; // описание
+  public string EventType;
+  public string Description;
 
   public EventSystem(string eventType, string description) { EventType = eventType; Description = description; }
 }

@@ -46,8 +46,10 @@ public class AuthUI : MonoBehaviour
   {
     _statusImage.gameObject.SetActive(false);
     _headText.text = "Вход";
-    _switchAuthText.text = "Нет аккаунта? <link=register><color=blue><u>Зарегистрироваться!</u></color></link>";
+    _switchAuthText.text = "Нет аккаунта? <link=register><color=blue><u>Зарегистрироваться!</u></color></link> " +
+      "<br> Забыли пароль? <link=reset><color=blue><u>Восстановить</u></color></link>";
     _authButtonText.text = "Войти";
+    _passwordInput.gameObject.SetActive(true);
     _confirmPasswordInput.gameObject.SetActive(false);
     _authButton.onClick.RemoveAllListeners();
     _authButton.onClick.AddListener(OnLoginClicked);
@@ -59,14 +61,24 @@ public class AuthUI : MonoBehaviour
     _headText.text = "Регистрация";
     _switchAuthText.text = "Уже есть аккаунт? <link=login><color=blue><u>Войти!</u></color></link>";
     _authButtonText.text = "Зарегистрироваться";
+    _passwordInput.gameObject.SetActive(true);
     _confirmPasswordInput.gameObject.SetActive(true);
     _authButton.onClick.RemoveAllListeners();
     _authButton.onClick.AddListener(OnRegisterClicked);
   }
 
-  /// <summary>
-  /// Обработчик кнопки входа.
-  /// </summary>
+  public void SwitchToResetPassword()
+  {
+    _statusImage.gameObject.SetActive(false);
+    _headText.text = "Сброс пароля";
+    _switchAuthText.text = "<link=login><color=blue><u>Вернуться к входу</u></color></link>";
+    _passwordInput.gameObject.SetActive(false);
+    _confirmPasswordInput.gameObject.SetActive(false);
+    _authButtonText.text = "Сбросить";
+    _authButton.onClick.RemoveAllListeners();
+    _authButton.onClick.AddListener(OnResetPasswordClicked);
+  }
+
   private async void OnLoginClicked()
   {
     if (!_isProcessing)
@@ -85,14 +97,11 @@ public class AuthUI : MonoBehaviour
       _isProcessing = true;
 
       await AuthManager.LoginAsync(email, password, _statusText);
-
+      _statusImage.gameObject.SetActive(true);
       _isProcessing = false;
     }
   }
 
-  /// <summary>
-  /// Обработчик кнопки регистрации.
-  /// </summary>
   private async void OnRegisterClicked()
   {
     if (!_isProcessing)
@@ -112,14 +121,34 @@ public class AuthUI : MonoBehaviour
       _isProcessing = true;
 
       await AuthManager.RegisterAsync(email, password, _statusText);
-
+      _statusImage.gameObject.SetActive(true);
       _isProcessing = false;
     }
   }
 
-  /// <summary>
-  /// Валидация email и пароля.
-  /// </summary>
+  private async void OnResetPasswordClicked()
+  {
+    if (_isProcessing) return;
+
+    _statusImage.gameObject.SetActive(false);
+
+    string email = _emailInput.text.Trim();
+
+    if (!IsValidEmail(email))
+    {
+      _statusImage.gameObject.SetActive(true);
+      _statusText.text = "Некорректный email!";
+      return;
+    }
+
+    _isProcessing = true;
+
+    await AuthManager.SendRequestPasswordResetAsync(email, _statusText);
+
+    _statusImage.gameObject.SetActive(true);
+    _isProcessing = false;
+  }
+
   private bool ValidateInput(string email, string password, string confirmPassword)
   {
     if (!IsValidEmail(email))
@@ -143,26 +172,17 @@ public class AuthUI : MonoBehaviour
     return true;
   }
 
-  /// <summary>
-  /// Регулярная проверка email.
-  /// </summary>
   private bool IsValidEmail(string email)
   {
     return System.Text.RegularExpressions.Regex.IsMatch(email,
         @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
   }
 
-  /// <summary>
-  /// Проверка пароля (не менее 6 символов).
-  /// </summary>
   private bool IsValidPassword(string password)
   {
     return password.Length >= 6;
   }
 
-  /// <summary>
-  /// Переключение видимости пароля для переданного TMP_InputField.
-  /// </summary>
   private void TogglePasswordVisibility(TMP_InputField inputField)
   {
     if (inputField == _passwordInput)
@@ -178,7 +198,6 @@ public class AuthUI : MonoBehaviour
       _showConfirmPasswordButton.image.sprite = _isConfirmPasswordVisible ? _openEyeSprite : _closedEyeSprite;
     }
 
-    // Применяем изменения
     inputField.ForceLabelUpdate();
   }
 }

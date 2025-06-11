@@ -31,12 +31,12 @@ public class BurgerMenu : MonoBehaviour
     }
 
     _canvasGroup = GetComponent<CanvasGroup>();
-    SceneManager.sceneLoaded += OnSceneLoaded; // подписались на событие загрузки сцены
+    SceneManager.sceneLoaded += OnSceneLoaded;
   }
 
   private void OnDestroy()
   {
-    SceneManager.sceneLoaded -= OnSceneLoaded; // отписались
+    SceneManager.sceneLoaded -= OnSceneLoaded;
   }
 
   private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -54,22 +54,21 @@ public class BurgerMenu : MonoBehaviour
 
   private void HideBurgerMenu()
   {
-    _canvasGroup.alpha = 0; // невидимый
-    _canvasGroup.interactable = false; // некликабельный
-    _canvasGroup.blocksRaycasts = false; // пропускает лучи
+    _canvasGroup.alpha = 0;
+    _canvasGroup.interactable = false;
+    _canvasGroup.blocksRaycasts = false;
   }
 
   private void ShowBurgerMenu()
   {
-    Time.timeScale = 1.0f; // на всякий случай, ибо в игре можем поставить на паузу и как-то попасть в меню
-    _canvasGroup.alpha = 1f; // видимый
-    _canvasGroup.interactable = true; // кликабельный
-    _canvasGroup.blocksRaycasts = true; // не пропускает лучи
+    Time.timeScale = 1.0f;
+    _canvasGroup.alpha = 1f;
+    _canvasGroup.interactable = true;
+    _canvasGroup.blocksRaycasts = true;
   }
 
   private void Start()
   {
-    // значение должно быть выше, чем у других Canvas, иначе перекроют друг друга
     gameObject.GetComponent<Canvas>().sortingOrder = 10;
     _buttonOpenMenu.onClick.AddListener(OpenMenu);
     _buttonCloseMenu.onClick.AddListener(CloseMenu);
@@ -96,7 +95,6 @@ public class BurgerMenu : MonoBehaviour
   {
     CloseMenu();
     
-    // ибо смысл загружать текущую сцену
     if (SceneManager.GetActiveScene().name != nameScene)
     {
       SceneManager.LoadScene(nameScene);

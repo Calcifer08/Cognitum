@@ -264,21 +264,18 @@ public abstract class AbstractGameBuilder : MonoBehaviour
 
   protected void RaiseOnSetAnswer(AnswerData answerData)
   {
-    OnSetAnswer?.Invoke(answerData);  // ¬ызов событи€ через метод
+    OnSetAnswer?.Invoke(answerData);
   }
 
   /// <summary> ¬ычисл€ет базовое зерно и создаЄт генератор случайных чисел дл€ неконтрольных игр. </summary>
   public virtual int GetBaseSeedForGame(int countGame)
   {
-    // т.к. не зависит от платформы и версии ,как обычный GetHashCode, вернЄт базовое зерно дл€ игры
     using MD5 md5 = MD5.Create();
     string word = NameGame + countGame;
     byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(word));
 
-    // берЄм только 3 байта
     BaseSeed = (hashBytes[0] << 16) | (hashBytes[1] << 8) | hashBytes[2];
 
-    // если это не контрольна€ игра, то один раз создадим рандом на всю игру на базовом сиде + рандом
     if (countGame % _frequencyOfControlGames == 0)
     {
       _isControlGame = true;

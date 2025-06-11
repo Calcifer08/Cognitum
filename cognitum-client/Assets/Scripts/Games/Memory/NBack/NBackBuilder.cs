@@ -9,9 +9,20 @@ using UnityEngine.UI;
 
 public class NBackBuilder : AbstractGameBuilder
 {
-  private int _positions; // Количество позиций
-  private int _hiddenPositions; // Количество скрытых позиций
-  private int _memorySpan; // Количество позиций для запоминания
+  //SpecificData
+  private int _countPositions;
+  private int _countHiddenPositions;
+  private int _countMemorySpan;
+
+ 
+  [SerializeField] private Transform _sequenceParent;
+  [SerializeField] private GameObject _numberPrefab;
+
+  private int _targetHiddenIndex = 0;
+  private int _targetCompareIndex;
+
+  private int _currentHidden = -1;
+  private List<int> _sequence = new();
 
   private void Awake()
   {
@@ -56,15 +67,15 @@ public class NBackBuilder : AbstractGameBuilder
 
   private void SetLevelConfig(int positions, int hiddenPositions, int memorySpan, float timeLimit)
   {
-    _positions = positions;
-    _hiddenPositions = hiddenPositions;
-    _memorySpan = memorySpan;
+    _countPositions = positions;
+    _countHiddenPositions = hiddenPositions;
+    _countMemorySpan = memorySpan;
     TimeAnswerPhase = timeLimit;
 
-    _sequence.Clear(); // очищаем при смене уровня
+    _sequence.Clear();
     _currentHidden = -1;
 
-    for (int i = 0; i < _positions - 1; i++)
+    for (int i = 0; i < _countPositions - 1; i++)
     {
       _sequence.Add(Rand.Next(1, 10));
     }
@@ -76,9 +87,9 @@ public class NBackBuilder : AbstractGameBuilder
     {
       return new Dictionary<string, object>
       {
-        { "Positions", _positions },
-        { "HiddenPositions", _hiddenPositions },
-        { "MemorySpan", _memorySpan },
+        { "Positions", _countPositions },
+        { "HiddenPositions", _countHiddenPositions },
+        { "MemorySpan", _countMemorySpan },
       };
     }
     else
@@ -117,40 +128,24 @@ public class NBackBuilder : AbstractGameBuilder
     return null;
   }
 
-
-
-
-
-
-
-  private int _targetHiddenIndex = 0; // скрытое
-  private int _targetCompareIndex;
-
-  private int _currentHidden = -1;
-  private List<int> _sequence = new();
-
   public override void GameUpdateQuestion()
   {
-    // Добавляем новое число
-    if (_sequence.Count >= _memorySpan && Rand.NextDouble() < 0.5)
+    if (_sequence.Count >= _countMemorySpan && Rand.NextDouble() < 0.5)
     {
-      _sequence.Add(_sequence[_sequence.Count - _memorySpan]);
+      _sequence.Add(_sequence[_sequence.Count - _countMemorySpan]);
     }
     else
     {
-      // есть малая вероятность что совпадёт, но не страшно
       _sequence.Add(Rand.Next(1, 10));
     }
 
-    // Удаляем самое старое число, чтобы не превышать длину
-    if (_sequence.Count > _positions)
+    if (_sequence.Count > _countPositions)
       _sequence.RemoveAt(0);
 
-    // Постепенно увеличиваем количество скрытых чисел
-    if (_currentHidden < _hiddenPositions)
+    if (_currentHidden < _countHiddenPositions)
       _currentHidden++;
 
-    _targetCompareIndex = _targetHiddenIndex + _memorySpan;
+    _targetCompareIndex = _targetHiddenIndex + _countMemorySpan;
     TextAnswer = _sequence[_targetHiddenIndex] == _sequence[_targetCompareIndex] ? "да" : "нет";
     TextQuestion =
       $"Последовательность: [{string.Join(", ", _sequence)}] | " +
@@ -158,40 +153,30 @@ public class NBackBuilder : AbstractGameBuilder
       $"Сравниваем индексы: {_targetHiddenIndex} и {_targetCompareIndex} | " +
       $"Совпадают ли числа на этих позициях?";
 
-    // Обновляем UI
     ShowVisibleNumbers(_currentHidden);
   }
 
-  [SerializeField] private Transform _sequenceParent; // Родительский объект, куда спавним числа
-  [SerializeField] private GameObject _numberPrefab; // Префаб цифры
-
   private void ShowVisibleNumbers(int hiddenCount)
   {
-    // Удаляем все предыдущие числа
     foreach (Transform child in _sequenceParent)
     {
       Destroy(child.gameObject);
     }
 
-    // Спавним числа заново по текущей последовательности
     for (int i = 0; i < _sequence.Count; i++)
     {
       int number = _sequence[i];
 
-      // Спавним префаб
       GameObject obj = Instantiate(_numberPrefab, _sequenceParent);
 
-      // Устанавливаем текст
       TextMeshProUGUI tmp = obj.GetComponentInChildren<TextMeshProUGUI>();
       tmp.text = number.ToString();
 
-      // Прячем, если входит в скрываемые (слева)
       if (i < hiddenCount)
       {
         tmp.canvasRenderer.SetAlpha(0f);
       }
 
-      // Подсвечиваем цветом Image, если это сравниваемые позиции
       if (i == _targetHiddenIndex || i == _targetCompareIndex)
       {
         Image img = obj.GetComponentInChildren<Image>();

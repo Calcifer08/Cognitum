@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// весь файл
 [System.Serializable]
 public class LogGame
 {
@@ -24,7 +23,6 @@ public class LogGame
   }
 }
 
-// инфа по устройству
 [System.Serializable]
 public class DeviceMetadata
 {
@@ -40,7 +38,6 @@ public class DeviceMetadata
   }
 }
 
-// инфа по конкретной игре
 [System.Serializable]
 public class LogGameInfo
 { 
@@ -54,7 +51,6 @@ public class LogGameInfo
   }
 }
 
-// инфа по игровой сессии, хранит в себе настройки сессии и результаты
 [System.Serializable]
 public class LogSessionInfo
 {
@@ -68,12 +64,11 @@ public class LogSessionInfo
   }
 }
 
-// настройки сессии
 [System.Serializable]
 public class LogSessionParams
 {
-  public float AllowedTime; // время на прохождение сессии
-  public int BaseSeed; // базовое зерно для построения игры
+  public float AllowedTime;
+  public int BaseSeed;
 
   public LogSessionParams(int baseSeed, float allowedTime)
   {
@@ -82,7 +77,6 @@ public class LogSessionParams
   }
 }
 
-// результаты сессии
 [System.Serializable]
 public class LogSessionResults
 {
@@ -91,9 +85,9 @@ public class LogSessionResults
   public string TimeEnd;
   public int StartLevel;
   public int FinalLevel;
-  public int MaxLevelReached; // макс до которого дошли (но не обязательно прошли)
-  public int MaxLevelCompleted; // макс лвл, который игрок смог пройти
-  public int LevelsCompleted = 0; // сколько завершили (с учётом поражений и истечении времени)
+  public int MaxLevelReached;
+  public int MaxLevelCompleted;
+  public int LevelsCompleted = 0;
   public int CorrectQuestions = 0;
   public int MistakeQuestions = 0;
   public int CorrectAnswers = 0;
@@ -111,7 +105,6 @@ public class LogSessionResults
   }
 }
 
-// данные по уровню
 [System.Serializable]
 public class LogLevelData
 {
@@ -145,7 +138,6 @@ public class LogLevelData
   }
 }
 
-// настройки уровня
 [System.Serializable]
 public class LogLevelParams
 {
@@ -185,7 +177,6 @@ public class LogLevelParams
   }
 }
 
-// результаты уровня (поднят наверх?)
 [System.Serializable]
 public class LogLevelResults
 {
@@ -199,7 +190,7 @@ public class LogLevelResults
   public float CompletionTime;
   public float ReactionTime;
 
-  [JsonConverter(typeof(StringEnumConverter))] // JsonConverter для конвертации Enum в строку, иначе будут инты
+  [JsonConverter(typeof(StringEnumConverter))]
   public StatusLevelList Status;
 
   public LogLevelResults(string time)

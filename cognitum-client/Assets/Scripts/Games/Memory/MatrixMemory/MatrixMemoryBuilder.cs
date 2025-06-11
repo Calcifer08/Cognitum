@@ -12,9 +12,9 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
   [SerializeField] private Material _materialBlue;
   [SerializeField] private Material _materialRed;
 
-  private Dictionary<string, Button> _cellToButtonMap = new(); // ссылки на все кнопкм
-  private List<Button> _targetButtonList = new(); // список записанных кнопок
-  private float _timeOpenIncorrectButton = 0.5f; // время отображения ошибки на ячейке
+  private Dictionary<string, Button> _cellToButtonMap = new();
+  private List<Button> _targetButtonList = new();
+  private float _timeOpenIncorrectButton = 0.5f;
 
   //SpecificData
   private int _rows = 2;
@@ -26,28 +26,26 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
 
     InitGameObject();
 
-    InitGameParams(11); // 7*7
+    InitGameParams(11);
 
     InitOptionalGameParams(
-      streakCorrectQuestions: 1, // 2 для тестов
-      mistakesToLevelDown: 3, // 3,
-      countAnswers: 2, // 2
-      countMistakes: 0, // 2
-      timeMemorize: 2f, // 1f
-      timeForget: 2f, // 0f
-      timeAnswer: 0f, // 10f
-      resultDisplayTime: 1f); // 1f
+      streakCorrectQuestions: 1,
+      mistakesToLevelDown: 3,
+      countAnswers: 2,
+      countMistakes: 0,
+      timeMemorize: 2f,
+      timeForget: 2f,
+      timeAnswer: 0f,
+      resultDisplayTime: 1f);
   }
 
   protected override void CalculateLevelConfig(int level)
   {
     level = Mathf.Clamp(level, 1, MaxLevel);
 
-    // округляем в большую сторону и прибавляем 1 для вычисления размерности
     int dimension = (int)Math.Ceiling((double)level / 2) + 1;
     _rows = dimension;
 
-    // если это нечётный уровень, то это квадратная матрица
     if (level % 2 == 1)
     {
       _columns = dimension;
@@ -80,21 +78,11 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
 
   public override void GameUpdateQuestion()
   {
-    TextAnswer = null; // очищаем, т.к. всегда конкатенируем
+    TextAnswer = null;
 
     CreateMatrix();
-
-    //QuestionData questionData = new QuestionData(
-    //  TextQuestion, 
-    //  _textAnswer, 
-    //  _timeHideButtons * 2, 
-    //  GetSpecificData(false));
-    //// _timeHideButtons * 2 т.к. корутина 2 раза выполняется
-
-    //return questionData;
   }
 
-  // создаём сетку
   private void CreateMatrix()
   {
     _cellToButtonMap.Clear();
@@ -104,57 +92,46 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
     {
       Destroy(child.gameObject);
     }
-    _matrixGridLayout.constraintCount = _columns; // т.к. фикс на колонках стоит
+    _matrixGridLayout.constraintCount = _columns;
 
     List<Button> buttonsList = new List<Button>(_rows * _columns);
     for (int i = 0; i < _rows * _columns; i++)
     {
       Button button = Instantiate(_prefabCell, _matrixGridLayout.transform).GetComponent<Button>();
-      button.name = i.ToString(); // вроде можно убрать
+      button.name = i.ToString();
       string cell = (i / _columns) + "," + (i % _columns);
-      _cellToButtonMap[cell] = button; // запоминаем значение и саму кнопку
+      _cellToButtonMap[cell] = button;
       button.GetComponent<ButtonAnswerDinamic>().InitializeButton(this, cell);
       buttonsList.Add(button);
     }
 
-    // иначе не успевает заполнить вопрос до конца, т.к. ждёт 1с, а код продолжается
-    //StartCoroutine(WaitSetTargetButton(buttonsList));
-    SetTargetButton(buttonsList); // альтернатива
+    SetTargetButton(buttonsList);
   }
 
-  // устанавливаем целевые кнопки
   private void SetTargetButton(List<Button> buttonsList)
   {
-    // список записанных кнопок (запоминаем просто номер кнопки, чтоб не лезть в компоненты)
     while (_targetButtonList.Count < CountAnswersToQuestion)
     {
-      // из всех кнопок выбираем случайную
-      //int numberButton = UnityEngine.Random.Range(0, buttonsList.Count);
       int numberButton = Rand.Next(0, buttonsList.Count);
 
-      // НЕ записывали ли такую кнопку?
       if (!_targetButtonList.Contains(buttonsList[numberButton]))
       {
         _targetButtonList.Add(buttonsList[numberButton]);
-        //buttonsList[numberButton].image.color = Color.green;
         buttonsList[numberButton].GetComponent<Image>().material = _materialBlue;
 
         string cell = (numberButton / _columns) + "," + (numberButton % _columns);
         TextAnswer += cell + "|";
       }
     }
-
-    //StartCoroutine(HideTargetButtons());
   }
 
   public override IEnumerator StartMemorizePhaseCoroutine()
   {
     _gameZoneCanvasGroup.interactable = false;
-    yield return new WaitForSeconds(TimeMemorizePhase); // время на запомнить
+    yield return new WaitForSeconds(TimeMemorizePhase);
 
     foreach (Button button in _targetButtonList)
     {
-      //button.image.color = Color.white;
       button.GetComponent<Image>().material = null;
     }
   }
@@ -162,29 +139,10 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
   public override IEnumerator StartForgetPhaseCoroutine()
   {
     _forgetObject.SetActive(true);
-    yield return new WaitForSeconds(TimeForgetPhase); // чтобы дать время забыть
+    yield return new WaitForSeconds(TimeForgetPhase);
     _forgetObject.SetActive(false);
     _gameZoneCanvasGroup.interactable = true;
   }
-
-  //private IEnumerator HideTargetButtons()
-  //{
-  //  _gameZoneCanvasGroup.interactable = false;
-  //  yield return new WaitForSeconds(TimeMemorizePhase); // время на запомнить
-
-
-  //  foreach (Button button in _targetButtonList)
-  //  {
-  //    button.image.color = Color.white;
-  //  }
-
-  //  _forgetObject.gameObject.SetActive(true);
-  //  yield return new WaitForSeconds(TimeForgetPhase); // чтобы дать время забыть
-
-
-  //  _forgetObject.gameObject.SetActive(false);
-  //  _gameZoneCanvasGroup.interactable = true;
-  //}
 
   public override void SetAnswer(string answer)
   {
@@ -204,8 +162,6 @@ public class MatrixMemoryBuilder : AbstractGameBuilder
         StartCoroutine(BlockButtonAfterClicking(button, _timeOpenIncorrectButton));
         isTrue = false;
       }
-
-      //EventAnswer eventAnswer = new EventAnswer(answer, isTrue);
 
       AnswerData answerData = new AnswerData(answer, isTrue);
 

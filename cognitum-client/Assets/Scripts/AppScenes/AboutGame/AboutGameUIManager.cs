@@ -20,10 +20,8 @@ public class AboutGameUIManager : MonoBehaviour
 
     _tutorialViewer.Init(_gameId);
 
-    // Инициализируем слайдер уровня
     _levelSelector.Init(_gameId);
 
-    // Подписка на кнопки
     _startButton.onClick.AddListener(OnStartClicked);
     _backButton.onClick.AddListener(OnBackClicked);
   }
@@ -31,7 +29,7 @@ public class AboutGameUIManager : MonoBehaviour
   private void OnStartClicked()
   {
     _levelSelector.SaveSelectedLevel();
-    string sceneToLoad = GameDataManager.GetSceneName(_gameId);
+    string sceneToLoad = GameDataManager.GetSceneNameByID(_gameId);
     SceneManager.LoadScene(sceneToLoad);
   }
 

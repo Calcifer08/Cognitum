@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-// GameLogStructs.cs
 // Структуры данных, используемые для логирования игровых сессий
 // Используются GameManager и LogManager
 
@@ -57,7 +56,6 @@ public struct LevelResults
   public float ReactionTime;
 }
 
-// при добавлении большого числа полей от контроллера - стоит разбить на 2 сущности
 public struct QuestionData
 {
   /// <summary> Указывает игровой менеджер </summary>
@@ -82,7 +80,6 @@ public struct QuestionData
   }
 }
 
-  // при добавлении большого числа полей от контроллера - стоит разбить на 2 сущности
   public struct AnswerData
 {
   /// <summary> Указывает игровой менеджер </summary>

@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 488, y: -650}
+  m_AnchoredPosition: {x: 488, y: -410}
   m_SizeDelta: {x: 916, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &46144052
@@ -374,12 +374,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18858633e88dbb1489249561118cd5c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgeDropdown: {fileID: 654673627}
-  GenderDropdown: {fileID: 2120541055}
-  EducationDropdown: {fileID: 1366104845}
-  SleepDropdown: {fileID: 366000145}
-  DigitalUsageDropdown: {fileID: 355041852}
-  SaveButton: {fileID: 1324412774}
+  _ageDropdown: {fileID: 654673627}
+  _genderDropdown: {fileID: 1366104845}
+  _educationDropdown: {fileID: 2120541055}
+  _sleepDropdown: {fileID: 366000145}
+  _digitalUsageDropdown: {fileID: 355041852}
+  _saveButton: {fileID: 1324412774}
 --- !u!114 &255998281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041F\u043E\u043B"
+  m_text: "\u041E\u0431\u0440\u0430\u0437\u043E\u0432\u0430\u043D\u0438\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d57e3833dde6e4a45bc64af3c7a64d20, type: 2}
   m_sharedMaterial: {fileID: 3979413414766746391, guid: d57e3833dde6e4a45bc64af3c7a64d20, type: 2}
@@ -943,7 +943,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u043E\u0437\u0440\u0430\u0441\u0442"
+  m_text: "\u041F\u043E\u043B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d57e3833dde6e4a45bc64af3c7a64d20, type: 2}
   m_sharedMaterial: {fileID: 3979413414766746391, guid: d57e3833dde6e4a45bc64af3c7a64d20, type: 2}
@@ -1165,7 +1165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 488, y: -410}
+  m_AnchoredPosition: {x: 488, y: -650}
   m_SizeDelta: {x: 916, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1250687762
@@ -2290,10 +2290,10 @@ PrefabInstance:
       addedObject: {fileID: 1340048239}
     - targetCorrespondingSourceObject: {fileID: 2064776241981011126, guid: ed5c77a0ee9acf741aae56d65a159d92, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1250687761}
+      addedObject: {fileID: 46144051}
     - targetCorrespondingSourceObject: {fileID: 2064776241981011126, guid: ed5c77a0ee9acf741aae56d65a159d92, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 46144051}
+      addedObject: {fileID: 1250687761}
     - targetCorrespondingSourceObject: {fileID: 2064776241981011126, guid: ed5c77a0ee9acf741aae56d65a159d92, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1553440924}

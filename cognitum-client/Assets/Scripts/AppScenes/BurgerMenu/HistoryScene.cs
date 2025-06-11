@@ -9,19 +9,16 @@ public class HistoryScene : MonoBehaviour
 
   private Stack<string> _sceneHistory = new Stack<string>();
 
-  private float _lastBackPressedTime = -1f; // Время последнего нажатия Escape
-  private float _doublePressPeriod = 1.5f; // интервал между нажатиями
+  private float _lastBackPressedTime = -1f;
+  private float _doublePressPeriod = 1.5f;
 
   void Awake()
   {
     if (_instance == null)
     {
-      // если пустой, то этот станет оригиналом
       _instance = this;
-      // запрещаем удаления при загрузке другой сцены
       DontDestroyOnLoad(gameObject);
 
-      // Подписка на событие загрузки сцены
       SceneManager.sceneLoaded += OnSceneLoaded;
 
       string nameScene = SceneManager.GetActiveScene().name;
@@ -30,25 +27,20 @@ public class HistoryScene : MonoBehaviour
     }
     else
     {
-      // если оригинал есть, то этот удалим
       Destroy(gameObject);
     }
   }
 
-  // Метод вызывается автоматически при каждой полной загрузке новой сцены
   private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
   {
-    // Игнорируем аддитивную загрузку
     if (mode == LoadSceneMode.Additive)
       return;
 
     string sceneName = scene.name;
 
-    // Пропускаем игровые и итоговые сцены
     if (GameDataManager.IsGameScene(sceneName) || sceneName == SceneNames.EndGame)
       return;
 
-    // Запоминаем сцену, если это не дубль
     if (_sceneHistory.Count == 0 || _sceneHistory.Peek() != sceneName)
     {
       _sceneHistory.Push(sceneName);
@@ -79,7 +71,6 @@ public class HistoryScene : MonoBehaviour
     }
     else
     {
-      // Если стек пуст или одна сцена — ждём повторное нажатие
       if (Time.time - _lastBackPressedTime < _doublePressPeriod)
       {
         Application.Quit();

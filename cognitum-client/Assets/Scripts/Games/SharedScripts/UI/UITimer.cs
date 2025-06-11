@@ -55,35 +55,3 @@ public class UITimer : MonoBehaviour
     _fillRect.sizeDelta = new Vector2(newWidth, _originalSize.y);
   }
 }
-  //public void UpdateTimerQuestion(float normalizedTime)
-  //{
-  //  _timeQuestionImage.fillAmount = normalizedTime;
-
-  //  if (normalizedTime <= 0f)
-  //  {
-  //    if (_lastAlpha != 0f)
-  //    {
-  //      _timeQuestionImage.canvasRenderer.SetAlpha(0f);
-  //      _timeQuestionImageBack.canvasRenderer.SetAlpha(0f);
-  //      _lastAlpha = 0f;
-  //    }
-  //  }
-  //  else
-  //  {
-  //    if (_lastAlpha != 1f)
-  //    {
-  //      _timeQuestionImage.canvasRenderer.SetAlpha(1f);
-  //      _timeQuestionImageBack.canvasRenderer.SetAlpha(1f);
-  //      _lastAlpha = 1f;
-  //    }
-
-  //    if (normalizedTime > 0.5f)
-  //    {
-  //      _timeQuestionImage.color = Color.Lerp(Color.green, Color.yellow, 1 - (normalizedTime - 0.5f) * 2);
-  //    }
-  //    else
-  //    {
-  //      _timeQuestionImage.color = Color.Lerp(Color.yellow, Color.red, 1 - normalizedTime * 2);
-  //    }
-  //  }
-  //}

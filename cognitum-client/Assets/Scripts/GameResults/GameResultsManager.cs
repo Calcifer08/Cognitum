@@ -4,26 +4,19 @@ using UnityEngine;
 
 public class GameResultsManager
 {
-  //  оличество правильных и неправильных ответов
   private static int _correctAnswers = 0;
   private static int _incorrectAnswers = 0;
   private static int _skippedAnswers = 0;
 
-  //  оличество успешно пройденных и не пройденных уровней
   private static int _winLevels = 0;
   private static int _failLevels = 0;
 
-  // ћинимальный и максимальный достигнутый уровень
   private static int _minLevelReached = 1;
   private static int _maxLevelReached = 1;
 
-  // ќчки, набранные за сессию
   private static int _totalScore = 0;
   private static int _maxScore = 0;
 
-  /// <summary>
-  /// «адаЄт начальные значени€.
-  /// </summary>
   public static void InitResults(int level)
   {
     ResetResults();
@@ -31,17 +24,11 @@ public class GameResultsManager
     _maxLevelReached = level;
   }
 
-  /// <summary>
-  /// ”величивает количество правильных ответов.
-  /// </summary>
   public static void AddCorrectAnswer()
   {
     _correctAnswers++;
   }
 
-  /// <summary>
-  /// ”величивает количество неправильных ответов.
-  /// </summary>
   public static void AddIncorrectAnswer()
   {
     _incorrectAnswers++;
@@ -52,36 +39,24 @@ public class GameResultsManager
     _skippedAnswers++;
   }
 
-  /// <summary>
-  /// ƒобавл€ет успешное прохождение уровн€ и обновл€ет максимальный/минимальный достигнутый уровень.
-  /// </summary>
   public static void AddWinLevel(int level)
   {
     _winLevels++;
     UpdateLevelBounds(level);
   }
 
-  /// <summary>
-  /// ƒобавл€ет неуспешное прохождение уровн€ и обновл€ет максимальный/минимальный достигнутый уровень.
-  /// </summary>
   public static void AddFailLevel(int level)
   {
     _failLevels++;
     UpdateLevelBounds(level);
   }
 
-  /// <summary>
-  /// ќбновл€ет границы минимального и максимального уровней.
-  /// </summary>
   private static void UpdateLevelBounds(int level)
   {
     if (level < _minLevelReached) _minLevelReached = level;
     if (level > _maxLevelReached) _maxLevelReached = level;
   }
 
-  /// <summary>
-  /// ƒобавл€ет очки.
-  /// </summary>
   public static void SetScore(int score)
   {
     _totalScore = score;
@@ -92,7 +67,6 @@ public class GameResultsManager
     _maxScore = score;
   }
 
-  // ћетоды дл€ получени€ текущих значений статистики
   public static int GetCorrectAnswers() => _correctAnswers;
   public static int GetIncorrectAnswers() => _incorrectAnswers;
   public static int GetSkippedAnswers() => _skippedAnswers;
@@ -103,9 +77,6 @@ public class GameResultsManager
   public static int GetTotalScore() => _totalScore;
   public static int GetMaxScore() => _maxScore;
 
-  /// <summary>
-  /// ¬ыводит результаты статистики.
-  /// </summary>
   public static string GetResults()
   {
     string results = $"Ќабрано очков: {_totalScore}\n";
@@ -128,9 +99,6 @@ public class GameResultsManager
     return results;
   }
 
-  /// <summary>
-  /// ¬озвращает достижение игрока по приоритету
-  /// </summary>
   public static string GetAchievement()
   {
     if (_totalScore > _maxScore)
@@ -149,9 +117,6 @@ public class GameResultsManager
     return "’ороша€ работа!";
   }
 
-  /// <summary>
-  /// —брасывает все значени€ статистики.
-  /// </summary>
   public static void ResetResults()
   {
     _correctAnswers = 0;

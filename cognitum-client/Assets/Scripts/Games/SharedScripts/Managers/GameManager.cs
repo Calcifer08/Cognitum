@@ -14,24 +14,20 @@ public class GameManager : MonoBehaviour
 
   private string _nameGame;
 
-  private int _countGame; // уст из файла при старте // чтоб генерить сиды для уровней
-  private int _level = 1; // уст из файла при старте
-  private int _maxLevel; // уст в игр скрип
-  //private int _streakCorrectQuestionsToLevelUp; // уст в игр скрип // число правильных вопросов подряд, чтобы повысить лвл
+  private int _countGame;
+  private int _level = 1;
+  private int _maxLevel;
   private int _correctQuestions = 0;
-  //private int _correctAnswersToQuestion;
   [SerializeField] private int _correctAnswers = 0;
-  //private int _сountMistakesToLevelDown; // число неправильных ответов подряд, чтобы снизить лвл
   private int _mistakes = 0;
   private int _countMistakesForQuestion = 0;
   private int _numberQuestion = 0;
 
   private List<float> _reactionTimes = new List<float>();
-  private float _startPhaseAnswer; // время конца последнего вопроса или ответа (для расчёта времени реакции)
+  private float _startPhaseAnswer;
 
   private void Awake()
   {
-    // отписки не нужны, т.к. все объекты живут одинаково
     _timerManager.OnGameTimeOver += SaveSession;
     _timerManager.OnPauseStarted += _logSessionManager.AddPauseStartToLog;
     _timerManager.OnPauseEnded += _logSessionManager.AddPauseEndToLog;
@@ -42,7 +38,7 @@ public class GameManager : MonoBehaviour
 
   private void Start()
   {
-    _nameGame = _gameBuilder.NameGame; // для удобства
+    _nameGame = _gameBuilder.NameGame;
     GameConfig gameConfig = GameConfigManager.GetGameConfig(_nameGame);
     _level = gameConfig.CurrentLevel;
     _countGame = gameConfig.CountGame;
@@ -66,8 +62,6 @@ public class GameManager : MonoBehaviour
 
     _logSessionManager.StartGameSessionLog(startGame);
 
-    // передаём такой статус, просто потому что не хочется пока делать флаг начала игры,
-    // ну и это значение не вызывается нигде, кроме конца игры
     UpdateLevel(StatusLevelList._);
   }
 
@@ -91,19 +85,16 @@ public class GameManager : MonoBehaviour
 
     _progressManager.AddPointsForCorrectAnswer();
     _correctAnswers++;
-    //_mistakes = 0; // сбрасываем ошибки
     GameResultsManager.AddCorrectAnswer();
-    UpdateScore(); // убрать, если не будет ответов в ui
+    UpdateScore();
 
-    // если дали все ответы на вопрос
     if (_correctAnswers >= _gameBuilder.CountAnswersToQuestion)
     {
-      _timerManager.CancelAnswerTimer(); // если таймер был запущен
+      _timerManager.CancelAnswerTimer();
       _logSessionManager.AddAnswerPhaseEndToLog(_numberQuestion, StatusQuestionList.Win);
       _correctQuestions++;
       UpdateScore();
 
-      // если ответили на все вопросы и можем повысить лвл
       if (_correctQuestions >= _gameBuilder.StreakCorrectQuestionsToLevelUp)
       {
         if (_level < _maxLevel)
@@ -134,9 +125,8 @@ public class GameManager : MonoBehaviour
     _progressManager.SubtractPointsForIncorrectAnswer();
     _mistakes++;
     _countMistakesForQuestion++;
-    _correctQuestions = 0; //сбрасываем правильные вопросы
+    _correctQuestions = 0;
 
-    // т.к. это не ошибочный ответ, а просто его отсутствие
     if (isTimeOut)
     {
       GameResultsManager.AddSkippedAnswer();
@@ -148,7 +138,6 @@ public class GameManager : MonoBehaviour
     UpdateScore();
 
     bool isQuestionFailed = _countMistakesForQuestion >= _gameBuilder.CountMistakesForQuestion || isTimeOut;
-    // если достигли макса неправильных ответов на вопрос
     if (isQuestionFailed)
     {
       if (isTimeOut)
@@ -157,12 +146,11 @@ public class GameManager : MonoBehaviour
       }
       else
       {
-        _timerManager.CancelAnswerTimer(); // если таймер был запущен
+        _timerManager.CancelAnswerTimer();
         _logSessionManager.AddAnswerPhaseEndToLog(_numberQuestion, StatusQuestionList.Fail);
       }
     }
 
-    // если достигли макса неправильных ответов на весь уровень
     if (_mistakes >= _gameBuilder.CountMistakesToLevelDown)
     {
       if (_level > 1)
@@ -177,7 +165,6 @@ public class GameManager : MonoBehaviour
     }
     else
     {
-      // если надо обновить вопрос
       if (isQuestionFailed)
       {
         yield return StartCoroutine(UpdateGameZoneStateCoroutine(false));
@@ -199,12 +186,10 @@ public class GameManager : MonoBehaviour
 
   private void UpdateLevel(StatusLevelList status)
   {
-    _numberQuestion = 0; // обнуляем для новго уровня
-    _correctQuestions = 0; // сбрасываем для нового уровня/раунда
-    //_correctAnswers = 0; // всё равно сбросим в вопросе
+    _numberQuestion = 0;
+    _correctQuestions = 0;
     _mistakes = 0;
 
-    //  ибо StatusLevelList._ просто заглушка для старта
     if (status != StatusLevelList._)
     {
       LevelResults levelResults = new LevelResults()
@@ -216,11 +201,10 @@ public class GameManager : MonoBehaviour
       _logSessionManager.LevelResultsLog(levelResults);
     }
 
-    //SetDataFromGame();
     _gameBuilder.GameSetLevel(_level);
 
     _progressManager.UpdateLevel(_level);
-    _progressManager.UpdatePointsForLevel(_level); // обновляем очки под текущий уровень
+    _progressManager.UpdatePointsForLevel(_level);
     UpdateScore();
 
     LevelData levelData = new LevelData(
@@ -247,7 +231,6 @@ public class GameManager : MonoBehaviour
     _progressManager.UpdateMistake(_mistakes, _gameBuilder.CountMistakesToLevelDown);
   }
 
-  // должен добавить вопрос из игрового скрипта, если вопроса нет, то ничего не делает
   private void UpdateQuestion()
   {
     if (_numberQuestion != 0)
@@ -276,7 +259,6 @@ public class GameManager : MonoBehaviour
 
   private IEnumerator RunGamePhasesCoroutine()
   {
-    // если есть фаза запоминания
     if (_gameBuilder.TimeMemorizePhase > 0f)
     {
       _logSessionManager.AddMemorizePhaseStartToLog(_numberQuestion, _gameBuilder.TimeMemorizePhase);
@@ -284,7 +266,6 @@ public class GameManager : MonoBehaviour
       _logSessionManager.AddMemorizePhaseEndToLog(_numberQuestion);
     }
 
-    // если есть фаза забывания
     if (_gameBuilder.TimeForgetPhase > 0f)
     {
       _logSessionManager.AddForgetPhaseStartToLog(_numberQuestion, _gameBuilder.TimeForgetPhase);
@@ -292,7 +273,6 @@ public class GameManager : MonoBehaviour
       _logSessionManager.AddForgetPhaseEndToLog(_numberQuestion);
     }
 
-    // если есть время на ответы
     if (_gameBuilder.TimeAnswerPhase > 0f)
     {
       _timerManager.SetTimerQuestion(_gameBuilder.TimeAnswerPhase);
@@ -312,15 +292,12 @@ public class GameManager : MonoBehaviour
 
     _reactionTimes.Add(answerData.ReactionTime);
 
-    //LogLevelEvents events = new LogLevelEvents(TagsList.AnswerSubmitted, GetTimeString(), answerData);
-
-    //_logSessionManager.AddEventToCurrentLevel(events);
     _logSessionManager.AddAnswerToLog(answerData);
   }
 
   public void SaveSession()
   {
-    _countGame++; // повышаем число сыгранных игр
+    _countGame++;
 
     LevelResults levelResults = new LevelResults()
     {
@@ -330,23 +307,19 @@ public class GameManager : MonoBehaviour
 
     _logSessionManager.LevelResultsLog(levelResults);
 
-    _logSessionManager.EndGameSessionLog(); // сохраняем лог
+    _logSessionManager.EndGameSessionLog();
 
-    // сделал синхронным, ибо не много данных
-    _ = GameSessionManager.SaveSessionDataAsync(_nameGame, _progressManager.Score, _level); // перенести очки из score
+    _ = GameSessionManager.SaveSessionDataAsync(_nameGame, _progressManager.Score, _level);
 
     GameResultsManager.SetScore(_progressManager.Score);
     GameResultsManager.SetMaxScore(GameConfigManager.GetGameConfig(_nameGame).MaxScore);
 
-    // мне не надо ждать его заверешения на этой сцене, так что можно запустить без ожидания заверешения
-    // _ = просто заглушка предупрежедния
     _ = GameConfigManager.UpdateConfigForGameAsync(_nameGame, _level, _countGame, _progressManager.Score);
 
     Time.timeScale = 1f;
     SceneManager.LoadScene(SceneNames.EndGame);
   }
 
-  // раньше возвращал nan, если было пусто, заменил на -1, ибо в монгоДБ не принимается nan в число
   private float CalculateReactionTime()
   {
     if (_reactionTimes.Count == 0)

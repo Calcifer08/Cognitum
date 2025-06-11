@@ -9,18 +9,12 @@ public static class GameDataManager
 {
   private static GamesData _gamesData;
 
-  // Словарь для быстрого доступа: GameId -> имя сцены
   private static Dictionary<string, string> _gameIdToSceneName = new();
 
-  // Хешсет всех имён сцен для быстрой проверки
   private static HashSet<string> _allSceneNames = new();
 
-  // Флаг инициализации
   public static bool IsInitialized { get; private set; } = false;
 
-  /// <summary>
-  /// Инициализация менеджера — сохраняем GamesData и заполняем вспомогательные словари.
-  /// </summary>
   public static void Initialize(GamesData gamesData)
   {
     if (IsInitialized)
@@ -40,9 +34,6 @@ public static class GameDataManager
     IsInitialized = true;
   }
 
-  /// <summary>
-  /// Получить ссылку на GamesData, если нужно вручную обойти категории и игры.
-  /// </summary>
   public static GamesData GetGamesData()
   {
     if (_gamesData == null)
@@ -53,10 +44,7 @@ public static class GameDataManager
     return _gamesData;
   }
 
-  /// <summary>
-  /// Получить имя сцены по GameId.
-  /// </summary>
-  public static string GetSceneName(string gameId)
+  public static string GetSceneNameByID(string gameId)
   {
     if (_gameIdToSceneName.TryGetValue(gameId, out var sceneName))
     {
@@ -67,9 +55,6 @@ public static class GameDataManager
     return null;
   }
 
-  /// <summary>
-  /// Проверить, является ли имя сцены сценой игры.
-  /// </summary>
   public static bool IsGameScene(string sceneName)
   {
     return _allSceneNames.Contains(sceneName);

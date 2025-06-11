@@ -6,25 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-  // для ui таймера
   [SerializeField] private UITimer _uiTimer;
   [SerializeField] private TimerManager _timerManager;
 
-  // для ui прогресса
   [SerializeField] private UIProgress _uiProgress;
 
-  // для ui туториала
   [SerializeField] private UITutorial _uiTutorial;
 
 
-  // взаимодействие с менеджером таймера
   public void SetPause(bool isPause)
   {
     _timerManager.SetPause(isPause);
   }
 
 
-  // UI таймера
   public void UpdateTimerSession(int minutes, int seconds)
   {
     _uiTimer.UpdateTimerSession(minutes, seconds);
@@ -37,7 +32,6 @@ public class UIManager : MonoBehaviour
   
 
 
-  // UI прогресса
   public void UpdateScore(int score)
   {
     _uiProgress.UpdateScore(score);

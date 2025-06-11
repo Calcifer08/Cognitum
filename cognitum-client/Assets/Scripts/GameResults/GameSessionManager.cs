@@ -10,11 +10,9 @@ public static class GameSessionManager
   private static readonly string FilePath = Path.Combine(Application.persistentDataPath, FileName);
   private static SessionsData _sessionData;
 
-  // Инициализация данных при первом вызове
-  // Асинхронная инициализация данных
   public static async Task InitializeAsync()
   {
-    if (_sessionData == null) // Проверяем, загружены ли данные
+    if (_sessionData == null)
     {
       await LoadDataAsync();
     }
@@ -44,13 +42,11 @@ public static class GameSessionManager
   {
     string date = System.DateTime.Now.ToString("yyyy-MM-dd");
 
-    // Если такой игры нет
     if (!_sessionData.Sessions.ContainsKey(nameGame))
     {
       _sessionData.Sessions[nameGame] = new Dictionary<string, List<GameSession>>();
     }
 
-    // Если такой даты нет
     if (!_sessionData.Sessions[nameGame].ContainsKey(date))
     {
       _sessionData.Sessions[nameGame][date] = new List<GameSession>();

@@ -26,20 +26,16 @@ public class AppSettingsUI : MonoBehaviour
 
   private void Awake()
   {
-    // если загрузили во время игры
     if (SceneManager.sceneCount > 1)
     {
-      // системы 2 эвентов и слушателей не хорошо (но юнити успевает заметить их)
       _eventSystem.gameObject.SetActive(false);
       _audioListener.gameObject.SetActive(false);
 
-      // кнопка специально для игрового открытия настроек
       _backButton.gameObject.SetActive(true);
       _backButton.onClick.AddListener(() => SceneManager.UnloadSceneAsync(SceneNames.Settings));
     }
     else
     {
-      // т.к. на сцене отключил, ибо юнити успевает в игре увидеть 2 системы
       _eventSystem.gameObject.SetActive(true);
       _audioListener.gameObject.SetActive(true);
     }
@@ -116,12 +112,8 @@ public class AppSettingsUI : MonoBehaviour
     _volumeLabel.text = value * 100f + "%";
   }
 
-  /// <summary>
-  /// Обработка включения/выключения уведомлений
-  /// </summary>
   private void OnNotificationToggleChanged(bool isOn)
   {
-    // если вернёт false,то надо снять галку
     bool isHasPermission = AppSettingsManager.SetNotificationsEnabled(isOn);
 
     if (!isHasPermission)
@@ -130,15 +122,12 @@ public class AppSettingsUI : MonoBehaviour
       _notificationToggle.isOn = isOn;
     }
 
-    _notifyTimeContainer.SetActive(isOn); // Показать/скрыть блок времени
+    _notifyTimeContainer.SetActive(isOn);
 
     if (isOn)
       OnTimeDropdownChanged(0);
   }
 
-  /// <summary>
-  /// Обработка изменения времени уведомлений
-  /// </summary>
   private void OnTimeDropdownChanged(int _)
   {
     if (_notificationToggle.isOn)

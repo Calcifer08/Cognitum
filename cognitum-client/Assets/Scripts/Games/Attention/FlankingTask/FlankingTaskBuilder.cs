@@ -20,11 +20,11 @@ public class FlankingTaskBuilder : AbstractGameBuilder
   [SerializeField] private List<Transform> _verticalPositions;
   [SerializeField] private Image _imageInvertDirection;
 
-  private List<string> _layoutTypeList; // "Vertical", "Horizontal", "Cross"
+  private List<string> _layoutTypeList;
 
   private string _layoutType;
 
-  private float _invertDirectionChance = 0f; // вероятность инвертирования направления цели (доп. условие)
+  private float _invertDirectionChance = 0f;
 
   private bool _isInvert = false;
 
@@ -125,15 +125,12 @@ public class FlankingTaskBuilder : AbstractGameBuilder
     ClearArrowsFromPositions(_horizontalPositions);
     ClearArrowsFromPositions(_verticalPositions);
 
-    // Выбираем макет
     _layoutType = _layoutTypeList[Rand.Next(0, _layoutTypeList.Count)];
 
-    // Выбираем направление цели
     string targetDirection = GetRandomDirection();
 
     RotateArrow(_targetFlanker, targetDirection);
 
-    // Определяем, нужно ли инвертировать направление
     _isInvert = Rand.NextDouble() < _invertDirectionChance;
     string finalTargetDirection;
 
@@ -148,10 +145,8 @@ public class FlankingTaskBuilder : AbstractGameBuilder
       _imageInvertDirection.canvasRenderer.SetAlpha(0f);
     }
 
-    // Получаем список позиций по текущему layout
     List<Transform> positions = GetPositionsByLayout(_layoutType);
 
-    // Спавним стрелки
     bool isFlankerDirection = Rand.NextDouble() < 0.5;
     string flankerDirection = isFlankerDirection ? finalTargetDirection : GetOppositeDirection(finalTargetDirection);
 
@@ -208,7 +203,6 @@ public class FlankingTaskBuilder : AbstractGameBuilder
     };
   }
 
-  // Метод для поворота стрелки
   private void RotateArrow(GameObject arrow, string direction)
   {
     float zRotation = direction switch

@@ -6,7 +6,6 @@ public class SendLogAfterGame : MonoBehaviour
 {
   async void Start()
   {
-    // иначе при смене сцены - прервётся отправка
     DontDestroyOnLoad(gameObject);
 
     await LogUploadManager.SendAllLogsAsync();

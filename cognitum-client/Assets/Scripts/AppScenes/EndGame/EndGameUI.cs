@@ -16,7 +16,7 @@ public class EndGameUI : MonoBehaviour
   void Start()
   {
     string gameId = SelectedGameData.SelectedGameId;
-    string sceneToLoad = GameDataManager.GetSceneName(gameId);
+    string sceneToLoad = GameDataManager.GetSceneNameByID(gameId);
 
     _achievementResult.text = GameResultsManager.GetAchievement();
     _textResult.text = GameResultsManager.GetResults();

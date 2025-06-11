@@ -14,16 +14,14 @@ public static class PlayerDataManager
   public const string FileName = "PlayerData.json";
   private static readonly string FilePath = Path.Combine(Application.persistentDataPath, FileName);
 
-  // Инициализация данных игрока, если они ещё не загружены
   public static async Task InitializeAsync()
   {
-    if (_playerData == null) // Проверяем, загружены ли данные
+    if (_playerData == null)
     {
       await LoadPlayerDataAsync();
     }
   }
 
-  // Асинхронная загрузка данных игрока из файла
   private static async Task LoadPlayerDataAsync()
   {
     if (File.Exists(FilePath))
@@ -34,14 +32,13 @@ public static class PlayerDataManager
     }
     else
     {
-      string userId = GetUserIdFromToken(AuthManager.GetAccessToken()); // Получаем ID из токена
+      string userId = GetUserIdFromToken(AuthManager.GetAccessToken());
       _playerData = new PlayerData(userId);
-      await SavePlayerDataAsync(_playerData, false); // Сразу сохраняем
+      await SavePlayerDataAsync(_playerData, false);
       Debug.Log("Файл профиля игрока не найден. Создан новый");
     }
   }
 
-  // Возвращает данные игрока
   public static PlayerData GetPlayerData()
   {
     return _playerData;
@@ -65,9 +62,8 @@ public static class PlayerDataManager
         throw new ArgumentException("Неверный JWT токен");
 
       string payload = Base64UrlDecode(parts[1]);
-      var payloadObj = JsonConvert.DeserializeObject<JObject>(payload);  // Используем JObject вместо dynamic
+      var payloadObj = JsonConvert.DeserializeObject<JObject>(payload);
 
-      // Если нет userId, выбрасываем исключение
       if (payloadObj?["userId"] == null)
       {
         throw new ArgumentException("Токен не содержит userId");
@@ -78,13 +74,10 @@ public static class PlayerDataManager
     catch (Exception e)
     {
       Debug.LogError("Ошибка при разборе JWT: " + e.Message);
-      throw;  // Перебрасываем исключение выше
+      throw;
     }
   }
 
-  /// <summary>
-  /// Декодирует строку из Base64Url.
-  /// </summary>
   private static string Base64UrlDecode(string input)
   {
     string base64 = input.Replace('-', '+').Replace('_', '/');
@@ -96,7 +89,6 @@ public static class PlayerDataManager
     return Encoding.UTF8.GetString(Convert.FromBase64String(base64));
   }
 
-  // Метод сохранения данных (локально + на сервер)
   public static async Task SavePlayerDataAsync(PlayerData playerData, bool isSendToServer)
   {
     if (playerData == null)
@@ -124,7 +116,6 @@ public static class PlayerDataManager
     }
   }
 
-  // Отправка данных на сервер
   private static async Task<bool> SendProfileDataAsync(string json, int retryCount = 0)
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -149,15 +140,11 @@ public static class PlayerDataManager
       request.SetRequestHeader("Authorization", $"Bearer {token}");
       request.SetRequestHeader("Content-Type", "application/json");
 
-      // await request.SendWebRequest(); // не может вернуть await
-      //request.SendWebRequest();
-
       var operation = request.SendWebRequest();
 
-      // Ожидаем завершения на каждом шаге
       while (!operation.isDone)
       {
-        await Task.Yield();  // Освобождаем поток для других задач
+        await Task.Yield();
       }
 
       if (request.result == UnityWebRequest.Result.Success)
@@ -172,9 +159,6 @@ public static class PlayerDataManager
     }
   }
 
-  /// <summary>
-  /// Обрабатывает ошибки при отправке данных игрока.
-  /// </summary>
   private static async Task<bool> HandleSaveDataErrorAsync(UnityWebRequest request, string json, int retryCount)
   {
     if (request.responseCode == 0)
@@ -226,9 +210,6 @@ public static class PlayerDataManager
     }
   }
 
-  /// <summary>
-  /// Синхронизириует неотправленные данные профиля
-  /// </summary>
   public static async Task<bool> SendPlayerDataFromQueueAsync()
   {
     if (_playerData == null)

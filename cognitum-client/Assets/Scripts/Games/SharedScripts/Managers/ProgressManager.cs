@@ -15,7 +15,6 @@ public class ProgressManager : MonoBehaviour
   private int _levelWinPoints = 5;
   private int _levelFailPoints = 3;
 
-  // обновляем очки под уровень
   public void UpdatePointsForLevel(int level)
   {
     _сorrectAnswerPoint = 3 * level;
@@ -70,7 +69,6 @@ public class ProgressManager : MonoBehaviour
     _uiMananger.UpdateCorrect(correct, maxCorrect);
   }
 
-  // отображает правильность ответа (пока только цвет, но может потом и ожидаемый ответ)
   public IEnumerator DisplayResultCoroutine(bool isGreen, float resultDisplayTime)
   {
    yield return _uiMananger.DisplayResultCoroutine(isGreen, resultDisplayTime);

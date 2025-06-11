@@ -17,7 +17,6 @@ public static class AppSettingsManager
       await LoadConfigAsync();
 
 
-      // Проверка разрешения при первом запуске
       bool isHasPermission = NotificationManager.HasNotificationPermission();
 
       if (!isHasPermission)
@@ -25,8 +24,6 @@ public static class AppSettingsManager
         NotificationManager.RequestNotificationPermissionIfNeeded();
       }
 
-      // Если разрешение есть — включаем уведомления согласно конфигу
-      // Если нет — принудительно отключаем
       bool isEnableNotifications = isHasPermission && _settings.Notifications.Enabled;
 
       SetNotificationsEnabled(isEnableNotifications);
@@ -55,13 +52,12 @@ public static class AppSettingsManager
     return _settings;
   }
 
-  // Асинхронное сохранение настроек
   public static async Task SaveSettingsAsync()
   {
     try
     {
 #if !UNITY_EDITOR
-    string json = JsonConvert.SerializeObject(_config, Formatting.None);
+    string json = JsonConvert.SerializeObject(_settings, Formatting.None);
 #elif UNITY_EDITOR
       string json = JsonConvert.SerializeObject(_settings, Formatting.Indented);
 #endif
@@ -89,19 +85,15 @@ public static class AppSettingsManager
   {
     if (enabled)
     {
-      // Проверка перед включением
       if (!NotificationManager.HasNotificationPermission())
       {
-        // Принудительно откатываем включение
         _settings.Notifications.Enabled = false;
 
-        // Открываем настройки уведомлений
         NotificationManager.OpenNotificationSettings();
 
         return false;
       }
 
-      // Только если разрешение есть — сохраняем и продолжаем
       _settings.Notifications.Enabled = true;
     }
     else

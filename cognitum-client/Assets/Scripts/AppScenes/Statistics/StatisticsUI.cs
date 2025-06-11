@@ -37,7 +37,6 @@ public class StatisticsUI : MonoBehaviour
     _manager = new StatisticsUIManager();
     await _manager.InitAsync();
 
-    // если сменили сцену
     if (this == null) return;
 
     InitCategoryDropdown();
@@ -55,7 +54,6 @@ public class StatisticsUI : MonoBehaviour
     _text.gameObject.SetActive(false);
     _graphContainer.SetActive(false);
 
-    // т.к. не хочет обновляться сразу
     LayoutRebuilder.ForceRebuildLayoutImmediate(_content.GetComponent<RectTransform>());
   }
 

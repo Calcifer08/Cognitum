@@ -11,10 +11,10 @@ public static class DataSyncManager
   private static readonly string _pendingFilesPath = Path.Combine(Application.persistentDataPath, FileName);
   private static HashSet<string> _pendingFiles = new HashSet<string>();
   private static bool _isSending = false;
-  private static int _timeWait = 30 * 1000; // для Task.Delay
+  private static int _timeWait = 30 * 1000;
 
   /// <summary>
-  /// Инициализация: загружаем список неотправленных файлов и пытаемся отправить.
+  /// Инициализация: загружает список неотправленных файлов и пытается отправить.
   /// </summary>
   public static async Task InitializeAsync()
   {
@@ -22,9 +22,6 @@ public static class DataSyncManager
     await TrySendDataAsync();
   }
 
-  /// <summary>
-  /// Загружает список неотправленных файлов из файла в память.
-  /// </summary>
   private static async Task LoadPendingFilesAsync()
   {
     if (File.Exists(_pendingFilesPath))
@@ -34,32 +31,23 @@ public static class DataSyncManager
     }
   }
 
-  /// <summary>
-  /// Сохраняет список неотправленных файлов в файл.
-  /// </summary>
   private static async Task SavePendingFilesAsync()
   {
     string json = JsonConvert.SerializeObject(_pendingFiles);
     await File.WriteAllTextAsync(_pendingFilesPath, json);
   }
 
-  /// <summary>
-  /// Добавляет файл в очередь и сразу пытается отправить.
-  /// </summary>
   public static async Task AddFileToQueueAsync(string fileName)
   {
-    if (_pendingFiles.Add(fileName)) // Добавляем, если файла ещё нет в списке
+    if (_pendingFiles.Add(fileName))
     {
-      await SavePendingFilesAsync(); // Сохраняем обновлённый список
+      await SavePendingFilesAsync();
       Debug.Log($"Файл {fileName} добавлен в очередь на отправку.");
     }
     await Task.Delay(_timeWait);
     await TrySendDataAsync();
   }
 
-  /// <summary>
-  /// Проверяет интернет и отправляет данные.
-  /// </summary>
   private static async Task TrySendDataAsync()
   {
     if (_isSending) return;
@@ -77,7 +65,7 @@ public static class DataSyncManager
 
       Debug.LogWarning("Попытка синхронизации");
       _isSending = true;
-      List<string> filesToSend = new List<string>(_pendingFiles); // Копируем, чтобы не изменять коллекцию во время перебора
+      List<string> filesToSend = new List<string>(_pendingFiles);
 
       foreach (string file in filesToSend)
       {
@@ -86,13 +74,13 @@ public static class DataSyncManager
         if (success)
         {
           _pendingFiles.Remove(file);
-          await SavePendingFilesAsync(); // Обновляем файл после удаления
+          await SavePendingFilesAsync();
         }
         else
         {
           Debug.Log("Ошибка при отправке данных, будет произведена повторная попытка через 1 час.");
-          await Task.Delay(TimeSpan.FromHours(1)); // если сервер недоступен, то незачем спамить
-          break;  // Выход из текущего цикла, чтобы позже продолжить с новых данных
+          await Task.Delay(TimeSpan.FromHours(1));
+          break;
         }
       }
     }
@@ -100,9 +88,6 @@ public static class DataSyncManager
     _isSending = false;
   }
 
-  /// <summary>
-  /// Отправляет данные по имени файла.
-  /// </summary>
   private static async Task<bool> SendDataByFileNameAsync(string fileName)
   {
     switch (fileName)

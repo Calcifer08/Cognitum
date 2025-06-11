@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// в принципе, могу убрать
 public class ButtonAnswerFiller : MonoBehaviour
 {
   [SerializeField] private AbstractGameBuilder _gameBuilder;

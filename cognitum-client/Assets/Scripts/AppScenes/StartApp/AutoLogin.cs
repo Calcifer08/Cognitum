@@ -14,7 +14,6 @@ public class AutoLogin : MonoBehaviour
 
     if (!string.IsNullOrEmpty(accessToken))
     {
-      // т.к. GameStatisticsManager зависит от него
       while (!GameDataManager.IsInitialized)
       {
         await Task.Yield();
@@ -25,7 +24,7 @@ public class AutoLogin : MonoBehaviour
         GameConfigManager.InitializeAsync(),
         AppSettingsManager.InitializeAsync(),
         GameSessionManager.InitializeAsync(),
-        GameStatisticsManager.InitializeAsync() // обязательно сначала должен быть вызван GameDataInitializer
+        GameStatisticsManager.InitializeAsync()
       );
 
       _ = DataSyncManager.InitializeAsync();
@@ -34,13 +33,12 @@ public class AutoLogin : MonoBehaviour
     }
     else
     {
-      // т.к. GameStatisticsManager зависит от него
       while (!GameDataManager.IsInitialized)
       {
         await Task.Yield();
       }
 
-      GameStatisticsManager.InitializeCategoryList(); // в любом случае надо инициализировать
+      GameStatisticsManager.InitializeCategoryList();
       SceneManager.LoadScene(SceneNames.Authentication);
     }
   }

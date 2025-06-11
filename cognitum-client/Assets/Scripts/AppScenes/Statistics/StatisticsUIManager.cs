@@ -13,10 +13,8 @@ public class StatisticsUIManager
   {
     _gamesData = GameDataManager.GetGamesData();
 
-    // Асинхронно агрегируем данные
     await GameStatisticsManager.AggregateDateAsync();
 
-    // Подготавливаем список периодов
     _periodOptions = new List<DropdownOption<string>>
     {
       new DropdownOption<string>("Дни", "DailyAverage"),

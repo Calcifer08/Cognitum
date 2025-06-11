@@ -30,6 +30,10 @@ public class TMP_LinkHandler : MonoBehaviour, IPointerClickHandler
       {
         _authUI.SwitchToRegis();
       }
+      else if (linkID == "reset")
+      {
+        _authUI.SwitchToResetPassword();
+      }
     }
   }
 }

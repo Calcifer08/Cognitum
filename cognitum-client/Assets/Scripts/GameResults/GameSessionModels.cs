@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-// файл сыгранных игр
+// SessionsData.json
 
-/// <summary> Хранит данные по конкретной игровой сессии </summary>
+/// <summary> Данные по конкретной игровой сессии </summary>
 [System.Serializable]
 public class GameSession
 {
@@ -10,7 +10,7 @@ public class GameSession
   public int Level;
 }
 
-/// <summary> Класс для хранения всех игровых сесиий, которые не агрегированы </summary>
+/// <summary> Класс для результатов всех игровых сесиий, которые не агрегированы </summary>
 [System.Serializable]
 public class SessionsData
 {

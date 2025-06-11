@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 
-// файл статистики (агрегированных данных)
+// GameStatistics.json
 
 
-/// <summary> Хранит среднее по очкам </summary>
+/// <summary> Среднее по очкам </summary>
 [System.Serializable]
 public class DataStatistics
 {
   public int AverageScore;
 }
 
-/// <summary> Хранит агрегированные данные за дни/недели/месяцы <br/>
+/// <summary> Агрегированные данные за дни/недели/месяцы <br/>
 /// даты -> данные </summary>
 public class PeriodStatistics
 {
@@ -19,7 +19,7 @@ public class PeriodStatistics
   public Dictionary<string, DataStatistics> MonthlyAverage = new Dictionary<string, DataStatistics>();
 }
 
-/// <summary> Хранит статистику по одной игре и дату последнего обновления </summary>
+/// <summary> Статистика по одной игре и дата последнего обновления </summary>
 [System.Serializable]
 public class GameStatisticsEntry
 {
@@ -30,7 +30,7 @@ public class GameStatisticsEntry
   public PeriodStatistics Statistics = new PeriodStatistics();
 }
 
-/// <summary> Хранит все агрегированные данные по всем играм </summary>
+/// <summary> Все агрегированные данные по всем играм </summary>
 [System.Serializable]
 public class GameStatistics
 {

@@ -10,14 +10,12 @@ public class StroopWordBuilder : AbstractGameBuilder
 {
   [SerializeField] private TextMeshProUGUI _questionText;
 
-  // Список возможных названий цветов
   private readonly List<string> _colorNames = new List<string>
   {
     "Красный", "Зелёный", "Синий", "Жёлтый",
     "Оранжевый", "Фиолетовый", "Голубой", "Чёрный"
   };
 
-  // Сопоставление названий цветов с их фактическими значениями в Unity
   private readonly Dictionary<string, Color32> _colorDict = new Dictionary<string, Color32>
   {
     { "Красный", new Color32(239, 53, 68, 255) },
@@ -33,9 +31,8 @@ public class StroopWordBuilder : AbstractGameBuilder
   private int _minColors = 3;
   private float _maxTime = 3f;
   private float _minTime = 1f;
-  private double _chanceMatch = 0.5; // 50% совпадений
+  private double _chanceMatch = 0.5;
 
-  // Эти параметры будут вычисляться в CalculateLevelConfig
   private int _colorCount;
 
   private void Awake()
@@ -59,13 +56,10 @@ public class StroopWordBuilder : AbstractGameBuilder
 
   protected override void CalculateLevelConfig(int level)
   {
-    // ограничиваем, если передели не тот
     level = Mathf.Clamp(level, 1, MaxLevel);
 
-    // Рассчитываем количество цветов для текущего уровня
     _colorCount = Mathf.Clamp(_minColors + (level - 1), _minColors, _colorNames.Count);
 
-    // Рассчитываем время на ответ для текущего уровня
     float step = (_maxTime - _minTime) / (MaxLevel - 1);
     TimeAnswerPhase = _maxTime - step * (level - 1);
 

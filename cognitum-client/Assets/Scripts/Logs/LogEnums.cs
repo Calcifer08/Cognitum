@@ -20,8 +20,8 @@ public enum TagsList
   QuestionEnd,            // Конец показа вопроса
   MemorizePhaseStart,     // Начало фазы запоминания
   MemorizePhaseEnd,       // Конец фазы запоминания
-  ForgetPhaseStart,       // Начало фазы запоминания (когда вопрос закрыт)
-  ForgetPhaseEnd,         // Конец фазы запоминания (когда вопрос закрыт)
+  ForgetPhaseStart,       // Начало фазы запоминания (когда вопрос скрыт)
+  ForgetPhaseEnd,         // Конец фазы запоминания (когда вопрос скрыт)
   AnswerPhaseStart,       // Начало фазы ответа
   AnswerPhaseEnd,         // Конец фазы ответа
   AnswerSubmitted,        // Пользователь отправил ответ

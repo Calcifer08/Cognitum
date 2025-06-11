@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public class PlayerData
 {
-  public string UserID; // выдаёт сервер
+  public string UserID;
 
   [JsonConverter(typeof(StringEnumConverter))]
   public AgeGroup Age;
@@ -35,7 +35,6 @@ public class PlayerData
     DigitalUsage = DigitalUsageHours.Unknown;
   }
 
-  // Статический метод для получения строкового значения из перечисления
   public static string GetEnumMemberValue<T>(T value) where T : Enum
   {
     var enumType = typeof(T);
@@ -45,7 +44,6 @@ public class PlayerData
     return attributes.Length > 0 ? attributes[0].Value : enumName;
   }
 
-  // Перечисление для возраста
   public enum AgeGroup
   {
     [EnumMember(Value = "Не указано")]
@@ -76,7 +74,6 @@ public class PlayerData
     Age_66_Plus
   }
 
-  // Перечисление для пола
   public enum Genders
   {
     [EnumMember(Value = "Не указано")]
@@ -89,7 +86,6 @@ public class PlayerData
     Female
   }
 
-  // Перечисление для уровня образования
   public enum EducationLevel
   {
     [EnumMember(Value = "Не указано")]
@@ -105,7 +101,6 @@ public class PlayerData
     PostGrad
   }
 
-  // Перечисление для времени сна
   public enum SleepDuration
   {
     [EnumMember(Value = "Не указано")]
@@ -121,7 +116,6 @@ public class PlayerData
     Bad
   }
 
-  // Перечисление для времени использования цифровых устройств
   public enum DigitalUsageHours
   {
     [EnumMember(Value = "Не указано")]

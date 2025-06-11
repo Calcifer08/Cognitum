@@ -9,7 +9,7 @@ public static class APIConstants
 
   public static class ApiEndpoints
   {
-    private const string BaseUrl = "https://magical-deer-flying.ngrok-free.app/api";
+    private const string BaseUrl = "https://magical-deer-flying.ngrok-free.app/api"; //https://example.com/api
     public const string RegisterUrl = BaseUrl + "/auth/register";
     public const string LoginUrl = BaseUrl + "/auth/login";
     public const string LogoutUrl = BaseUrl + "/auth/logout";
@@ -18,5 +18,6 @@ public static class APIConstants
     public const string SavePlayerDataUrl = BaseUrl + "/player/update";
     public const string SaveGameConfigUrl = BaseUrl + "/game-config/update";
     public const string SaveGameStatisticksUrl = BaseUrl + "/statistics/update";
+    public const string PasswordResetRequestUrl = BaseUrl + "/password-reset/request";
   }
 }

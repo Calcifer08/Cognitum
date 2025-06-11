@@ -22,7 +22,7 @@ public class ButtonAnswerInputNumber : MonoBehaviour
 
     for (int i = 0; i < _buttonList.Count; i++)
     {
-      int index = i; // если не сделать локалку, то все лямбды будут ссылаться на одно и то же значение
+      int index = i;
 
       _buttonList[index].onClick.AddListener(() => UpdateAnswerText(index.ToString()[0]));
     }

@@ -4,7 +4,6 @@ public class AppSettings
 {
   public SoundSettings Sound = new SoundSettings();
   public NotificationSettings Notifications = new NotificationSettings();
-  // в будущем можно добавить другие блоки
 }
 
 [System.Serializable]

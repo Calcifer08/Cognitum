@@ -48,7 +48,7 @@ public class UITutorial : MonoBehaviour
     int countGame = GameConfigManager.GetGameConfig(SelectedGameData.SelectedGameId).CountGame;
     if (countGame == 0)
       OpenTutorial();
-    enabled = false; // отлкючаю монобех, но не класс
+    enabled = false;
   }
 
   public void OpenTutorial()
@@ -65,9 +65,6 @@ public class UITutorial : MonoBehaviour
     _tutorialMenu.SetActive(false);
   }
 
-  /// <summary>
-  /// Отображение текущей страницы
-  /// </summary>
   private void ShowPage()
   {
     var page = _pages[_currentIndex];
@@ -78,9 +75,6 @@ public class UITutorial : MonoBehaviour
     _nextPageButton.interactable = _currentIndex < _pages.Count - 1;
   }
 
-  /// <summary>
-  /// Переход к следующей странице
-  /// </summary>
   private void OnNextPage()
   {
     if (_currentIndex < _pages.Count - 1)
@@ -90,9 +84,6 @@ public class UITutorial : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Переход к предыдущей странице
-  /// </summary>
   private void OnPrevPage()
   {
     if (_currentIndex > 0)

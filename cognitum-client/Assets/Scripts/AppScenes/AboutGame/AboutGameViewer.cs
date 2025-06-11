@@ -21,7 +21,7 @@ public class AboutGameViewer : MonoBehaviour
   }
 
   /// <summary>
-  /// Загружаем туториал для выбранной игры по её GameId
+  /// Загружает туториал для выбранной игры по её GameId
   /// </summary>
   public void Init(string gameId)
   {
@@ -41,9 +41,6 @@ public class AboutGameViewer : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Обновляем текст и состояние кнопок
-  /// </summary>
   private void ShowPage()
   {
     _aboutGameText.text = _currentPages[_currentIndex];
@@ -52,9 +49,6 @@ public class AboutGameViewer : MonoBehaviour
     _nextButton.interactable = _currentIndex < _currentPages.Count - 1;
   }
 
-  /// <summary>
-  /// Перейти к следующей странице
-  /// </summary>
   public void OnNext()
   {
     if (_currentIndex < _currentPages.Count - 1)
@@ -64,9 +58,6 @@ public class AboutGameViewer : MonoBehaviour
     }
   }
 
-  /// <summary>
-  /// Перейти к предыдущей странице
-  /// </summary>
   public void OnPrev()
   {
     if (_currentIndex > 0)

@@ -3,8 +3,7 @@ using UnityEngine;
 public static class NotificationManager
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-    private static AndroidJavaClass _notificationClass;
-
+  private static AndroidJavaClass _notificationClass;
 
   private static AndroidJavaClass GetNotificationClass()
   {

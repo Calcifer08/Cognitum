@@ -3,10 +3,8 @@ using UnityEngine;
 public static class SecureStorage
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-  // Для работы с Android
   private static AndroidJavaClass secureStorageClass;
 
-  // Получение класса для SecureStorage в Android
   private static AndroidJavaClass GetSecureStorageClass()
   {
     if (secureStorageClass == null)
@@ -25,7 +23,6 @@ public static class SecureStorage
     return secureStorageClass;
   }
 
-  // Метод для сохранения данных
   public static bool SaveData(string key, string value)
   {
     var storage = GetSecureStorageClass();
@@ -46,7 +43,6 @@ public static class SecureStorage
     return false;
   }
 
-  // Метод для получения данных
   public static string GetData(string key)
   {
     var storage = GetSecureStorageClass();
@@ -66,7 +62,6 @@ public static class SecureStorage
     return null;
   }
 
-  // Метод для удаления данных
   public static bool DeleteData(string key)
   {
     var storage = GetSecureStorageClass();
@@ -87,7 +82,6 @@ public static class SecureStorage
     return false;
   }
 #else
-  // Для редактора сохраняем данные в папку на ПК
   public static bool SaveData(string key, string value)
   {
     try
@@ -103,7 +97,6 @@ public static class SecureStorage
     return false;
   }
 
-  // Для редактора получаем данные из файла
   public static string GetData(string key)
   {
     try
@@ -122,7 +115,6 @@ public static class SecureStorage
     return null;
   }
 
-  // Для редактора удаляем данные из файла
   public static bool DeleteData(string key)
   {
     try

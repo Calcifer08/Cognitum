@@ -13,11 +13,9 @@ public static class GameConfigManager
   private static readonly string FilePath = Path.Combine(Application.persistentDataPath, FileName);
   private static GameConfigData _gamesConfigData;
 
-  // Инициализация данных при первом вызове
-  // Асинхронная инициализация данных
   public static async Task InitializeAsync()
   {
-    if (_gamesConfigData == null) // Проверяем, загружены ли данные
+    if (_gamesConfigData == null)
     {
       await LoadDataAsync();
     }
@@ -58,10 +56,8 @@ public static class GameConfigManager
     }
   }
 
-  // сохраняем для конкретного
   public static async Task UpdateConfigForGameAsync(string nameGame, int level, int countGame, int score)
   {
-    // если такой игры нет в файле
     if (_gamesConfigData.GamesConfigData.ContainsKey(nameGame))
     {
       _gamesConfigData.GamesConfigData[nameGame].CurrentLevel = level;
@@ -81,7 +77,6 @@ public static class GameConfigManager
     }
     else
     {
-      // создаём такую запись
       _gamesConfigData.GamesConfigData[nameGame] =
         new GameConfig() { CurrentLevel = level, MaxLevelReached = level, CountGame = countGame, MaxScore = score };
       Debug.Log($"Данные игры {nameGame} созданы. Уровень {level}, CountGame: {countGame}");
@@ -89,7 +84,6 @@ public static class GameConfigManager
 
     await SaveGameConfigAsync(_gamesConfigData);
 
-    // отправляем на сервер только обновлённую часть
     var updatedGameConfig = new GameConfigData();
     updatedGameConfig.GamesConfigData[nameGame] = _gamesConfigData.GamesConfigData[nameGame];
     await SendSingleGameConfigAsync(updatedGameConfig);
@@ -108,9 +102,6 @@ public static class GameConfigManager
     Debug.Log("Данные всех игр сохранены локально");
   }
 
-  /// <summary>
-  /// Отправляет на сервер обновлённую часть
-  /// </summary>
   public static async Task SendSingleGameConfigAsync(GameConfigData gameConfigData)
   {    
     string json = JsonConvert.SerializeObject(gameConfigData, Formatting.Indented);
@@ -123,9 +114,6 @@ public static class GameConfigManager
     }
   }
 
-  /// <summary>
-  /// Отправляет на сервер весь конфиг
-  /// </summary>
   public static async Task<bool> SendAllGameConfigAsync()
   {
     if (_gamesConfigData == null)
@@ -141,9 +129,6 @@ public static class GameConfigManager
     return isSuccess;
   }
 
-  /// <summary>
-  /// Отправляет конфигурационные данные всех игр на сервер.
-  /// </summary>
   public static async Task<bool> SendGameConfigAsync(string json, int retryCount = 0)
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -170,7 +155,6 @@ public static class GameConfigManager
 
       var operation = request.SendWebRequest();
 
-      // Ждём завершения запроса, освобождая основной поток
       while (!operation.isDone)
       {
         await Task.Yield();
@@ -188,9 +172,6 @@ public static class GameConfigManager
     }
   }
 
-  /// <summary>
-  /// Обрабатывает ошибки при отправке конфигурации игр.
-  /// </summary>
   private static async Task<bool> HandleSaveGameConfigErrorAsync(UnityWebRequest request, string json, int retryCount)
   {
     if (request.responseCode == 0)

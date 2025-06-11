@@ -16,14 +16,13 @@ public static class GameStatisticsManager
 
   private static GameStatistics _gameStatistics; // категории -> игры -> даты -> данные
 
-  private static string _lastUpdate; // иначе передавать между методами
+  private static string _lastUpdate;
 
-  // список категорий и игр в них (для определения категории по названию)
   private static Dictionary<string, List<string>> _categoryList = new Dictionary<string, List<string>>();
 
   public static async Task InitializeAsync()
   {
-    if (_gameStatistics == null) // Проверяем, загружены ли данные
+    if (_gameStatistics == null)
     {
       InitializeCategoryList();
 
@@ -99,91 +98,71 @@ public static class GameStatisticsManager
 
   private static async Task AggregateDailyDataAsync()
   {
-    var sessionData = GameSessionManager.GetSessionsData(); // просто ссылка для удобства
+    var sessionData = GameSessionManager.GetSessionsData();
     var today = DateTime.Now.ToString("yyyy-MM-dd");
 
-    // ключ = название игры, значение = даты
-    // ключ = даты, значение = список сессий
-    // перебираем все игры
     foreach (var session in sessionData.Sessions)
     {
-      string nameGame = session.Key; // получаем имя игры
+      string nameGame = session.Key;
 
-      // т.к. значения это даты
-      // копируем через ToList для избежания изменений коллекции при итерации, т.к. удаляем данные
       foreach (var date in session.Value.ToList())
       {
-        string dateGame = date.Key; // дата данных
+        string dateGame = date.Key;
 
-        // незачем считать устаревшие данные
         if (DateTime.Parse(dateGame) < DateTime.Parse(_gameStatistics.LastUpdate).Date)
         {
           sessionData.Sessions[nameGame].Remove(dateGame);
           continue;
         }
 
-        // считаем среднее количество очков, окргуляем до целого и приводим к инту
         int averageScore = (int)Math.Round(date.Value.Average(session => session.Score));
-        // добавляем в файл агрегаиции игр
+
         AddToAggregation(_gameStatistics, nameGame, dateGame, averageScore);
 
-        // удаляем кроме текущего дня
         if (dateGame != today)
         {
-          // удаляем из файла сессий
           sessionData.Sessions[nameGame].Remove(dateGame);
         }
       }
     }
 
-    // сначала сохраняем агрегированные данные, а потом уже файл сессий, если наоборот, то сохранив файл сессий
-    // и получив какой-то сбой - не сможем обновить файл агрегации, а так просто перезапишет
     await SaveStatisticsFileAsync(_gameStatistics);
     await GameSessionManager.SaveFileAsync();
   }
 
-  // добавляет данные в файл агрегации игр
   private static void AddToAggregation(GameStatistics gameAggregation, string nameGame, string dateGame, int scoreGame)
   {
     string nameCategory = GetCategoryName(nameGame);
 
-    // если такой категории ещё нет, то создаём
     if (!gameAggregation.GamesStatistics.ContainsKey(nameCategory))
     {
       gameAggregation.GamesStatistics[nameCategory] = new Dictionary<string, GameStatisticsEntry>();
     }
 
-    // если нет такой игры, то создаём
     if (!gameAggregation.GamesStatistics[nameCategory].ContainsKey(nameGame))
     {
       gameAggregation.GamesStatistics[nameCategory][nameGame] = new GameStatisticsEntry();
     }
 
-    // получаем объект статистики
     GameStatisticsEntry gameEntry = gameAggregation.GamesStatistics[nameCategory][nameGame];
 
-    // если уже есть запись, и она не изменилась — не трогаем
     if (gameEntry.Statistics.DailyAverage.TryGetValue(dateGame, out var existingData))
     {
       if (existingData.AverageScore == scoreGame)
       {
-        return; // данные те же — ничего не делаем
+        return;
       }
     }
 
-    // обновляем дату последнего обновления именно этой игры
     gameEntry.LastUpdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
-    // записываем данные в дневную статистику
     gameEntry.Statistics.DailyAverage[dateGame] = new DataStatistics { AverageScore = scoreGame };
   }
 
-  // агрегация игр по неделям и месяцам
   private static async Task AggregateWeeklyAndMonthlyDataAsync()
   {
-    _lastUpdate = _gameStatistics.LastUpdate; // чтобы не передавать через методы
+    _lastUpdate = _gameStatistics.LastUpdate;
 
-    // создаём обрезанную версию статистики, в которую попадут только изменённые игры для отправки на сервер
     var updatedStatistics = new GameStatistics
     {
       LastUpdate = _lastUpdate,
@@ -197,16 +176,12 @@ public static class GameStatisticsManager
         GameStatisticsEntry gameEntry = gamePair.Value;
         PeriodStatistics stats = gameEntry.Statistics;
 
-        // агрегируем из дней -> в недели
         SaveAggregatePeriod(stats.DailyAverage, stats.WeeklyAverage, 7);
 
-        // агрегируем из дней -> в месяцы
         SaveAggregatePeriod(stats.DailyAverage, stats.MonthlyAverage, 30);
 
-        // удаляем устаревшие данные
         RemoveOldData(stats);
 
-        // если обновления есть (т.е. игра изменилась с момента последнего обновления)
         if (DateTime.Parse(gameEntry.LastUpdate) > DateTime.Parse(_lastUpdate))
         {
           if (!updatedStatistics.GamesStatistics.ContainsKey(category.Key))
@@ -219,26 +194,21 @@ public static class GameStatisticsManager
       }
     }
 
-    // обновляем время последнего обновления файла
     _gameStatistics.LastUpdate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
     await SaveStatisticsFileAsync(_gameStatistics);
 
-    // если есть обновления — отправляем на сервер
     if (updatedStatistics.GamesStatistics.Count > 0)
     {
       await SendPartialStatisticsAsync(updatedStatistics);
     }
   }
 
-  // производит добавление агрегированных данных
-  // производит добавление агрегированных данных в целевой словарь
   private static void SaveAggregatePeriod(
     Dictionary<string, DataStatistics> sourceData,
     Dictionary<string, DataStatistics> targetData,
     int periodDays)
   {
-    // агрегируем по нужному периоду (недели или месяцы)
     var periodData = AggregatePeriod(sourceData, periodDays);
 
     DateTime periodEndDate;
@@ -247,12 +217,10 @@ public static class GameStatisticsManager
     {
       if (periodDays == 7)
       {
-        // конец недели — +6 дней от начала
         periodEndDate = DateTime.Parse(data.Key).AddDays(6);
       }
       else if (periodDays == 30)
       {
-        // конец месяца — +1 месяц -1 день от начала
         periodEndDate = DateTime.Parse(data.Key).AddMonths(1).AddDays(-1);
       }
       else
@@ -260,7 +228,6 @@ public static class GameStatisticsManager
         throw new ArgumentException("Неверно указан период");
       }
 
-      // если период не старше последнего обновления — сохраняем
       if (periodEndDate >= DateTime.Parse(_lastUpdate).Date)
       {
         targetData[data.Key] = new DataStatistics { AverageScore = data.Value };
@@ -268,32 +235,22 @@ public static class GameStatisticsManager
     }
   }
 
-  // агрегирует полученные дни в недели и месяцы с очками
-  // на вход идут все дни для обработки и 7/30 - неделя/месяц
   private static Dictionary<string, int> AggregatePeriod(Dictionary<string, DataStatistics> data, int days)
   {
-    // хранит в себе недели/месяцы и их значение
     var result = new Dictionary<string, int>();
 
-    // по итогу GroupBy получим сгруппированные дни по неделям/месяцам
-    // через Select перебираем эти группы, считаем в них среднее очко и указываем дату начала периода
-    // получаем словарик с периодами и очками
     var groupData = data
       .GroupBy(g =>
       {
-        var date = DateTime.Parse(g.Key); // получили дату
+        var date = DateTime.Parse(g.Key);
 
-        // для недель
         if (days == 7)
         {
-          // (int)date.DayOfWeek получаем число дня от 0(воскресенье) до 6
-          // Date - убирает время, date.AddDays(-(int)date.DayOfWeek).Date; получаем начало недели
           return date.AddDays(-(int)date.DayOfWeek).Date;
         }
-        // для месяца
         else if (days == 30)
         {
-          return new DateTime(date.Year, date.Month, 1).Date; // начало месяца
+          return new DateTime(date.Year, date.Month, 1).Date;
         }
         else
         {
@@ -301,12 +258,10 @@ public static class GameStatisticsManager
         }
 
       })
-      //.Where(w => w.Key >= DateTime.Parse(_lastUpdate))
       .Select(s => new
       {
         period = s.Key.ToString("yyyy-MM-dd"),
         averageScore = (int)Math.Round(s.Average(a => a.Value.AverageScore))
-        //averageScore = CalculateMedian(s.Select(a => a.Value.AverageScore))
       });
 
     foreach (var entryData in groupData)
@@ -321,46 +276,40 @@ public static class GameStatisticsManager
   {
     gameData.DailyAverage = gameData.DailyAverage
         .OrderByDescending(data => DateTime.Parse(data.Key))
-        .Take(35) // оставляем только последние 8 дней
+        .Take(35)
         .ToDictionary(data => data.Key, data => data.Value);
 
     gameData.WeeklyAverage = gameData.WeeklyAverage
         .OrderByDescending(data => DateTime.Parse(data.Key))
-        .Take(8) // оставляем только последние 5 недель
+        .Take(8)
         .ToDictionary(data => data.Key, data => data.Value);
 
     gameData.MonthlyAverage = gameData.MonthlyAverage
         .OrderByDescending(data => DateTime.Parse(data.Key))
-        .Take(8) // оставляем только последние 7 месяцев
+        .Take(8)
         .ToDictionary(data => data.Key, data => data.Value);
   }
 
-  // Метод для вычисления медианы из списка значений
   private static int CalculateMedian(IEnumerable<int> scores)
   {
-    var sortedScores = scores.OrderBy(x => x).ToList(); // Сортируем значения по возрастанию
+    var sortedScores = scores.OrderBy(x => x).ToList();
     int count = sortedScores.Count;
 
     if (count == 0)
-      return 0; // Если список пуст — возвращаем 0
+      return 0;
 
     if (count % 2 == 1)
     {
-      // Если количество нечётное — берём средний элемент
       return sortedScores[count / 2];
     }
     else
     {
-      // Если чётное — берём среднее двух центральных
       int mid1 = sortedScores[(count / 2) - 1];
       int mid2 = sortedScores[count / 2];
       return (int)Math.Round((mid1 + mid2) / 2.0);
     }
   }
 
-  /// <summary>
-  /// Отправляет обрезанную статистику на сервер (только изменённые игры)
-  /// </summary>
   public static async Task SendPartialStatisticsAsync(GameStatistics partialStatistics)
   {
     string json = JsonConvert.SerializeObject(partialStatistics, Formatting.Indented);
@@ -373,9 +322,6 @@ public static class GameStatisticsManager
     }
   }
 
-  /// <summary>
-  /// Отправляет полную статистику на сервер (весь файл)
-  /// </summary>
   public static async Task<bool> SendAllStatisticsAsync()
   {
     if (_gameStatistics == null)
@@ -389,9 +335,6 @@ public static class GameStatisticsManager
     return await SendGameStatisticsAsync(json);
   }
 
-  /// <summary>
-  /// Универсальный метод отправки статистики.
-  /// </summary>
   private static async Task<bool> SendGameStatisticsAsync(string json, int retryCount = 0)
   {
     if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -434,9 +377,6 @@ public static class GameStatisticsManager
     }
   }
 
-  /// <summary>
-  /// Обрабатывает ошибки при отправке статистики.
-  /// </summary>
   private static async Task<bool> HandleSendStatisticsErrorAsync(UnityWebRequest request, string json, int retryCount)
   {
     if (request.responseCode == 0)
@@ -505,7 +445,6 @@ public static class GameStatisticsManager
       return new Dictionary<string, int>();
     }
 
-    // выбираем период
     Dictionary<string, DataStatistics> rawPeriodData;
     switch (periodName)
     {

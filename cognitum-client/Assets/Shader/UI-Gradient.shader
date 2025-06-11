@@ -2,8 +2,8 @@ Shader "Unlit/UI-Gradient"
 {
     Properties
     {
-        _ColorTop ("Top Color", Color) = (0.45, 0.63, 0.95, 1) // 73A0F3
-        _ColorBottom ("Bottom Color", Color) = (0.25, 0.52, 0.95, 1) // 3F86F2
+        _ColorTop ("Top Color", Color) = (0.45, 0.63, 0.95, 1)
+        _ColorBottom ("Bottom Color", Color) = (0.25, 0.52, 0.95, 1)
         [HideInInspector]_MainTex ("Sprite Texture", 2D) = "white" {}
 
         _Stencil("Stencil Reference", Float) = 0
@@ -44,14 +44,14 @@ Shader "Unlit/UI-Gradient"
             {
                 float4 vertex : POSITION;
                 float2 texcoord : TEXCOORD0;
-                float4 color : COLOR; // <--- цвет из UI-компонента (например, Button)
+                float4 color : COLOR;
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
-                fixed4 color : COLOR; // передаём цвет в пиксельный шейдер
+                fixed4 color : COLOR;
             };
 
             sampler2D _MainTex;
@@ -64,7 +64,7 @@ Shader "Unlit/UI-Gradient"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-                o.color = v.color; // передаём цвет в frag
+                o.color = v.color;
                 return o;
             }
 
@@ -73,7 +73,7 @@ Shader "Unlit/UI-Gradient"
                 fixed4 texColor = tex2D(_MainTex, i.uv);
                 float gradientFactor = i.uv.y;
                 fixed4 gradientColor = lerp(_ColorBottom, _ColorTop, gradientFactor);
-                return texColor * gradientColor * i.color; // учитываем состояние UI (нажатие и т.п.)
+                return texColor * gradientColor * i.color;
             }
             ENDCG
         }
