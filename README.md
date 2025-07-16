@@ -95,19 +95,19 @@ Cognitum/
 ## Экраны мобильного приложения
 
 ### Экраны авторизации и Меню  
-<img width="800" alt="Экраны авторизации и Меню" src="https://github.com/user-attachments/assets/6fe80d73-52b1-497e-a889-bf7a5965c7f5" />
+<img height="300" alt="Экраны авторизации и Меню" src="https://github.com/user-attachments/assets/6fe80d73-52b1-497e-a889-bf7a5965c7f5" />
 
 ### Основные экраны  
-<img width="800" alt="Основные экраны" src="https://github.com/user-attachments/assets/dd2b4c8c-d9b1-4e99-927b-fab6e417580b" />
+<img height="300" alt="Основные экраны" src="https://github.com/user-attachments/assets/dd2b4c8c-d9b1-4e99-927b-fab6e417580b" />
 
 ### Экраны «О тренажёре» и «Результаты»  
-<img width="800" alt="О тренажёре и Результаты" src="https://github.com/user-attachments/assets/4ec71b6f-7f70-4e39-8fd3-52cc782fbc6f" />
+<img height="300" alt="О тренажёре и Результаты" src="https://github.com/user-attachments/assets/4ec71b6f-7f70-4e39-8fd3-52cc782fbc6f" />
 
 ### Экраны тренажёров  
-<img width="800" alt="Экраны тренажёров" src="https://github.com/user-attachments/assets/2c10e6b0-73ab-4b59-ad80-2250255168f1" />
+<img height="300" alt="Экраны тренажёров" src="https://github.com/user-attachments/assets/2c10e6b0-73ab-4b59-ad80-2250255168f1" />
 
 ### Игровые экраны «Помощь» и «Пауза»  
-<img width="800" alt="Игровые экраны Помощь и Пауза" src="https://github.com/user-attachments/assets/7debb740-575f-4520-ab66-05af2689e276" />
+<img height="300" alt="Игровые экраны Помощь и Пауза" src="https://github.com/user-attachments/assets/7debb740-575f-4520-ab66-05af2689e276" />
 
 ---
 
