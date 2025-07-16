@@ -92,6 +92,9 @@ Cognitum/
 
 ---
 
+<img width="2178" height="962" alt="image" src="https://github.com/user-attachments/assets/6fe80d73-52b1-497e-a889-bf7a5965c7f5" />
+
+
 ## Обратная связь и багрепорты
 
 Создавайте issue в GitHub:  
